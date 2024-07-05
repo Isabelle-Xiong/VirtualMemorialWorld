@@ -15,12 +15,24 @@ const avatarSchema = new mongoose.Schema({
     name: String,
     picture: String,
     age: Number,
+    birthday: Date,
     hobbies: String,
     education: String,
     career: String,
     maritalStatus: String,
-    children: String,
-    pets: String,
+    children: [
+        {
+            gender: String,
+            name: String,
+            age: Number
+        }
+    ],
+    pets: [
+        {
+            type: String,
+            name: String
+        }
+    ],
     personality: String,
     specialNotes: String,
     jobs: [
