@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../Avatar.css'; // Adjusted import path
 
@@ -16,7 +16,7 @@ const hobbyOptions = [
     'Swimming', 'Other'
 ];
 
-function Avatar() {
+function Avatar({ virtualTime }) { // Receive virtualTime as a prop
     const [name, setName] = useState('');
     const [picture, setPicture] = useState('');
     const [age, setAge] = useState('');
@@ -44,6 +44,28 @@ function Avatar() {
     const [jobStartDate, setJobStartDate] = useState('');
     const [jobEndDate, setJobEndDate] = useState('');
     const [jobIsCurrent, setJobIsCurrent] = useState(false);
+
+    // Routine-related state variables
+    const [dailyRoutine, setDailyRoutine] = useState([
+        { time: "08:00", event: "Wake up" },
+        { time: "09:00", event: "Go to work" }
+    ]);
+    const [relationships, setRelationships] = useState([]);
+
+    useEffect(() => {
+        const updateRoutine = () => {
+            console.log(`Updating ${name}'s routine at virtual time ${virtualTime}`);
+            // Implement routine update logic based on virtual time
+        };
+
+        const updateRelationships = () => {
+            console.log(`Updating ${name}'s relationships at virtual time ${virtualTime}`);
+            // Implement relationship update logic based on virtual time
+        };
+
+        updateRoutine();
+        updateRelationships();
+    }, [virtualTime]);
 
     const handleAddChild = () => {
         setChildren([...children, { gender: childGender, name: childName }]);

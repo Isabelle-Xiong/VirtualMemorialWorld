@@ -1,3 +1,4 @@
+// src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
@@ -15,12 +16,19 @@ import VerifyEmail from './components/VerifyEmail';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import VirtualClock from './components/VirtualClock';
 
 function App() {
+  const handleTick = (virtualTime) => {
+    console.log("Virtual Time:", virtualTime);
+    // Here you can call functions to update avatar routines and relationships
+  };
+
   return (
     <Router>
       <div className="App">
         <Navigation />
+        <VirtualClock speedMultiplier={60} onTick={handleTick} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

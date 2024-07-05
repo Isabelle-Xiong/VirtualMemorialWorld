@@ -128,6 +128,7 @@ app.post('/api/avatars', auth, async (req, res) => {
     console.log('Received request:', req.body);
     const { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes, goals = [], jobs = [] } = req.body;
     console.log('Jobs received:', jobs);
+
     // Create relationships from children and pets
     const relationships = [
         ...children.map(child => ({
@@ -148,7 +149,9 @@ app.post('/api/avatars', auth, async (req, res) => {
                 type: pet.type
             }
         }))
-    ];  // Add job details
+    ];
+
+    // Add job details
     const jobDetails = jobs.map(job => ({
         title: job.title,
         company: job.company,
@@ -156,8 +159,6 @@ app.post('/api/avatars', auth, async (req, res) => {
         endDate: job.endDate ? new Date(job.endDate) : null,
         isCurrent: job.isCurrent || false
     }));
-
-
 
     const avatar = new Avatar({
         name,
@@ -193,7 +194,7 @@ app.get('/api/avatars', auth, async (req, res) => {
 
 app.put('/api/avatars/:id', auth, async (req, res) => {
     const { id } = req.params;
-    const { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes, jobs = [] } = req.body;
+    const { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes, goals = [], jobs = [] } = req.body;
 
     // Update relationships from children and pets
     const relationships = [
@@ -226,7 +227,6 @@ app.put('/api/avatars/:id', auth, async (req, res) => {
         isCurrent: job.isCurrent || false
     }));
 
-
     try {
         const avatar = await Avatar.findByIdAndUpdate(id, {
             name,
@@ -256,7 +256,6 @@ app.delete('/api/avatars/:id', auth, async (req, res) => {
     await Avatar.findByIdAndDelete(id);
     res.send({ message: 'Avatar deleted' });
 });
-
 app.get('/api/profile', auth, async (req, res) => {
     const user = await User.findById(req.user.userId);
     res.send({ username: user.username });
@@ -273,6 +272,29 @@ app.put('/api/profile', auth, async (req, res) => {
     user.password = hashedNewPassword;
     await user.save();
     res.send({ message: 'Password updated successfully' });
+});
+
+// Endpoint to update avatar's routine and relationships based on virtual time
+app.post('/api/update-avatar-routine', auth, async (req, res) => {
+    const { id, virtualTime } = req.body;
+    try {
+        const avatar = await Avatar.findById(id);
+        if (!avatar) {
+            return res.status(404).send('Avatar not found');
+        }
+
+        // Logic to update the avatar's routine and relationships
+        // For example, we can add a log entry to the progressionLog
+        avatar.progressionLog.push({
+            date: new Date(),
+            statement: `Routine and relationships updated at virtual time ${virtualTime}`
+        });
+
+        await avatar.save();
+        res.send(avatar);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 });
 
 // Serve static files from the React app

@@ -75,12 +75,6 @@ const avatarSchema = new mongoose.Schema({
         }
     ],
     relationships: [relationshipSchema],
-    goals: [
-        {
-            goal: String,
-            status: String
-        }
-    ]
 });
 
 const User = mongoose.model('User', userSchema);
