@@ -1,23 +1,26 @@
-// src/components/VirtualClock.js
 import React, { useEffect, useState } from 'react';
 
 const VirtualClock = ({ speedMultiplier, onTick }) => {
-    const [virtualTime, setVirtualTime] = useState(0);
+    const [virtualTime, setVirtualTime] = useState(() => {
+        const savedTime = localStorage.getItem('virtualTime');
+        return savedTime ? parseInt(savedTime, 10) : 0;
+    });
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setVirtualTime(prevTime => prevTime + 1);
-            onTick(virtualTime);
+            setVirtualTime(prevTime => {
+                const newTime = prevTime + 1;
+                const adjustedTime = newTime % 1800; // Ensure it wraps correctly at 1800
+                onTick(adjustedTime); // Pass the adjusted time
+                localStorage.setItem('virtualTime', newTime);
+                return newTime;
+            });
         }, 1000 / speedMultiplier);
 
         return () => clearInterval(interval);
-    }, [virtualTime, speedMultiplier, onTick]);
+    }, [speedMultiplier, onTick]);
 
-    return (
-        <div>
-            <h2>Virtual Time: {virtualTime}</h2>
-        </div>
-    );
+    // No return statement to avoid displaying the clock
 };
 
 export default VirtualClock;

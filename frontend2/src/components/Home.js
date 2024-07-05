@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb, faBullseye, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import '../Home.css';
 
-function Home() {
+function Home({ virtualTime, virtualDay, incrementDayManually }) {
     const [avatars, setAvatars] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState(null);
