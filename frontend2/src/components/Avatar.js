@@ -29,9 +29,9 @@ function Avatar() {
     const [children, setChildren] = useState([]);
     const [pets, setPets] = useState([]);
     const [personality, setPersonality] = useState([]);
-    const [personalityTrait, setPersonalityTrait] = useState(''); // Added state variable
+    const [personalityTrait, setPersonalityTrait] = useState('');
+    const [goals, setGoals] = useState([{ goal: '', status: '' }]);
     const [specialNotes, setSpecialNotes] = useState('');
-
     const [childGender, setChildGender] = useState('');
     const [childName, setChildName] = useState('');
     const [petType, setPetType] = useState('');
@@ -107,13 +107,27 @@ function Avatar() {
         setPersonality(personality.filter((_, i) => i !== index));
     };
 
+    const handleAddGoal = () => {
+        setGoals([...goals, { goal: '', status: '' }]);
+    };
+
+    const handleRemoveGoal = (index) => {
+        setGoals(goals.filter((_, i) => i !== index));
+    };
+
+    const handleGoalChange = (index, field, value) => {
+        const newGoals = goals.slice();
+        newGoals[index][field] = value;
+        setGoals(newGoals);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem('token');
         try {
             const response = await axios.post(
                 'http://localhost:5001/api/avatars',
-                { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes, jobs },
+                { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes, jobs, goals },
                 { headers: { 'x-auth-token': token } }
             );
             console.log('Avatar created:', response.data);
@@ -372,6 +386,34 @@ function Avatar() {
                             </li>
                         ))}
                     </ul>
+                </div>
+                <div className="mb-3">
+                    <label style={{ display: 'block', textAlign: 'center' }}>Goals</label>
+                    {goals.map((goal, index) => (
+                        <div key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Goal"
+                                value={goal.goal}
+                                onChange={(e) => handleGoalChange(index, 'goal', e.target.value)}
+                                style={{ width: '40%' }}
+                            />
+                            <select
+                                className="form-control"
+                                value={goal.status}
+                                onChange={(e) => handleGoalChange(index, 'status', e.target.value)}
+                                style={{ width: '40%' }}
+                            >
+                                <option value="">Select Status</option>
+                                <option value="Not Started">Not Started</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                            <button type="button" className="btn btn-link btn-sm" onClick={() => handleRemoveGoal(index)}>x</button>
+                        </div>
+                    ))}
+                    <button type="button" className="btn btn-primary" onClick={handleAddGoal}>Add Goal</button>
                 </div>
                 <div className="mb-3">
                     <textarea

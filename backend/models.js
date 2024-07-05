@@ -55,6 +55,12 @@ const avatarSchema = new mongoose.Schema({
     pets: [petSchema],
     personality: String,
     specialNotes: String,
+    goals: [
+        {
+            goal: String,
+            status: String
+        }
+    ],
     jobs: [jobSchema],
     dailyRoutine: [
         {

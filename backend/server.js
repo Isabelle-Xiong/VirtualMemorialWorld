@@ -126,7 +126,7 @@ app.post('/api/login', async (req, res) => {
 // Avatar CRUD operations
 app.post('/api/avatars', auth, async (req, res) => {
     console.log('Received request:', req.body);
-    const { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes, jobs = [] } = req.body;
+    const { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes, goals = [], jobs = [] } = req.body;
     console.log('Jobs received:', jobs);
     // Create relationships from children and pets
     const relationships = [
@@ -172,6 +172,7 @@ app.post('/api/avatars', auth, async (req, res) => {
         pets,
         personality,
         specialNotes,
+        goals,
         jobs: jobDetails,
         relationships
     });
@@ -240,6 +241,7 @@ app.put('/api/avatars/:id', auth, async (req, res) => {
             pets,
             personality,
             specialNotes,
+            goals,
             jobs: jobDetails,
             relationships
         }, { new: true });
