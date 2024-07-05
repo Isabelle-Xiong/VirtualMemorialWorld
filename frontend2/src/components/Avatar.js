@@ -1,24 +1,49 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import '../Avatar.css'; // Adjusted import path
+
+const personalityOptions = [
+    'Adventurous', 'Artistic', 'Charismatic', 'Cheerful', 'Confident', 'Creative', 'Dependable',
+    'Energetic', 'Friendly', 'Funny', 'Generous', 'Hardworking', 'Honest', 'Imaginative',
+    'Independent', 'Kind', 'Loyal', 'Optimistic', 'Outgoing', 'Patient', 'Reliable', 'Sociable',
+    'Thoughtful', 'Trustworthy'
+];
+
+const hobbyOptions = [
+    'Reading', 'Traveling', 'Cooking', 'Gardening', 'Hiking', 'Fishing', 'Painting', 'Drawing',
+    'Photography', 'Writing', 'Dancing', 'Playing Musical Instruments', 'Singing', 'Knitting',
+    'Crafting', 'Collecting', 'Gaming', 'Yoga', 'Meditation', 'Fitness', 'Cycling', 'Running',
+    'Swimming', 'Other'
+];
 
 function Avatar() {
     const [name, setName] = useState('');
     const [picture, setPicture] = useState('');
     const [age, setAge] = useState('');
     const [birthday, setBirthday] = useState('');
-    const [hobbies, setHobbies] = useState('');
+    const [hobbies, setHobbies] = useState([]);
+    const [customHobby, setCustomHobby] = useState('');
     const [education, setEducation] = useState('');
     const [career, setCareer] = useState('');
     const [maritalStatus, setMaritalStatus] = useState('');
     const [children, setChildren] = useState([]);
     const [pets, setPets] = useState([]);
-    const [personality, setPersonality] = useState('');
+    const [personality, setPersonality] = useState([]);
+    const [personalityTrait, setPersonalityTrait] = useState(''); // Added state variable
     const [specialNotes, setSpecialNotes] = useState('');
 
     const [childGender, setChildGender] = useState('');
     const [childName, setChildName] = useState('');
     const [petType, setPetType] = useState('');
     const [petName, setPetName] = useState('');
+
+    // Job-related state variables
+    const [jobs, setJobs] = useState([]);
+    const [jobTitle, setJobTitle] = useState('');
+    const [jobCompany, setJobCompany] = useState('');
+    const [jobStartDate, setJobStartDate] = useState('');
+    const [jobEndDate, setJobEndDate] = useState('');
+    const [jobIsCurrent, setJobIsCurrent] = useState(false);
 
     const handleAddChild = () => {
         setChildren([...children, { gender: childGender, name: childName }]);
@@ -40,13 +65,55 @@ function Avatar() {
         setPets(pets.filter((_, i) => i !== index));
     };
 
+    const handleAddJob = () => {
+        setJobs([...jobs, { title: jobTitle, company: jobCompany, startDate: jobStartDate, endDate: jobIsCurrent ? null : jobEndDate, isCurrent: jobIsCurrent }]);
+        setJobTitle('');
+        setJobCompany('');
+        setJobStartDate('');
+        setJobEndDate('');
+        setJobIsCurrent(false);
+    };
+
+    const handleRemoveJob = (index) => {
+        setJobs(jobs.filter((_, i) => i !== index));
+    };
+
+    const handleJobIsCurrentChange = (checked) => {
+        setJobIsCurrent(checked);
+        if (checked) {
+            setJobEndDate('');
+        }
+    };
+
+    const handleAddHobby = () => {
+        if (customHobby) {
+            setHobbies([...hobbies, customHobby]);
+            setCustomHobby('');
+        }
+    };
+
+    const handleRemoveHobby = (index) => {
+        setHobbies(hobbies.filter((_, i) => i !== index));
+    };
+
+    const handleAddPersonality = () => {
+        if (personalityTrait && !personality.includes(personalityTrait)) {
+            setPersonality([...personality, personalityTrait]);
+            setPersonalityTrait('');
+        }
+    };
+
+    const handleRemovePersonality = (index) => {
+        setPersonality(personality.filter((_, i) => i !== index));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem('token');
         try {
             const response = await axios.post(
                 'http://localhost:5001/api/avatars',
-                { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes },
+                { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes, jobs },
                 { headers: { 'x-auth-token': token } }
             );
             console.log('Avatar created:', response.data);
@@ -58,7 +125,7 @@ function Avatar() {
     return (
         <div className="container">
             <h2 className="my-4">Create Avatar</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="form-center">
                 <div className="mb-3">
                     <input
                         type="text"
@@ -97,13 +164,53 @@ function Avatar() {
                     />
                 </div>
                 <div className="mb-3">
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Hobbies"
-                        value={hobbies}
-                        onChange={(e) => setHobbies(e.target.value)}
-                    />
+                    <label style={{ display: 'block', textAlign: 'center' }}>Hobbies</label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <select
+                            className="form-control"
+                            style={{ width: '70%' }}
+                            onChange={(e) => setCustomHobby(e.target.value)}
+                        >
+                            <option value="">Select Hobby</option>
+                            {hobbyOptions.map((hobby, index) => (
+                                <option key={index} value={hobby}>{hobby}</option>
+                            ))}
+                        </select>
+                        <button type="button" className="btn btn-primary" style={{ width: '25%' }} onClick={handleAddHobby}>Add Hobby</button>
+                    </div>
+                    <ul className="list-centered">
+                        {hobbies.map((hobby, index) => (
+                            <li key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                {hobby}
+                                <button type="button" className="btn btn-link btn-sm" onClick={() => handleRemoveHobby(index)}>x</button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="mb-3">
+                    <label style={{ display: 'block', textAlign: 'center' }}>Personality Traits</label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <select
+                            className="form-control"
+                            style={{ width: '70%' }}
+                            value={personalityTrait}
+                            onChange={(e) => setPersonalityTrait(e.target.value)}
+                        >
+                            <option value="">Select Personality Trait</option>
+                            {personalityOptions.map((trait, index) => (
+                                <option key={index} value={trait}>{trait}</option>
+                            ))}
+                        </select>
+                        <button type="button" className="btn btn-primary" style={{ width: '25%' }} onClick={handleAddPersonality}>Add Trait</button>
+                    </div>
+                    <ul className="list-centered">
+                        {personality.map((trait, index) => (
+                            <li key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                {trait}
+                                <button type="button" className="btn btn-link btn-sm" onClick={() => handleRemovePersonality(index)}>x</button>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
                 <div className="mb-3">
                     <select
@@ -167,9 +274,9 @@ function Avatar() {
                             value={childName}
                             onChange={(e) => setChildName(e.target.value)}
                         />
-                        <button type="button" className="btn btn-primary" style={{ width: '15%' }} onClick={handleAddChild}>Add Child</button>
+                        <button type="button" className="btn btn-secondary" style={{ width: '15%' }} onClick={handleAddChild}>Add Child</button>
                     </div>
-                    <ul>
+                    <ul className="list-centered">
                         {children.map((child, index) => (
                             <li key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 {child.gender} - {child.name}
@@ -201,9 +308,9 @@ function Avatar() {
                             value={petName}
                             onChange={(e) => setPetName(e.target.value)}
                         />
-                        <button type="button" className="btn btn-primary" style={{ width: '15%' }} onClick={handleAddPet}>Add Pet</button>
+                        <button type="button" className="btn btn-secondary" style={{ width: '15%' }} onClick={handleAddPet}>Add Pet</button>
                     </div>
-                    <ul>
+                    <ul className="list-centered">
                         {pets.map((pet, index) => (
                             <li key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 {pet.type} - {pet.name}
@@ -213,12 +320,58 @@ function Avatar() {
                     </ul>
                 </div>
                 <div className="mb-3">
-                    <textarea
-                        className="form-control"
-                        placeholder="Personality"
-                        value={personality}
-                        onChange={(e) => setPersonality(e.target.value)}
-                    />
+                    <label style={{ display: 'block', textAlign: 'center' }}>Jobs</label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Job Title"
+                            style={{ width: '20%' }}
+                            value={jobTitle}
+                            onChange={(e) => setJobTitle(e.target.value)}
+                        />
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Company"
+                            style={{ width: '20%' }}
+                            value={jobCompany}
+                            onChange={(e) => setJobCompany(e.target.value)}
+                        />
+                        <input
+                            type="date"
+                            className="form-control"
+                            placeholder="Start Date"
+                            style={{ width: '20%' }}
+                            value={jobStartDate}
+                            onChange={(e) => setJobStartDate(e.target.value)}
+                        />
+                        <input
+                            type="date"
+                            className="form-control"
+                            placeholder="End Date"
+                            style={{ width: '20%' }}
+                            value={jobEndDate}
+                            onChange={(e) => setJobEndDate(e.target.value)}
+                            disabled={jobIsCurrent}
+                        />
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={jobIsCurrent}
+                                onChange={(e) => handleJobIsCurrentChange(e.target.checked)}
+                            /> Current
+                        </label>
+                        <button type="button" className="btn btn-secondary" style={{ width: '15%' }} onClick={handleAddJob}>Add Job</button>
+                    </div>
+                    <ul className="list-centered">
+                        {jobs.map((job, index) => (
+                            <li key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                {job.title} at {job.company} from {job.startDate} to {job.endDate ? job.endDate : 'Present'} {job.isCurrent ? '(Current)' : ''}
+                                <button type="button" className="btn btn-link btn-sm" onClick={() => handleRemoveJob(index)}>x</button>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
                 <div className="mb-3">
                     <textarea
@@ -228,7 +381,7 @@ function Avatar() {
                         onChange={(e) => setSpecialNotes(e.target.value)}
                     />
                 </div>
-                <button type="submit" className="btn btn-primary">Create Avatar</button>
+                <button type="submit" className="btn btn-create">Create Avatar</button>
             </form>
         </div>
     );

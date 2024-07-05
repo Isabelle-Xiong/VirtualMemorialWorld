@@ -34,6 +34,14 @@ const petSchema = new mongoose.Schema({
     name: String
 });
 
+const jobSchema = new mongoose.Schema({
+    title: String,
+    company: String,
+    startDate: Date,
+    endDate: Date,
+    isCurrent: Boolean
+});
+
 const avatarSchema = new mongoose.Schema({
     name: String,
     picture: String,
@@ -41,21 +49,13 @@ const avatarSchema = new mongoose.Schema({
     birthday: Date,
     hobbies: String,
     education: String,
-    career: String,
+    career: [String],
     maritalStatus: String,
     children: [childSchema],
     pets: [petSchema],
     personality: String,
     specialNotes: String,
-    jobs: [
-        {
-            title: String,
-            company: String,
-            startDate: Date,
-            endDate: Date,
-            isCurrent: Boolean
-        }
-    ],
+    jobs: [jobSchema],
     dailyRoutine: [
         {
             time: String,

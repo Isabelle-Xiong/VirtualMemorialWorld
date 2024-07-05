@@ -8,6 +8,7 @@ function Home() {
     const [avatars, setAvatars] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState(null);
+    const [modalType, setModalType] = useState(null); // Add modalType state
     const [hoverContent, setHoverContent] = useState(null);
 
     useEffect(() => {
@@ -42,14 +43,16 @@ function Home() {
         }
     };
 
-    const handleShowModal = (content) => {
+    const handleShowModal = (content, type) => {
         setModalContent(content);
+        setModalType(type); // Set modal type
         setShowModal(true);
     };
 
     const handleCloseModal = () => {
         setShowModal(false);
         setModalContent(null);
+        setModalType(null); // Reset modal type
     };
 
     const handleHoverContent = (content) => {
@@ -69,6 +72,18 @@ function Home() {
                 {relationship.details && relationship.details.age && <p><strong>Age:</strong> {relationship.details.age}</p>}
                 {relationship.details && relationship.details.birthday && <p><strong>Birthday:</strong> {new Date(relationship.details.birthday).toLocaleDateString()}</p>}
                 <p><strong>Since:</strong> {new Date(relationship.since).toLocaleDateString()}</p>
+            </div>
+        ));
+    };
+
+    const renderJobs = (jobs) => {
+        return jobs.map((job, index) => (
+            <div key={index} className="job-card">
+                <p><strong>Title:</strong> {job.title}</p>
+                <p><strong>Company:</strong> {job.company}</p>
+                <p><strong>Start Date:</strong> {new Date(job.startDate).toLocaleDateString()}</p>
+                {job.endDate && <p><strong>End Date:</strong> {new Date(job.endDate).toLocaleDateString()}</p>}
+                {job.isCurrent && <p><strong>Current Job:</strong> Yes</p>}
             </div>
         ));
     };
@@ -94,14 +109,14 @@ function Home() {
                                 <p><strong>Personality:</strong> {avatar.personality}</p>
                                 <p><strong>Special Notes:</strong> {avatar.specialNotes}</p>
                                 <div className="button-group">
-                                    <button className="btn btn-info" onClick={() => handleShowModal(avatar.career)}>Careers</button>
-                                    <button className="btn btn-info" onClick={() => handleShowModal(avatar.relationships)}>Relationships</button>
+                                    <button className="btn btn-info" onClick={() => handleShowModal(avatar.relationships, 'relationships')}>Relationships</button>
+                                    <button className="btn btn-info" onClick={() => handleShowModal(avatar.jobs, 'jobs')}>Career</button>
                                 </div>
                             </div>
                             <div className="avatar-icons">
                                 <FontAwesomeIcon icon={faLightbulb} className="icon" onMouseEnter={() => handleHoverContent(avatar.progressionLog)} onMouseLeave={handleLeaveHover} />
                                 <FontAwesomeIcon icon={faBullseye} className="icon" onMouseEnter={() => handleHoverContent(avatar.goals)} onMouseLeave={handleLeaveHover} />
-                                <FontAwesomeIcon icon={faCalendarAlt} className="icon" onClick={() => handleShowModal(avatar.dailyRoutine)} />
+                                <FontAwesomeIcon icon={faCalendarAlt} className="icon" onClick={() => handleShowModal(avatar.dailyRoutine, 'routine')} />
                             </div>
                         </div>
                     ))
@@ -115,7 +130,13 @@ function Home() {
                     <div className="modal-content">
                         <span className="close" onClick={handleCloseModal}>&times;</span>
                         {Array.isArray(modalContent) && modalContent.length > 0 ? (
-                            renderRelationships(modalContent)
+                            modalType === 'relationships' ? (
+                                renderRelationships(modalContent)
+                            ) : modalType === 'jobs' ? (
+                                renderJobs(modalContent)
+                            ) : (
+                                <p>No details available.</p>
+                            )
                         ) : (
                             <p>No details available.</p>
                         )}

@@ -8,7 +8,7 @@ const path = require('path');
 const auth = require('./middleware/auth');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
-const { User, Avatar } = require('./models'); // Import models
+const { User, Avatar } = require('./models');
 
 const app = express();
 app.use(cors());
@@ -125,8 +125,9 @@ app.post('/api/login', async (req, res) => {
 
 // Avatar CRUD operations
 app.post('/api/avatars', auth, async (req, res) => {
-    const { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes } = req.body;
-
+    console.log('Received request:', req.body);
+    const { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes, jobs = [] } = req.body;
+    console.log('Jobs received:', jobs);
     // Create relationships from children and pets
     const relationships = [
         ...children.map(child => ({
@@ -147,7 +148,16 @@ app.post('/api/avatars', auth, async (req, res) => {
                 type: pet.type
             }
         }))
-    ];
+    ];  // Add job details
+    const jobDetails = jobs.map(job => ({
+        title: job.title,
+        company: job.company,
+        startDate: job.startDate ? new Date(job.startDate) : new Date(), // set startDate as current date if not provided
+        endDate: job.endDate ? new Date(job.endDate) : null,
+        isCurrent: job.isCurrent || false
+    }));
+
+
 
     const avatar = new Avatar({
         name,
@@ -162,6 +172,7 @@ app.post('/api/avatars', auth, async (req, res) => {
         pets,
         personality,
         specialNotes,
+        jobs: jobDetails,
         relationships
     });
 
@@ -181,7 +192,7 @@ app.get('/api/avatars', auth, async (req, res) => {
 
 app.put('/api/avatars/:id', auth, async (req, res) => {
     const { id } = req.params;
-    const { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes } = req.body;
+    const { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes, jobs = [] } = req.body;
 
     // Update relationships from children and pets
     const relationships = [
@@ -205,6 +216,16 @@ app.put('/api/avatars/:id', auth, async (req, res) => {
         }))
     ];
 
+    // Add job details
+    const jobDetails = jobs.map(job => ({
+        title: job.title,
+        company: job.company,
+        startDate: job.startDate ? new Date(job.startDate) : new Date(), // set startDate as current date if not provided
+        endDate: job.endDate ? new Date(job.endDate) : null,
+        isCurrent: job.isCurrent || false
+    }));
+
+
     try {
         const avatar = await Avatar.findByIdAndUpdate(id, {
             name,
@@ -219,6 +240,7 @@ app.put('/api/avatars/:id', auth, async (req, res) => {
             pets,
             personality,
             specialNotes,
+            jobs: jobDetails,
             relationships
         }, { new: true });
         res.send(avatar);

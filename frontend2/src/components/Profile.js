@@ -34,15 +34,15 @@ function Profile() {
                     <p className="card-text"><strong>Age:</strong> {profile.age}</p>
                     <p className="card-text"><strong>Hobbies:</strong> {profile.hobbies}</p>
                     <p className="card-text"><strong>Education:</strong> {profile.education}</p>
-                    <p className="card-text"><strong>Career:</strong> {profile.career}</p>
+                    <p className="card-text"><strong>Interested Career:</strong> {profile.career}</p>
                     <p className="card-text"><strong>Marital Status:</strong> {profile.maritalStatus}</p>
                     <p className="card-text"><strong>Children:</strong> {profile.children}</p>
                     <p className="card-text"><strong>Pets:</strong> {profile.pets}</p>
                     <p className="card-text"><strong>Personality:</strong> {profile.personality}</p>
                     <p className="card-text"><strong>Special Notes:</strong> {profile.specialNotes}</p>
-                    
+
                     <h4>Jobs and Occupations</h4>
-                    {profile.jobs.map((job, index) => (
+                    {profile.jobs?.map((job, index) => (
                         <div key={index}>
                             <p><strong>Title:</strong> {job.title}</p>
                             <p><strong>Company:</strong> {job.company}</p>
@@ -51,9 +51,9 @@ function Profile() {
                             <p><strong>Current Job:</strong> {job.isCurrent ? "Yes" : "No"}</p>
                         </div>
                     ))}
-                    
+
                     <h4>Pets</h4>
-                    {profile.pets.map((pet, index) => (
+                    {profile.pets?.map((pet, index) => (
                         <div key={index}>
                             <p><strong>Name:</strong> {pet.name}</p>
                             <p><strong>Type:</strong> {pet.type}</p>
@@ -62,7 +62,7 @@ function Profile() {
                     ))}
 
                     <h4>Daily Routine</h4>
-                    {profile.dailyRoutine.map((item, index) => (
+                    {profile.dailyRoutine?.map((item, index) => (
                         <div key={index}>
                             <p><strong>Time:</strong> {item.time}</p>
                             <p><strong>Event:</strong> {item.event}</p>
@@ -70,7 +70,7 @@ function Profile() {
                     ))}
 
                     <h4>Progression Log</h4>
-                    {profile.progressionLog.map((log, index) => (
+                    {profile.progressionLog?.map((log, index) => (
                         <div key={index}>
                             <p><strong>Date:</strong> {log.date}</p>
                             <p><strong>Statement:</strong> {log.statement}</p>
@@ -78,7 +78,7 @@ function Profile() {
                     ))}
 
                     <h4>Relationships</h4>
-                    {profile.relationships.map((relationship, index) => (
+                    {profile.relationships?.map((relationship, index) => (
                         <div key={index}>
                             <p><strong>Type:</strong> {relationship.type}</p>
                             <p><strong>Name:</strong> {relationship.name}</p>
@@ -87,7 +87,7 @@ function Profile() {
                     ))}
 
                     <h4>Goals</h4>
-                    {profile.goals.map((goal, index) => (
+                    {profile.goals?.map((goal, index) => (
                         <div key={index}>
                             <p><strong>Goal:</strong> {goal.goal}</p>
                             <p><strong>Status:</strong> {goal.status}</p>
