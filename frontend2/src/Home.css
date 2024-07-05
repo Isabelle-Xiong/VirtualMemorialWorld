@@ -1,0 +1,106 @@
+.container {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+.avatars-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.avatar-card {
+    background-color: #f0f8ff;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+
+}
+
+.avatar-header {
+    position: relative;
+    text-align: center;
+}
+
+.avatar-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto;
+    display: block;
+}
+
+.avatar-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.release-button,
+.edit-button {
+    position: absolute;
+    top: 10px;
+}
+
+.release-button {
+    right: 70px;
+}
+
+.edit-button {
+    right: 10px;
+}
+
+.avatar-details {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    /* Or use flex-start if you prefer the buttons to be aligned to the left */
+    gap: 10px;
+    /* Optional: add a small gap between the buttons */
+    padding-bottom: 10px;
+    margin-top: 10px;
+}
+
+.icon {
+    font-size: 30px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    text-align: left;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.hover-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}

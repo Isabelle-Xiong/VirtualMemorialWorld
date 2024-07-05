@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLightbulb, faBullseye, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import '../Home.css';
 
 function Home() {
     const [avatars, setAvatars] = useState([]);
@@ -60,13 +63,17 @@ function Home() {
     return (
         <div className="container">
             <h2 className="my-4">Avatars</h2>
-            <ul className="list-group">
+            <div className="avatars-container">
                 {Array.isArray(avatars) && avatars.length > 0 ? (
                     avatars.map((avatar) => (
-                        <li key={avatar._id} className="list-group-item d-flex justify-content-between align-items-center">
-                            <div>
-                                <img src={avatar.picture} alt={avatar.name} width="100" className="me-3" />
-                                <h5 className="fw-bold">{avatar.name}</h5>
+                        <div key={avatar._id} className="avatar-card">
+                            <button className="btn btn-danger release-button" onClick={() => deleteAvatar(avatar._id)}>Release</button>
+                            <button className="btn btn-primary edit-button" onClick={() => window.location.href = `/edit-avatar/${avatar._id}`}>Edit</button>
+                            <div className="avatar-header">
+                                <img src={avatar.picture} alt={avatar.name} className="avatar-picture" />
+                                <h5 className="avatar-name">{avatar.name}</h5>
+                            </div>
+                            <div className="avatar-details">
                                 <p><strong>Age:</strong> {avatar.age}</p>
                                 <p><strong>Hobbies:</strong> {avatar.hobbies}</p>
                                 <p><strong>Education:</strong> {avatar.education}</p>
@@ -75,26 +82,22 @@ function Home() {
                                 <p><strong>Pets:</strong> {avatar.pets}</p>
                                 <p><strong>Personality:</strong> {avatar.personality}</p>
                                 <p><strong>Special Notes:</strong> {avatar.specialNotes}</p>
-                                <button onClick={() => handleShowModal([...avatar.jobs, { title: 'Career', company: avatar.career }])}>Jobs and Occupations</button>
-                                <button onClick={() => handleShowModal(avatar.dailyRoutine)}>Daily Routine</button>
-                                <div onMouseEnter={() => handleHoverContent(avatar.progressionLog)} onMouseLeave={handleLeaveHover}>
-                                    <span>Progression Log</span>
+                                <div className="button-group">
+                                    <button className="btn btn-info" onClick={() => handleShowModal(avatar.career)}>Careers</button>
+                                    <button className="btn btn-info" onClick={() => handleShowModal(avatar.relationships)}>Relationships</button>
                                 </div>
-                                <div onMouseEnter={() => handleHoverContent(avatar.goals)} onMouseLeave={handleLeaveHover}>
-                                    <span>Goals</span>
-                                </div>
-                                <button onClick={() => handleShowModal(avatar.relationships)}>Relationships</button>
                             </div>
-                            <div>
-                                <button className="btn btn-danger me-2" onClick={() => deleteAvatar(avatar._id)}>Delete</button>
-                                <button className="btn btn-primary" onClick={() => window.location.href = `/edit-avatar/${avatar._id}`}>Edit</button>
+                            <div className="avatar-icons">
+                                <FontAwesomeIcon icon={faLightbulb} className="icon" onMouseEnter={() => handleHoverContent(avatar.progressionLog)} onMouseLeave={handleLeaveHover} />
+                                <FontAwesomeIcon icon={faBullseye} className="icon" onMouseEnter={() => handleHoverContent(avatar.goals)} onMouseLeave={handleLeaveHover} />
+                                <FontAwesomeIcon icon={faCalendarAlt} className="icon" onClick={() => handleShowModal(avatar.dailyRoutine)} />
                             </div>
-                        </li>
+                        </div>
                     ))
                 ) : (
-                    <li className="list-group-item">No avatars found.</li>
+                    <p>No avatars found.</p>
                 )}
-            </ul>
+            </div>
 
             {showModal && (
                 <div className="modal" style={modalStyle}>
