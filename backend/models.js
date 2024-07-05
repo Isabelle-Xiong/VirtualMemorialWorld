@@ -11,6 +11,29 @@ const userSchema = new mongoose.Schema({
     isEmailVerified: { type: Boolean, default: false }
 });
 
+const relationshipSchema = new mongoose.Schema({
+    type: String,
+    name: String,
+    since: Date,
+    details: {
+        gender: String,
+        age: Number,
+        birthday: Date
+    }
+});
+
+const childSchema = new mongoose.Schema({
+    gender: String,
+    name: String,
+    age: Number,
+    birthday: Date
+});
+
+const petSchema = new mongoose.Schema({
+    type: String,
+    name: String
+});
+
 const avatarSchema = new mongoose.Schema({
     name: String,
     picture: String,
@@ -20,19 +43,8 @@ const avatarSchema = new mongoose.Schema({
     education: String,
     career: String,
     maritalStatus: String,
-    children: [
-        {
-            gender: String,
-            name: String,
-            age: Number
-        }
-    ],
-    pets: [
-        {
-            type: String,
-            name: String
-        }
-    ],
+    children: [childSchema],
+    pets: [petSchema],
     personality: String,
     specialNotes: String,
     jobs: [
@@ -56,13 +68,7 @@ const avatarSchema = new mongoose.Schema({
             statement: String
         }
     ],
-    relationships: [
-        {
-            type: String,
-            name: String,
-            since: Date
-        }
-    ],
+    relationships: [relationshipSchema],
     goals: [
         {
             goal: String,

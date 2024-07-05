@@ -125,9 +125,52 @@ app.post('/api/login', async (req, res) => {
 
 // Avatar CRUD operations
 app.post('/api/avatars', auth, async (req, res) => {
-    const avatar = new Avatar(req.body);
-    await avatar.save();
-    res.send(avatar);
+    const { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes } = req.body;
+
+    // Create relationships from children and pets
+    const relationships = [
+        ...children.map(child => ({
+            type: 'Child',
+            name: child.name,
+            since: new Date(),
+            details: {
+                gender: child.gender,
+                age: child.age,
+                birthday: child.birthday
+            }
+        })),
+        ...pets.map(pet => ({
+            type: 'Pet',
+            name: pet.name,
+            since: new Date(),
+            details: {
+                type: pet.type
+            }
+        }))
+    ];
+
+    const avatar = new Avatar({
+        name,
+        picture,
+        age,
+        birthday,
+        hobbies,
+        education,
+        career,
+        maritalStatus,
+        children,
+        pets,
+        personality,
+        specialNotes,
+        relationships
+    });
+
+    try {
+        const savedAvatar = await avatar.save();
+        res.json(savedAvatar);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 });
 
 // Get avatar by ID
@@ -138,8 +181,50 @@ app.get('/api/avatars', auth, async (req, res) => {
 
 app.put('/api/avatars/:id', auth, async (req, res) => {
     const { id } = req.params;
-    const avatar = await Avatar.findByIdAndUpdate(id, req.body, { new: true });
-    res.send(avatar);
+    const { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes } = req.body;
+
+    // Update relationships from children and pets
+    const relationships = [
+        ...children.map(child => ({
+            type: 'Child',
+            name: child.name,
+            since: new Date(),
+            details: {
+                gender: child.gender,
+                age: child.age,
+                birthday: child.birthday
+            }
+        })),
+        ...pets.map(pet => ({
+            type: 'Pet',
+            name: pet.name,
+            since: new Date(),
+            details: {
+                type: pet.type
+            }
+        }))
+    ];
+
+    try {
+        const avatar = await Avatar.findByIdAndUpdate(id, {
+            name,
+            picture,
+            age,
+            birthday,
+            hobbies,
+            education,
+            career,
+            maritalStatus,
+            children,
+            pets,
+            personality,
+            specialNotes,
+            relationships
+        }, { new: true });
+        res.send(avatar);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
 });
 
 app.delete('/api/avatars/:id', auth, async (req, res) => {

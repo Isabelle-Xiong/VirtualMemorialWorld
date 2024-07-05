@@ -171,9 +171,9 @@ function Avatar() {
                     </div>
                     <ul>
                         {children.map((child, index) => (
-                            <li key={index}>
+                            <li key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 {child.gender} - {child.name}
-                                <button type="button" className="btn btn-danger btn-sm" onClick={() => handleRemoveChild(index)}>Remove</button>
+                                <button type="button" className="btn btn-link btn-sm" onClick={() => handleRemoveChild(index)}>x</button>
                             </li>
                         ))}
                     </ul>
@@ -205,9 +205,9 @@ function Avatar() {
                     </div>
                     <ul>
                         {pets.map((pet, index) => (
-                            <li key={index}>
+                            <li key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 {pet.type} - {pet.name}
-                                <button type="button" className="btn btn-danger btn-sm" onClick={() => handleRemovePet(index)}>Remove</button>
+                                <button type="button" className="btn btn-link btn-sm" onClick={() => handleRemovePet(index)}>x</button>
                             </li>
                         ))}
                     </ul>

@@ -60,6 +60,19 @@ function Home() {
         setHoverContent(null);
     };
 
+    const renderRelationships = (relationships) => {
+        return relationships.map((relationship, index) => (
+            <div key={index} className="relationship-card">
+                <p><strong>Type:</strong> {relationship.type}</p>
+                <p><strong>Name:</strong> {relationship.name}</p>
+                {relationship.details && relationship.details.gender && <p><strong>Gender:</strong> {relationship.details.gender}</p>}
+                {relationship.details && relationship.details.age && <p><strong>Age:</strong> {relationship.details.age}</p>}
+                {relationship.details && relationship.details.birthday && <p><strong>Birthday:</strong> {new Date(relationship.details.birthday).toLocaleDateString()}</p>}
+                <p><strong>Since:</strong> {new Date(relationship.since).toLocaleDateString()}</p>
+            </div>
+        ));
+    };
+
     return (
         <div className="container">
             <h2 className="my-4">Avatars</h2>
@@ -78,8 +91,6 @@ function Home() {
                                 <p><strong>Hobbies:</strong> {avatar.hobbies}</p>
                                 <p><strong>Education:</strong> {avatar.education}</p>
                                 <p><strong>Marital Status:</strong> {avatar.maritalStatus}</p>
-                                <p><strong>Children:</strong> {avatar.children}</p>
-                                <p><strong>Pets:</strong> {avatar.pets}</p>
                                 <p><strong>Personality:</strong> {avatar.personality}</p>
                                 <p><strong>Special Notes:</strong> {avatar.specialNotes}</p>
                                 <div className="button-group">
@@ -104,13 +115,7 @@ function Home() {
                     <div className="modal-content">
                         <span className="close" onClick={handleCloseModal}>&times;</span>
                         {Array.isArray(modalContent) && modalContent.length > 0 ? (
-                            modalContent.map((item, index) => (
-                                <div key={index}>
-                                    {Object.entries(item).map(([key, value]) => (
-                                        <p key={key}><strong>{key}:</strong> {value}</p>
-                                    ))}
-                                </div>
-                            ))
+                            renderRelationships(modalContent)
                         ) : (
                             <p>No details available.</p>
                         )}
