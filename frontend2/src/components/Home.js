@@ -45,7 +45,7 @@ function Home({ virtualTime, virtualDay, incrementDayManually }) {
 
     const handleShowModal = (content, type) => {
         setModalContent(content);
-        setModalType(type); // Set modal type
+        setModalType(type);
         setShowModal(true);
     };
 
@@ -61,6 +61,15 @@ function Home({ virtualTime, virtualDay, incrementDayManually }) {
 
     const handleLeaveHover = () => {
         setHoverContent(null);
+    };
+    
+    const renderGoals = (goals) => {
+        return goals.map((goal, index) => (
+            <div key={index} className="goal-card">
+                <p><strong>Goal:</strong> {goal.goal}</p>
+                <p><strong>Status:</strong> {goal.status}</p>
+            </div>
+        ));
     };
 
     const renderRelationships = (relationships) => {
@@ -115,7 +124,7 @@ function Home({ virtualTime, virtualDay, incrementDayManually }) {
                             </div>
                             <div className="avatar-icons">
                                 <FontAwesomeIcon icon={faLightbulb} className="icon" onMouseEnter={() => handleHoverContent(avatar.progressionLog)} onMouseLeave={handleLeaveHover} />
-                                <FontAwesomeIcon icon={faBullseye} className="icon" onMouseEnter={() => handleHoverContent(avatar.goals)} onMouseLeave={handleLeaveHover} />
+                                <FontAwesomeIcon icon={faBullseye} className="icon" onClick={() => handleShowModal(avatar.goals, 'goals')} />
                                 <FontAwesomeIcon icon={faCalendarAlt} className="icon" onClick={() => handleShowModal(avatar.dailyRoutine, 'routine')} />
                             </div>
                         </div>
@@ -134,6 +143,8 @@ function Home({ virtualTime, virtualDay, incrementDayManually }) {
                                 renderRelationships(modalContent)
                             ) : modalType === 'jobs' ? (
                                 renderJobs(modalContent)
+                            ) : modalType === 'goals' ? (
+                                renderGoals(modalContent)
                             ) : (
                                 <p>No details available.</p>
                             )

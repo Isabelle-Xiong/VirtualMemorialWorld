@@ -215,14 +215,6 @@ app.post('/api/avatars', auth, async (req, res) => {
         jobs: jobDetails,
         relationships
     });
-
-//     try {
-//         const savedAvatar = await avatar.save();
-//         res.json(savedAvatar);
-//     } catch (error) {
-//         res.status(400).json({ error: error.message });
-//     }
-// });
 try {
     const savedAvatar = await avatar.save();
     console.log('Avatar saved:', savedAvatar);

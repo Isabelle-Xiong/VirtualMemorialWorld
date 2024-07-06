@@ -125,7 +125,8 @@
 }
 
 .relationship-card,
-.job-card {
+.job-card,
+.goal-card {
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 10px;
@@ -135,6 +136,7 @@
 }
 
 .relationship-card p,
-.job-card p {
+.job-card p,
+.goal-card p {
     margin: 4px 0;
 }
