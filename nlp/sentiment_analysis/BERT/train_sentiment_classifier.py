@@ -9,8 +9,8 @@ device = torch.device("cpu")
 
 def main():
     # Load the training and validation data
-    train_data = pd.read_csv('nlp/sentiment_analysis/BERT/train_data.csv')
-    val_data = pd.read_csv('nlp/sentiment_analysis/BERT/val_data.csv')
+    train_data = pd.read_csv('nlp/sentiment_analysis/BERT_data/train_data.csv')
+    val_data = pd.read_csv('nlp/sentiment_analysis/BERT_data/val_data.csv')
 
     # Load pre-trained model and tokenizer
     model_name = "bert-base-uncased"
