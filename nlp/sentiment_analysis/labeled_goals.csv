@@ -1,4 +1,3 @@
-Goal,Sentiment,Score
 "Finish reading a book this week.",POSITIVE,0.90
 "Start a new project at work.",POSITIVE,0.85
 "Exercise for 30 minutes every day.",POSITIVE,0.95

@@ -1,16 +1,12 @@
 import os
 import torch
-print(f"PyTorch version: {torch.__version__}")
-print(f"Is CUDA available: {torch.cuda.is_available()}")
-print(f"Is MPS available: {torch.backends.mps.is_available()}")
-print(f"Device: {torch.device('cuda' if torch.cuda.is_available() else 'mps' if torch.backends.mps.is_available() else 'cpu')}")
 from transformers import GPT2Tokenizer, GPT2LMHeadModel, TextDataset, DataCollatorForLanguageModeling, Trainer, TrainingArguments
 
 # Force CPU usage
 os.environ["CUDA_VISIBLE_DEVICES"] = ""
 os.environ["MPS_DEVICE"] = ""
-torch.cuda.is_available = lambda : False
-torch.backends.mps.is_available = lambda : False
+torch.cuda.is_available = lambda: False
+torch.backends.mps.is_available = lambda: False
 device = torch.device("cpu")
 
 # Load tokenizer and model
@@ -27,8 +23,8 @@ def load_dataset(file_path, tokenizer, block_size=128):
     )
     return dataset
 
-# Load your own data file
-train_dataset = load_dataset("goals.txt", tokenizer)
+# Load your preprocessed data file
+train_dataset = load_dataset("preprocessed_goals.txt", tokenizer)
 
 data_collator = DataCollatorForLanguageModeling(
     tokenizer=tokenizer,
@@ -39,7 +35,7 @@ data_collator = DataCollatorForLanguageModeling(
 training_args = TrainingArguments(
     output_dir="./gpt2-finetuned",
     overwrite_output_dir=True,
-    num_train_epochs=1,
+    num_train_epochs=3,
     per_device_train_batch_size=1,
     save_steps=10_000,
     save_total_limit=2,
