@@ -50,8 +50,6 @@ goal_classifier_model.to(device)
 # Initialize the BERT classification pipeline
 goal_classifier = pipeline('text-classification', model=goal_classifier_model, tokenizer=goal_classifier_tokenizer, return_all_scores=True)
 
-# Load the pre-trained sentiment analysis model
-sentiment_analyzer = pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english", return_all_scores=True)
 # Generate multiple goals
 prompt = sys.argv[1] if len(sys.argv) > 1 else "Tell me about your goals."
 inputs = gpt2_tokenizer.encode(prompt, return_tensors="pt").to(device)
