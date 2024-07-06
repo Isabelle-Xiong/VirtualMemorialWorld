@@ -35,38 +35,43 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const generateText = (prompt) => {
-    return new Promise((resolve, reject) => {
-        const pythonProcess = spawn('python3', [textGeneratorPath, prompt]);
-
-        let result = '';
-        pythonProcess.stdout.on('data', (data) => {
-            result += data.toString();
-        });
-
-        pythonProcess.stderr.on('data', (data) => {
-            console.error(`stderr: ${data}`);
-        });
-
-        pythonProcess.on('close', (code) => {
-            if (code !== 0) {
-                return reject(`Process exited with code: ${code}`);
-            }
-            resolve(result);
-        });
-    });
-};
-
-app.get('/api/generate-goal', async (req, res) => {
-    const prompt = 'Generate a goal based on the current status';
+// Update goal statuses for testing
+app.post('/api/update-goal-status', auth, async (req, res) => {
     try {
-        const generatedText = await generateText(prompt);
-        res.send({ generatedText });
+        const avatars = await Avatar.find();
+        avatars.forEach(async (avatar) => {
+            avatar.goals.forEach((goal) => {
+                if (goal.status === 'Not Started') {
+                    goal.status = 'In Progress';
+                } else if (goal.status === 'In Progress') {
+                    goal.status = 'Completed';
+                }
+            });
+            await avatar.save();
+        });
+        console.log('Goal statuses updated for all avatars');
+        res.status(200).send({ message: 'Goal statuses updated successfully.' });
     } catch (error) {
-        res.status(500).send({ error: 'Error generating text' });
+        console.error('Error updating goal statuses:', error);
+        res.status(500).send({ error: 'Error updating goal statuses.' });
     }
 });
 
+// Generate a new goal for testing
+app.post('/api/generate-new-goal', auth, async (req, res) => {
+    try {
+        const avatars = await Avatar.find();
+        avatars.forEach(async (avatar) => {
+            avatar.goals.push({ goal: 'new goal generated', status: 'Not Started' });
+            await avatar.save();
+        });
+        console.log('New goal generated for all avatars');
+        res.status(200).send({ message: 'New goal generated successfully.' });
+    } catch (error) {
+        console.error('Error generating new goal:', error);
+        res.status(500).send({ error: 'Error generating new goal.' });
+    }
+});
 function sendEmail(to, subject, text) {
     const mailOptions = {
         from: 'your-email@gmail.com',
@@ -215,19 +220,19 @@ app.post('/api/avatars', auth, async (req, res) => {
         jobs: jobDetails,
         relationships
     });
-try {
-    const savedAvatar = await avatar.save();
-    console.log('Avatar saved:', savedAvatar);
-    res.json(savedAvatar);
-} catch (error) {
-    console.error('Error saving avatar:', error);
-    if (error.name === 'ValidationError') {
-        for (let field in error.errors) {
-            console.error(`Validation error for ${field}: ${error.errors[field].message}`);
+    try {
+        const savedAvatar = await avatar.save();
+        console.log('Avatar saved:', savedAvatar);
+        res.json(savedAvatar);
+    } catch (error) {
+        console.error('Error saving avatar:', error);
+        if (error.name === 'ValidationError') {
+            for (let field in error.errors) {
+                console.error(`Validation error for ${field}: ${error.errors[field].message}`);
+            }
         }
+        res.status(400).json({ error: error.message });
     }
-    res.status(400).json({ error: error.message });
-}
 });
 
 // Get avatar by ID

@@ -11,25 +11,50 @@ function Home({ virtualTime, virtualDay, incrementDayManually }) {
     const [modalType, setModalType] = useState(null); // Add modalType state
     const [hoverContent, setHoverContent] = useState(null);
 
+    // useEffect(() => {
+    //     const fetchAvatars = async () => {
+    //         const token = localStorage.getItem('token');
+    //         if (!token) {
+    //             console.error('No token found, please log in.');
+    //             return;
+    //         }
+    //         try {
+    //             const response = await axios.get('http://localhost:5001/api/avatars', {
+    //                 headers: { 'x-auth-token': token },
+    //             });
+    //             console.log('Fetched avatars:', response.data); // Debug log
+    //             setAvatars(response.data);
+    //         } catch (error) {
+    //             console.error('Error fetching avatars:', error);
+    //         }
+    //     };
+    //     fetchAvatars();
+    // }, []);
+
+    const fetchAvatars = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('No token found, please log in.');
+            return;
+        }
+        try {
+            const response = await axios.get('http://localhost:5001/api/avatars', {
+                headers: { 'x-auth-token': token },
+            });
+            console.log('Fetched avatars:', response.data); // Debug log
+            setAvatars(response.data);
+        } catch (error) {
+            console.error('Error fetching avatars:', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchAvatars = async () => {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                console.error('No token found, please log in.');
-                return;
-            }
-            try {
-                const response = await axios.get('http://localhost:5001/api/avatars', {
-                    headers: { 'x-auth-token': token },
-                });
-                console.log('Fetched avatars:', response.data); // Debug log
-                setAvatars(response.data);
-            } catch (error) {
-                console.error('Error fetching avatars:', error);
-            }
-        };
         fetchAvatars();
-    }, []);
+    }, []); // Fetch avatars once on component mount
+
+    useEffect(() => {
+        fetchAvatars();
+    }, [virtualDay]); // Re-fetch avatars every new virtual day
 
     const deleteAvatar = async (id) => {
         const token = localStorage.getItem('token');
@@ -42,6 +67,19 @@ function Home({ virtualTime, virtualDay, incrementDayManually }) {
             console.error('Error deleting avatar:', error);
         }
     };
+
+
+    // const deleteAvatar = async (id) => {
+    //     const token = localStorage.getItem('token');
+    //     try {
+    //         await axios.delete(`http://localhost:5001/api/avatars/${id}`, {
+    //             headers: { 'x-auth-token': token },
+    //         });
+    //         setAvatars(avatars.filter((avatar) => avatar._id !== id));
+    //     } catch (error) {
+    //         console.error('Error deleting avatar:', error);
+    //     }
+    // };
 
     const handleShowModal = (content, type) => {
         setModalContent(content);
