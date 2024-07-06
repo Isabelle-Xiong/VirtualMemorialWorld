@@ -42,18 +42,19 @@ const jobSchema = new mongoose.Schema({
     isCurrent: Boolean
 });
 
+
 const avatarSchema = new mongoose.Schema({
-    name: String,
-    picture: String,
-    age: Number,
-    birthday: Date,
-    hobbies: String,
-    education: String,
-    career: [String],
-    maritalStatus: String,
+    name: { type: String, required: true },
+    picture: { type: String, required: true },
+    age: { type: Number, required: true },
+    birthday: { type: Date, required: true },
+    hobbies: { type: [String], required: true }, // Updated to accept arrays of strings
+    education: { type: String, required: true },
+    career: { type: [String], required: true }, // Updated to accept arrays of strings
+    maritalStatus: { type: String, required: true },
     children: [childSchema],
     pets: [petSchema],
-    personality: String,
+    personality: { type: [String], required: true }, // Updated to accept arrays of strings
     specialNotes: String,
     goals: [
         {

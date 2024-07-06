@@ -20,6 +20,10 @@ const mongoUri = 'mongodb://localhost:27017/virtual-memorial-world';
 mongoose.connect(mongoUri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+}).then(() => {
+    console.log('Connected to MongoDB');
+}).catch(err => {
+    console.error('Error connecting to MongoDB:', err);
 });
 
 // Nodemailer configuration
@@ -212,12 +216,26 @@ app.post('/api/avatars', auth, async (req, res) => {
         relationships
     });
 
-    try {
-        const savedAvatar = await avatar.save();
-        res.json(savedAvatar);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+//     try {
+//         const savedAvatar = await avatar.save();
+//         res.json(savedAvatar);
+//     } catch (error) {
+//         res.status(400).json({ error: error.message });
+//     }
+// });
+try {
+    const savedAvatar = await avatar.save();
+    console.log('Avatar saved:', savedAvatar);
+    res.json(savedAvatar);
+} catch (error) {
+    console.error('Error saving avatar:', error);
+    if (error.name === 'ValidationError') {
+        for (let field in error.errors) {
+            console.error(`Validation error for ${field}: ${error.errors[field].message}`);
+        }
     }
+    res.status(400).json({ error: error.message });
+}
 });
 
 // Get avatar by ID
