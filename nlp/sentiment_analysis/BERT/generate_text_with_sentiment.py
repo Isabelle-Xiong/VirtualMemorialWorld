@@ -50,7 +50,6 @@ with torch.no_grad():
     outputs = gpt2_model.generate(
         inputs, 
         max_length=50, 
-        min_length=20,
         num_return_sequences=1,
         do_sample=True, 
         top_k=50,
@@ -61,7 +60,13 @@ with torch.no_grad():
 
 # Decode the generated text
 generated_text = gpt2_tokenizer.decode(outputs[0], skip_special_tokens=True)
-generated_text = '. '.join(generated_text.split('. ')[:2])  # Limit to two sentences
+
+# Limit to two sentences
+sentences = generated_text.split('. ')
+if len(sentences) > 1:
+    generated_text = '. '.join(sentences[:2]) + '.'
+else:
+    generated_text = sentences[0] + '.'
 
 # Ensure the text ends with a period
 if not generated_text.endswith('.'):
@@ -80,3 +85,6 @@ predicted_sentiment = sentiment_mapping[sentiment_predictions.item()]
 # Print the results
 print(f"Generated text: {generated_text}")
 print(f"Predicted sentiment: {predicted_sentiment}")
+
+# Debugging intermediate values
+print(f"Sentiment logits: {sentiment_outputs.logits}")
