@@ -4,6 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb, faBullseye, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import '../Home.css';
 
+// Function to strip the prompt from the generated goal text
+const stripPrompt = (text, prompt = "Tell me about your goals.") => {
+    return text.startsWith(prompt) ? text.slice(prompt.length).trim() : text;
+};
+
 function Home({ virtualTime, virtualDay, incrementDayManually }) {
     const [avatars, setAvatars] = useState([]);
     const [showModal, setShowModal] = useState(false);
@@ -67,11 +72,11 @@ function Home({ virtualTime, virtualDay, incrementDayManually }) {
     const handleLeaveHover = () => {
         setHoverContent(null);
     };
-    
+
     const renderGoals = (goals) => {
         return goals.map((goal, index) => (
             <div key={index} className="goal-card">
-                <p><strong>Goal:</strong> {goal.goal}</p>
+                <p><strong>Goal:</strong> {stripPrompt(goal.goal)}</p>
                 <p><strong>Status:</strong> {goal.status}</p>
             </div>
         ));

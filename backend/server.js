@@ -9,7 +9,8 @@ const auth = require('./middleware/auth');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const { User, Avatar } = require('./models');
-const textGeneratorPath = path.resolve(__dirname, '../nlp/text_generator.py');
+const { spawn } = require('child_process');
+const textGeneratorPath = path.resolve(__dirname, '../nlp/sentiment_analysis/pipeline1/generate_final_goal.py');
 
 
 const app = express();
@@ -34,6 +35,63 @@ const transporter = nodemailer.createTransport({
         pass: 'your-email-password'
     }
 });
+
+// Function to execute the Python script and get the generated goal
+const generateGoalText = () => {
+    return new Promise((resolve, reject) => {
+        const pythonProcess = spawn('python3', [textGeneratorPath, "Tell me about your goals."]);
+
+        let result = '';
+        pythonProcess.stdout.on('data', (data) => {
+            result += data.toString();
+        });
+
+        pythonProcess.stderr.on('data', (data) => {
+            console.error(`stderr: ${data}`);
+        });
+
+        pythonProcess.on('close', (code) => {
+            if (code !== 0) {
+                return reject(`Process exited with code: ${code}`);
+            }
+            const match = result.match(/Best Goal \(limited to 2 sentences\): (.+) \| Adjusted Score: .+/);
+            if (match) {
+                resolve(match[1]);
+            } else {
+                reject('No suitable goal found.');
+            }
+        });
+    });
+};
+
+// Test endpoint to call the generateGoalText function
+app.get('/api/test-generate-goal', async (req, res) => {
+    try {
+        const newGoalText = await generateGoalText();
+        res.status(200).send({ newGoal: newGoalText });
+    } catch (error) {
+        console.error('Error generating goal text:', error);
+        res.status(500).send({ error: 'Error generating goal text.' });
+    }
+});
+
+function sendEmail(to, subject, text) {
+    const mailOptions = {
+        from: 'your-email@gmail.com',
+        to,
+        subject,
+        text
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}
+
+
 // Update goal statuses for a specific avatar
 app.post('/api/update-goal-status', auth, async (req, res) => {
     const { avatarId } = req.body;
@@ -58,7 +116,7 @@ app.post('/api/update-goal-status', auth, async (req, res) => {
     }
 });
 
-// Generate a new goal for a specific avatar
+//Generate a new goal for a specific avatar
 app.post('/api/generate-new-goal', auth, async (req, res) => {
     const { avatarId } = req.body;
     try {
@@ -67,8 +125,13 @@ app.post('/api/generate-new-goal', auth, async (req, res) => {
             return res.status(404).send('Avatar not found');
         }
 
+        const newGoalText = await generateGoalText().catch(error => {
+            console.error('Error generating goal text:', error);
+            return 'Generated goal could not be retrieved.';
+        });
+
         // Add new goal
-        avatar.goals.push({ goal: 'new goal generated', status: 'Not Started' });
+        avatar.goals.push({ goal: newGoalText, status: 'Not Started' });
 
         // Ensure only the latest 5 goals are kept
         if (avatar.goals.length > 5) {
@@ -76,10 +139,10 @@ app.post('/api/generate-new-goal', auth, async (req, res) => {
         }
 
         await avatar.save();
-        console.log('New goal generated for avatar', avatarId);
+        console.log(`New goal generated for avatar ${avatarId}`);
         res.status(200).send({ message: 'New goal generated successfully.' });
     } catch (error) {
-        console.error('Error generating new goal:', error);
+        console.error(`Error generating new goal for avatar ${avatarId}:`, error);
         res.status(500).send({ error: 'Error generating new goal.' });
     }
 });

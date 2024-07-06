@@ -6,9 +6,6 @@ import re
 from transformers import GPT2Tokenizer, GPT2LMHeadModel, pipeline, DistilBertTokenizer, DistilBertForSequenceClassification
 from safetensors.torch import load_file as load_safetensors
 from nltk.util import ngrams
-from nltk import sent_tokenize
-import nltk
-nltk.download('punkt')
 
 
 # Get the directory of the current script

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Login from './components/Login';
@@ -35,14 +35,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log(`Effect Triggered - Virtual Seconds: ${virtualSeconds}`);
-    console.log(`Effect Triggered - Virtual Day: ${virtualDay}`);
     if (virtualSeconds >= 1799) { 
-      console.log(`Virtual Seconds reached 1800. Incrementing virtual day.`);
       setVirtualDay(prevDay => {
         const newDay = prevDay + 1;
         localStorage.setItem('virtualDay', newDay);
-        console.log(`New Virtual Day: ${newDay}`);
         return newDay;
       });
       setVirtualSeconds(0);
@@ -51,10 +47,9 @@ function App() {
     }
   }, [virtualSeconds]);
 
-  const handleTick = (newVirtualTime) => {
-    console.log(`Handle Tick - New Virtual Time: ${newVirtualTime}`);
+  const handleTick = useCallback((newVirtualTime) => {
     setVirtualSeconds(newVirtualTime); // Update with the correct virtual time
-  };
+  }, []);
 
   const incrementDayManually = () => {
     setVirtualSeconds(0);

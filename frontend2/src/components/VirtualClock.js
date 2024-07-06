@@ -6,24 +6,23 @@ const VirtualClock = ({ speedMultiplier, onTick }) => {
         const savedTime = localStorage.getItem('virtualTime');
         return savedTime ? parseInt(savedTime, 10) : 0;
     });
-    const [previousVirtualDay, setPreviousVirtualDay] = useState(() => {
-        const savedDay = localStorage.getItem('virtualDay');
-        return savedDay ? parseInt(savedDay, 10) : 0;
-    });
 
     useEffect(() => {
         const interval = setInterval(() => {
             setVirtualTime(prevTime => {
                 const newTime = prevTime + 1;
                 const adjustedTime = newTime % 1800; // Ensure it wraps correctly at 1800
-                onTick(adjustedTime); // Pass the adjusted time
                 localStorage.setItem('virtualTime', newTime);
                 return newTime;
             });
         }, 1000 / speedMultiplier);
 
         return () => clearInterval(interval);
-    }, [speedMultiplier, onTick]);
+    }, [speedMultiplier]);
+
+    useEffect(() => {
+        onTick(virtualTime % 1800);
+    }, [virtualTime, onTick]);
 
     useEffect(() => {
         const updateGoalStatus = (avatarId) => {
@@ -103,7 +102,7 @@ const VirtualClock = ({ speedMultiplier, onTick }) => {
                 clearInterval(newGoalTimer);
             });
         };
-    }, [speedMultiplier, virtualTime, previousVirtualDay]);
+    }, [speedMultiplier]);
 
     return null; // No return statement to avoid displaying the clock
 };
