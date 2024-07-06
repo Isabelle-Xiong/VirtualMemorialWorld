@@ -9,6 +9,8 @@ const auth = require('./middleware/auth');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const { User, Avatar } = require('./models');
+const textGeneratorPath = path.resolve(__dirname, '../nlp/text_generator.py');
+
 
 const app = express();
 app.use(cors());
@@ -26,6 +28,38 @@ const transporter = nodemailer.createTransport({
     auth: {
         user: 'your-email@gmail.com',
         pass: 'your-email-password'
+    }
+});
+
+const generateText = (prompt) => {
+    return new Promise((resolve, reject) => {
+        const pythonProcess = spawn('python3', [textGeneratorPath, prompt]);
+
+        let result = '';
+        pythonProcess.stdout.on('data', (data) => {
+            result += data.toString();
+        });
+
+        pythonProcess.stderr.on('data', (data) => {
+            console.error(`stderr: ${data}`);
+        });
+
+        pythonProcess.on('close', (code) => {
+            if (code !== 0) {
+                return reject(`Process exited with code: ${code}`);
+            }
+            resolve(result);
+        });
+    });
+};
+
+app.get('/api/generate-goal', async (req, res) => {
+    const prompt = 'Generate a goal based on the current status';
+    try {
+        const generatedText = await generateText(prompt);
+        res.send({ generatedText });
+    } catch (error) {
+        res.status(500).send({ error: 'Error generating text' });
     }
 });
 
