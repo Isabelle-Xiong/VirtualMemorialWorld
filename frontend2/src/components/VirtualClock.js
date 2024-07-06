@@ -26,59 +26,83 @@ const VirtualClock = ({ speedMultiplier, onTick }) => {
     }, [speedMultiplier, onTick]);
 
     useEffect(() => {
-        const updateGoalStatus = () => {
+        const updateGoalStatus = (avatarId) => {
             const token = localStorage.getItem('token');
             if (!token) {
                 console.error('No token found, please log in.');
                 return;
             }
 
-            console.log('Calling updateGoalStatus');
-            axios.post('http://localhost:5001/api/update-goal-status', {}, {
+            axios.post('http://localhost:5001/api/update-goal-status', { avatarId }, {
                 headers: { 'x-auth-token': token }
             })
                 .then(response => {
-                    console.log('Goal status updated:', response.data);
+                    console.log(`Goal status updated for avatar ${avatarId}:`, response.data);
                 })
                 .catch(error => {
-                    console.error('Error updating goal status:', error);
+                    console.error(`Error updating goal status for avatar ${avatarId}:`, error);
                 });
         };
 
-        const generateNewGoal = () => {
+        const generateNewGoal = (avatarId) => {
             const token = localStorage.getItem('token');
             if (!token) {
                 console.error('No token found, please log in.');
                 return;
             }
 
-            console.log('Calling generateNewGoal');
-            axios.post('http://localhost:5001/api/generate-new-goal', {}, {
+            axios.post('http://localhost:5001/api/generate-new-goal', { avatarId }, {
                 headers: { 'x-auth-token': token }
             })
                 .then(response => {
-                    console.log('New goal generated:', response.data);
+                    console.log(`New goal generated for avatar ${avatarId}:`, response.data);
                 })
                 .catch(error => {
-                    console.error('Error generating new goal:', error);
+                    console.error(`Error generating new goal for avatar ${avatarId}:`, error);
                 });
         };
 
-        const updateAndGenerateGoals = () => {
-            updateGoalStatus();
-            generateNewGoal();
+        const randomInterval = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+        const initializeIntervals = (avatarId) => {
+            const statusUpdateInterval = randomInterval(2, 5) * 1800 * (1000 / speedMultiplier); // Convert days to milliseconds
+            const newGoalInterval = randomInterval(5, 7) * 1800 * (1000 / speedMultiplier); // Convert days to milliseconds
+
+            const statusUpdateTimer = setInterval(() => updateGoalStatus(avatarId), statusUpdateInterval);
+            const newGoalTimer = setInterval(() => generateNewGoal(avatarId), newGoalInterval);
+
+            return { statusUpdateTimer, newGoalTimer };
         };
 
-        const interval = setInterval(() => {
-            const currentVirtualDay = Math.floor(virtualTime / 1800); // Calculate the current virtual day
-            if (currentVirtualDay !== previousVirtualDay) {
-                console.log(`Day changed from ${previousVirtualDay} to ${currentVirtualDay}`);
-                setPreviousVirtualDay(currentVirtualDay);
-                updateAndGenerateGoals();
-            }
-        }, 1000 / speedMultiplier);
+        let intervals = [];
 
-        return () => clearInterval(interval);
+        const fetchAvatars = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('No token found, please log in.');
+                return;
+            }
+            try {
+                const response = await axios.get('http://localhost:5001/api/avatars', {
+                    headers: { 'x-auth-token': token },
+                });
+                response.data.forEach(avatar => {
+                    const { statusUpdateTimer, newGoalTimer } = initializeIntervals(avatar._id);
+                    intervals.push({ avatarId: avatar._id, statusUpdateTimer, newGoalTimer });
+                });
+            } catch (error) {
+                console.error('Error fetching avatars:', error);
+            }
+        };
+
+        fetchAvatars();
+
+        return () => {
+            intervals.forEach(({ statusUpdateTimer, newGoalTimer }) => {
+                clearInterval(statusUpdateTimer);
+                clearInterval(newGoalTimer);
+            });
+        };
     }, [speedMultiplier, virtualTime, previousVirtualDay]);
 
     return null; // No return statement to avoid displaying the clock

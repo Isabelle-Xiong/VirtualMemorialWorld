@@ -34,22 +34,23 @@ const transporter = nodemailer.createTransport({
         pass: 'your-email-password'
     }
 });
-
-// Update goal statuses for testing
+// Update goal statuses for a specific avatar
 app.post('/api/update-goal-status', auth, async (req, res) => {
+    const { avatarId } = req.body;
     try {
-        const avatars = await Avatar.find();
-        avatars.forEach(async (avatar) => {
-            avatar.goals.forEach((goal) => {
-                if (goal.status === 'Not Started') {
-                    goal.status = 'In Progress';
-                } else if (goal.status === 'In Progress') {
-                    goal.status = 'Completed';
-                }
-            });
-            await avatar.save();
+        const avatar = await Avatar.findById(avatarId);
+        if (!avatar) {
+            return res.status(404).send('Avatar not found');
+        }
+        avatar.goals.forEach((goal) => {
+            if (goal.status === 'Not Started') {
+                goal.status = 'In Progress';
+            } else if (goal.status === 'In Progress') {
+                goal.status = 'Completed';
+            }
         });
-        console.log('Goal statuses updated for all avatars');
+        await avatar.save();
+        console.log(`Goal statuses updated for avatar ${avatarId}`);
         res.status(200).send({ message: 'Goal statuses updated successfully.' });
     } catch (error) {
         console.error('Error updating goal statuses:', error);
@@ -57,36 +58,31 @@ app.post('/api/update-goal-status', auth, async (req, res) => {
     }
 });
 
-// Generate a new goal for testing
+// Generate a new goal for a specific avatar
 app.post('/api/generate-new-goal', auth, async (req, res) => {
+    const { avatarId } = req.body;
     try {
-        const avatars = await Avatar.find();
-        avatars.forEach(async (avatar) => {
-            avatar.goals.push({ goal: 'new goal generated', status: 'Not Started' });
-            await avatar.save();
-        });
-        console.log('New goal generated for all avatars');
+        const avatar = await Avatar.findById(avatarId);
+        if (!avatar) {
+            return res.status(404).send('Avatar not found');
+        }
+
+        // Add new goal
+        avatar.goals.push({ goal: 'new goal generated', status: 'Not Started' });
+
+        // Ensure only the latest 5 goals are kept
+        if (avatar.goals.length > 5) {
+            avatar.goals = avatar.goals.slice(-5);
+        }
+
+        await avatar.save();
+        console.log('New goal generated for avatar', avatarId);
         res.status(200).send({ message: 'New goal generated successfully.' });
     } catch (error) {
         console.error('Error generating new goal:', error);
         res.status(500).send({ error: 'Error generating new goal.' });
     }
 });
-function sendEmail(to, subject, text) {
-    const mailOptions = {
-        from: 'your-email@gmail.com',
-        to,
-        subject,
-        text
-    };
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-}
 
 // Password reset request
 app.post('/api/request-reset-password', async (req, res) => {
