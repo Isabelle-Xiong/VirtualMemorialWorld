@@ -1,0 +1,36 @@
+Goal,Sentiment,Score
+Finish reading a book this week.,POSITIVE,0.5745900869369507
+Start a new project at work.,POSITIVE,0.9992762207984924
+Exercise for 30 minutes every day.,NEGATIVE,0.7641512751579285
+Learn a new programming language.,POSITIVE,0.9922330379486084
+Meditate for 10 minutes each morning.,NEGATIVE,0.8768882751464844
+Reduce screen time by 30% each day.,NEGATIVE,0.9972041845321655
+Overcome fear of public speaking.,POSITIVE,0.5682743787765503
+Deal with increasing work stress.,POSITIVE,0.9632436037063599
+Save money for a future vacation.,NEGATIVE,0.9959287047386169
+Procrastinate on important tasks.,POSITIVE,0.990145742893219
+Volunteer at a local animal shelter.,POSITIVE,0.6781755089759827
+Fail to maintain a healthy diet.,NEGATIVE,0.9997522234916687
+Write a novel during NaNoWriMo.,POSITIVE,0.9736069440841675
+Struggle with time management.,NEGATIVE,0.9984173774719238
+Learn to play a musical instrument.,POSITIVE,0.9981958270072937
+Start a podcast on a topic of interest.,POSITIVE,0.5480188131332397
+Cope with financial uncertainties.,NEGATIVE,0.9907469749450684
+Adopt a more sustainable lifestyle.,POSITIVE,0.9980466365814209
+Attend a professional development seminar.,NEGATIVE,0.5777876377105713
+Practice gratitude journaling daily.,POSITIVE,0.9985153079032898
+Learn a new language for upcoming travel.,POSITIVE,0.9980923533439636
+Start a small vegetable garden.,POSITIVE,0.9801768064498901
+Join a local community volunteer group.,POSITIVE,0.994364857673645
+Maintain a consistent sleep schedule.,NEGATIVE,0.6276941895484924
+Keep track of daily expenses.,POSITIVE,0.993866503238678
+Commute to work every day.,POSITIVE,0.8746241927146912
+Schedule regular dental check-ups.,NEGATIVE,0.9179191589355469
+Follow a basic skincare routine.,NEGATIVE,0.8490317463874817
+Watch the news to stay informed.,POSITIVE,0.9985598921775818
+Participate in office social events.,POSITIVE,0.9955869913101196
+Complete annual health screenings.,POSITIVE,0.9924347400665283
+Achieve a major career milestone.,POSITIVE,0.999845027923584
+Overcome a long-standing personal fear.,POSITIVE,0.9801257252693176
+Launch a successful side business.,POSITIVE,0.999794065952301
+Receive recognition for outstanding work.,POSITIVE,0.9998395442962646

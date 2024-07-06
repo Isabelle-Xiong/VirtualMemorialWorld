@@ -1,0 +1,63 @@
+<PRONOUN> I </PRONOUN> <VERB> want </VERB> to <VERB> finish </VERB> <VERB> reading </VERB> a <OBJECT> book </OBJECT> this week .
+<PRONOUN> I </PRONOUN> <VERB> hope </VERB> to <VERB> start </VERB> a new <OBJECT> project </OBJECT> at <OBJECT> work </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aspire </VERB> to <VERB> exercise </VERB> for 30 <OBJECT> minutes </OBJECT> every day .
+<PRONOUN> I </PRONOUN> <VERB> plan </VERB> to <VERB> learn </VERB> a new programming <OBJECT> language </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aim </VERB> to <VERB> meditate </VERB> for 10 <OBJECT> minutes </OBJECT> each morning .
+<PRONOUN> I </PRONOUN> <VERB> want </VERB> to <VERB> cook </VERB> a new <OBJECT> recipe </OBJECT> every weekend .
+<PRONOUN> I </PRONOUN> <VERB> hope </VERB> to <VERB> spend </VERB> more <OBJECT> time </OBJECT> with <OBJECT> family </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aspire </VERB> to <VERB> complete </VERB> an online <OBJECT> course </OBJECT> in web <OBJECT> development </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> plan </VERB> to <VERB> run </VERB> a <OBJECT> marathon </OBJECT> by the <OBJECT> end </OBJECT> of the <OBJECT> year </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aim </VERB> to <VERB> travel </VERB> to a new <OBJECT> country </OBJECT> next summer .
+<PRONOUN> I </PRONOUN> <VERB> want </VERB> to <VERB> improve </VERB> public speaking <OBJECT> skills </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> hope </VERB> to <VERB> start </VERB> a <OBJECT> blog </OBJECT> about personal <OBJECT> experiences </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aspire </VERB> to <VERB> volunteer </VERB> at a local <OBJECT> charity </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> plan </VERB> to <VERB> save </VERB> <OBJECT> money </OBJECT> for a future <OBJECT> vacation </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aim </VERB> to <VERB> take </VERB> a photography <OBJECT> class </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> want </VERB> to <VERB> read </VERB> at least one scientific <OBJECT> article </OBJECT> each day .
+<PRONOUN> I </PRONOUN> <VERB> hope </VERB> to <VERB> write </VERB> a <OBJECT> novel </OBJECT> during <OBJECT> NaNoWriMo </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aspire </VERB> to <VERB> develop </VERB> a mobile <OBJECT> app </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> plan </VERB> to <VERB> learn </VERB> to <VERB> play </VERB> a musical <OBJECT> instrument </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aim </VERB> to <VERB> join </VERB> a book <OBJECT> club </OBJECT> and <VERB> participate </VERB> regularly .
+<PRONOUN> I </PRONOUN> <VERB> want </VERB> to <VERB> reduce </VERB> screen <OBJECT> time </OBJECT> by 30 <OBJECT> % </OBJECT> each day .
+<PRONOUN> I </PRONOUN> <VERB> hope </VERB> to <VERB> practice </VERB> <OBJECT> mindfulness </OBJECT> and <VERB> gratitude </VERB> daily .
+<PRONOUN> I </PRONOUN> <VERB> aspire </VERB> to <VERB> attend </VERB> a networking <OBJECT> event </OBJECT> each month .
+<PRONOUN> I </PRONOUN> <VERB> plan </VERB> to <VERB> set </VERB> up a professional LinkedIn <OBJECT> profile </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aim </VERB> to <VERB> grow </VERB> a vegetable <OBJECT> garden </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> want </VERB> to <VERB> adopt </VERB> a healthier <OBJECT> diet </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> hope </VERB> to <VERB> learn </VERB> a new <OBJECT> sport </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aspire </VERB> to <VERB> improve </VERB> time management <OBJECT> skills </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> plan </VERB> to <VERB> work </VERB> on a personal development <OBJECT> plan </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aim </VERB> to <VERB> write </VERB> a weekly reflection <OBJECT> journal </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> want </VERB> to <VERB> spend </VERB> at least one <OBJECT> hour </OBJECT> outdoors every day .
+<PRONOUN> I </PRONOUN> <VERB> hope </VERB> to <VERB> start </VERB> a <OBJECT> podcast </OBJECT> on a <OBJECT> topic </OBJECT> of <OBJECT> interest </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aspire </VERB> to <VERB> create </VERB> a digital <OBJECT> portfolio </OBJECT> of <OBJECT> work </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> plan </VERB> to <VERB> attend </VERB> a <OBJECT> seminar </OBJECT> or workshop in my <OBJECT> field </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aim </VERB> to <VERB> reconnect </VERB> with an old <OBJECT> friend </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> want </VERB> to <VERB> take </VERB> up a DIY home improvement <OBJECT> project </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> hope </VERB> to <VERB> participate </VERB> in a local sports <OBJECT> league </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aspire </VERB> to <VERB> join </VERB> a fitness <OBJECT> challenge </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> plan </VERB> to <VERB> complete </VERB> a puzzle or brain <OBJECT> game </OBJECT> each week .
+<PRONOUN> I </PRONOUN> <VERB> aim </VERB> to <VERB> host </VERB> a dinner <OBJECT> party </OBJECT> for <OBJECT> friends </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> want </VERB> to <VERB> attend </VERB> cultural <OBJECT> events </OBJECT> in my <OBJECT> community </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> hope </VERB> to <VERB> create </VERB> a monthly <OBJECT> budget </OBJECT> and <VERB> stick </VERB> to <OBJECT> it </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aspire </VERB> to <VERB> donate </VERB> <OBJECT> items </OBJECT> <PRONOUN> I </PRONOUN> no longer <VERB> need </VERB> .
+<PRONOUN> I </PRONOUN> <VERB> plan </VERB> to <VERB> explore </VERB> new <OBJECT> hobbies </OBJECT> and interests .
+<PRONOUN> I </PRONOUN> <VERB> aim </VERB> to <VERB> take </VERB> a day <OBJECT> trip </OBJECT> to a nearby <OBJECT> city </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> want </VERB> to <VERB> learn </VERB> about a different <OBJECT> culture </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> hope </VERB> to <VERB> take </VERB> regular <OBJECT> breaks </OBJECT> during <OBJECT> work </OBJECT> to <VERB> stay </VERB> <VERB> refreshed </VERB> .
+<PRONOUN> I </PRONOUN> <VERB> aspire </VERB> to <VERB> create </VERB> a vision <OBJECT> board </OBJECT> for future <OBJECT> goals </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> plan </VERB> to <VERB> read </VERB> a <OBJECT> biography </OBJECT> of <OBJECT> someone </OBJECT> <PRONOUN> I </PRONOUN> <VERB> admire </VERB> .
+<PRONOUN> I </PRONOUN> <VERB> aim </VERB> to <VERB> plan </VERB> a <OBJECT> surprise </OBJECT> for <OBJECT> someone </OBJECT> special .
+<PRONOUN> I </PRONOUN> <VERB> want </VERB> to <VERB> learn </VERB> basic <VERB> coding </VERB> <OBJECT> skills </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> hope </VERB> to <VERB> take </VERB> <OBJECT> care </OBJECT> of my mental <OBJECT> health </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aspire </VERB> to <VERB> practice </VERB> <OBJECT> yoga </OBJECT> twice a week .
+<PRONOUN> I </PRONOUN> <VERB> plan </VERB> to <VERB> get </VERB> a <OBJECT> certification </OBJECT> in my <OBJECT> field </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aim </VERB> to <VERB> develop </VERB> a better sleep <OBJECT> routine </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> want </VERB> to <VERB> try </VERB> a new <OBJECT> form </OBJECT> of <OBJECT> exercise </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> hope </VERB> to <VERB> practice </VERB> <OBJECT> drawing </OBJECT> or painting .
+<PRONOUN> I </PRONOUN> <VERB> aspire </VERB> to <VERB> build </VERB> a personal <OBJECT> website </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> plan </VERB> to <VERB> join </VERB> a community <OBJECT> group </OBJECT> or club .
+<PRONOUN> I </PRONOUN> <VERB> aim </VERB> to <VERB> spend </VERB> less <OBJECT> time </OBJECT> on social <OBJECT> media </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> want </VERB> to <VERB> plan </VERB> and <VERB> execute </VERB> a community service <OBJECT> project </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> hope </VERB> to <VERB> get </VERB> <VERB> involved </VERB> in environmental <OBJECT> conservation </OBJECT> .
+<PRONOUN> I </PRONOUN> <VERB> aspire </VERB> to <VERB> write </VERB> <OBJECT> thank </OBJECT> - <OBJECT> you </OBJECT> <VERB> notes </VERB> to <OBJECT> people </OBJECT> <PRONOUN> I </PRONOUN> <VERB> appreciate </VERB> .
