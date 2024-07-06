@@ -1,0 +1,9 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore the virtual environment in the nlp directory
+/nlp/venv/
+
+# Ignore package-lock.json in the frontend2 directory
+/frontend2/package-lock.json
+package-lock.json
