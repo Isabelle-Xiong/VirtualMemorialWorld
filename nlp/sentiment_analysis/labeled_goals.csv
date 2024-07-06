@@ -1,0 +1,51 @@
+Goal,Sentiment,Score
+"Finish reading a book this week.",POSITIVE,0.90
+"Start a new project at work.",POSITIVE,0.85
+"Exercise for 30 minutes every day.",POSITIVE,0.95
+"Learn a new programming language.",POSITIVE,0.90
+"Meditate for 10 minutes each morning.",POSITIVE,0.70
+"Struggle to meet project deadlines.",NEGATIVE,0.90
+"Reduce screen time by 30% each day.",NEUTRAL,0.60
+"Overcome fear of public speaking.",POSITIVE,0.75
+"Deal with increasing work stress.",NEGATIVE,0.80
+"Save money for a future vacation.",POSITIVE,0.87
+"Procrastinate on important tasks.",NEGATIVE,0.93
+"Volunteer at a local animal shelter.",POSITIVE,0.93
+"Fail to maintain a healthy diet.",NEGATIVE,0.98
+"Write a novel during NaNoWriMo.",POSITIVE,0.89
+"Struggle with time management.",NEGATIVE,0.89
+"Learn to play a musical instrument.",POSITIVE,0.98
+"Face difficulties in personal relationships.",NEGATIVE,0.30
+"Start a podcast on a topic of interest.",POSITIVE,0.82
+"Cope with financial uncertainties.",NEGATIVE,0.22
+"Adopt a more sustainable lifestyle.",POSITIVE,0.91
+"Attend a professional development seminar.",POSITIVE,0.84
+"Miss deadlines for important assignments.",NEGATIVE,0.12
+"Practice gratitude journaling daily.",POSITIVE,0.94
+"Struggle with work-life balance.",NEGATIVE,0.28
+"Learn a new language for upcoming travel.",POSITIVE,0.89
+"Deal with chronic procrastination.",NEGATIVE,0.14
+"Start a small vegetable garden.",POSITIVE,0.88
+"Experience burnout from overworking.",NEGATIVE,0.08
+"Join a local community volunteer group.",POSITIVE,0.92
+"Fail to stick to New Year's resolutions.",NEGATIVE,0.70
+"Declutter and organize living space.",NEUTRAL,0.60
+"Maintain a consistent sleep schedule.",POSITIVE,0.70
+"Attend regular team meetings at work.",NEUTRAL,0.80
+"Update resume and LinkedIn profile.",NEUTRAL,0.58
+"Keep track of daily expenses.",NEUTRAL,0.70
+"Commute to work every day.",NEUTRAL,0.90
+"Schedule regular dental check-ups.",NEUTRAL,0.54
+"Follow a basic skincare routine.",POSITIVE,0.40
+"Watch the news to stay informed.",NEUTRAL,0.50
+"Participate in office social events.",NEUTRAL,0.56
+"Complete annual health screenings.",NEUTRAL,0.59
+"Achieve a major career milestone.",POSITIVE,0.96
+"Overcome a long-standing personal fear.",POSITIVE,0.93
+"Launch a successful side business.",POSITIVE,0.97
+"Receive recognition for outstanding work.",POSITIVE,0.95
+"Face repeated rejection in job search.",NEGATIVE,0.05
+"Experience a significant financial loss.",NEGATIVE,0.97
+"Struggle with chronic health issues.",NEGATIVE,0.70
+"Deal with persistent family conflicts.",NEGATIVE,0.09
+"Fail an important professional exam.",NEGATIVE,0.11
