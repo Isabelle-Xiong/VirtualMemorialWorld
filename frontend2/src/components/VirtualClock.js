@@ -1,64 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
+import useVirtualTime from '../hooks/useVirtualTime';
 import axios from 'axios';
 
 const VirtualClock = ({ speedMultiplier, onTick }) => {
-    const [virtualTime, setVirtualTime] = useState(() => {
-        const savedTime = localStorage.getItem('virtualTime');
-        return savedTime ? parseInt(savedTime, 10) : 0;
-    });
+    const { virtualSeconds } = useVirtualTime(speedMultiplier);
+    const lastTimeRef = useRef(virtualSeconds);
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setVirtualTime(prevTime => {
-                const newTime = prevTime + 1;
-                const adjustedTime = newTime % 1800; // Ensure it wraps correctly at 1800
-                localStorage.setItem('virtualTime', newTime);
-                return newTime;
-            });
-        }, 1000 / speedMultiplier);
-
-        return () => clearInterval(interval);
-    }, [speedMultiplier]);
+        if (lastTimeRef.current !== virtualSeconds) {
+            onTick(virtualSeconds); // Pass the adjusted time
+            lastTimeRef.current = virtualSeconds;
+        }
+    }, [virtualSeconds, onTick]);
 
     useEffect(() => {
-        onTick(virtualTime % 1800);
-    }, [virtualTime, onTick]);
-
-    useEffect(() => {
-        const updateGoalStatus = (avatarId) => {
+        const updateGoalStatus = async (avatarId) => {
             const token = localStorage.getItem('token');
             if (!token) {
                 console.error('No token found, please log in.');
                 return;
             }
 
-            axios.post('http://localhost:5001/api/update-goal-status', { avatarId }, {
-                headers: { 'x-auth-token': token }
-            })
-                .then(response => {
-                    console.log(`Goal status updated for avatar ${avatarId}:`, response.data);
-                })
-                .catch(error => {
-                    console.error(`Error updating goal status for avatar ${avatarId}:`, error);
+            try {
+                const response = await axios.post('http://localhost:5001/api/update-goal-status', { avatarId }, {
+                    headers: { 'x-auth-token': token }
                 });
+                console.log(`Goal status updated for avatar ${avatarId}:`, response.data);
+            } catch (error) {
+                console.error(`Error updating goal status for avatar ${avatarId}:`, error);
+            }
         };
 
-        const generateNewGoal = (avatarId) => {
+        const generateNewGoal = async (avatarId) => {
             const token = localStorage.getItem('token');
             if (!token) {
                 console.error('No token found, please log in.');
                 return;
             }
 
-            axios.post('http://localhost:5001/api/generate-new-goal', { avatarId }, {
-                headers: { 'x-auth-token': token }
-            })
-                .then(response => {
-                    console.log(`New goal generated for avatar ${avatarId}:`, response.data);
-                })
-                .catch(error => {
-                    console.error(`Error generating new goal for avatar ${avatarId}:`, error);
+            try {
+                const response = await axios.post('http://localhost:5001/api/generate-new-goal', { avatarId }, {
+                    headers: { 'x-auth-token': token }
                 });
+                console.log(`New goal generated for avatar ${avatarId}:`, response.data);
+            } catch (error) {
+                console.error(`Error generating new goal for avatar ${avatarId}:`, error);
+            }
         };
 
         const randomInterval = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;

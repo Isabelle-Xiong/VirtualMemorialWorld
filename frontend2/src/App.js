@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Login from './components/Login';
@@ -16,40 +16,14 @@ import VirtualClock from './components/VirtualClock';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import useVirtualTime from './hooks/useVirtualTime';
 
 function App() {
-  const [virtualSeconds, setVirtualSeconds] = useState(() => {
-    const savedTime = localStorage.getItem('virtualSeconds');
-    return savedTime ? parseInt(savedTime, 10) : 0;
-  });
-  const [virtualDay, setVirtualDay] = useState(() => {
-    const savedDay = localStorage.getItem('virtualDay');
-    return savedDay ? parseInt(savedDay, 10) : 1;
-  });
-
-  useEffect(() => {
-    const savedVirtualSeconds = parseInt(localStorage.getItem('virtualSeconds'), 10) || 0;
-    const savedVirtualDay = parseInt(localStorage.getItem('virtualDay'), 10) || 1;
-    setVirtualSeconds(savedVirtualSeconds);
-    setVirtualDay(savedVirtualDay);
-  }, []);
-
-  useEffect(() => {
-    if (virtualSeconds >= 1799) { 
-      setVirtualDay(prevDay => {
-        const newDay = prevDay + 1;
-        localStorage.setItem('virtualDay', newDay);
-        return newDay;
-      });
-      setVirtualSeconds(0);
-    } else {
-      localStorage.setItem('virtualSeconds', virtualSeconds);
-    }
-  }, [virtualSeconds]);
+  const { virtualSeconds, virtualDay, setVirtualSeconds, setVirtualDay } = useVirtualTime(48);
 
   const handleTick = useCallback((newVirtualTime) => {
     setVirtualSeconds(newVirtualTime); // Update with the correct virtual time
-  }, []);
+  }, [setVirtualSeconds]);
 
   const incrementDayManually = () => {
     setVirtualSeconds(0);
