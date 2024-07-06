@@ -6,6 +6,7 @@ import re
 from transformers import GPT2Tokenizer, GPT2LMHeadModel, pipeline, DistilBertTokenizer, DistilBertForSequenceClassification
 from safetensors.torch import load_file as load_safetensors
 from nltk.util import ngrams
+from nltk import sent_tokenize
 import nltk
 nltk.download('punkt')
 
@@ -108,6 +109,12 @@ for text in generated_texts:
 
 # Print the best goal
 if best_goal:
-    print(f"Best Goal: {best_goal}, Adjusted Score: {best_goal_score:.4f}")
+    # Split the text at sentence-ending punctuation
+    sentences = re.split(r'(?<=[.!?])\s+', best_goal)
+    if len(sentences) >= 2:
+        limited_goal = ' '.join(sentences[:2])
+    else:
+        limited_goal = best_goal  # If there's only one sentence or less, use the entire goal
+    print(f"Best Goal (limited to 2 sentences): {limited_goal} | Adjusted Score: {best_goal_score:.4f}")
 else:
     print("No suitable goal found.")
