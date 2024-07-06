@@ -23,8 +23,8 @@ def load_dataset(file_path, tokenizer, block_size=128):
     )
     return dataset
 
-# Load your preprocessed data file
-train_dataset = load_dataset("preprocessed_goals.txt", tokenizer)
+# Load your own data file
+train_dataset = load_dataset("cleaned_goals.txt", tokenizer)
 
 data_collator = DataCollatorForLanguageModeling(
     tokenizer=tokenizer,

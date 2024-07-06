@@ -12,6 +12,9 @@ torch.cuda.is_available = lambda: False
 torch.backends.mps.is_available = lambda: False
 device = torch.device("cpu")
 
+# Get the directory of the current script
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
 # Load dataset from CSV
 dataset = load_dataset('csv', data_files={'train': 'goal_classification_data.csv'})
 
@@ -65,7 +68,7 @@ tokenized_datasets.set_format(type='torch', columns=['input_ids', 'attention_mas
 
 # Define training arguments
 training_args = TrainingArguments(
-    output_dir='nlp/sentiment_analysis/pipeline1/goal_classification_results',
+    output_dir='./goal_classification_results',
     evaluation_strategy="epoch",
     learning_rate=2e-5,
     per_device_train_batch_size=8,
@@ -85,6 +88,9 @@ trainer = Trainer(
 # Train the model
 trainer.train()
 
+# Define the path to save the model and tokenizer
+model_save_path = os.path.abspath(os.path.join(current_dir, "nlp/sentiment_analysis/pipeline1/distilbert-goal-finetuned"))
+
 # Save the model and tokenizer
-trainer.save_model("./distilbert-goal-finetuned")
-tokenizer.save_pretrained("./distilbert-goal-finetuned")
+trainer.save_model(model_save_path)
+tokenizer.save_pretrained(model_save_path)

@@ -43,8 +43,7 @@ def generate_and_analyze(prompt, num_return_sequences=5):
             do_sample=True, 
             top_k=50,
             top_p=0.95,
-            attention_mask=torch.ones(inputs.shape, device=device)
-        )
+            attention_mask=torch.ones(inputs.shape, device=device)) # Penalize repetitions to improve diversity
 
     # Decode and analyze sentiment
     generated_texts = [gpt2_tokenizer.decode(output, skip_special_tokens=True) for output in outputs]
