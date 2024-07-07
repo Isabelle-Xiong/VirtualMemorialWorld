@@ -64,6 +64,59 @@ const generateGoalText = () => {
     });
 };
 
+
+// Retry mechanism for generating goal text
+const generateGoalWithRetries = async (retries = 3) => {
+    for (let attempt = 0; attempt < retries; attempt++) {
+        try {
+            const goalText = await generateGoalText();
+            if (goalText && goalText.trim() && goalText !== 'No suitable goal found') {
+                return goalText;
+            }
+        } catch (error) {
+            console.error(`Attempt ${attempt + 1} failed:`, error);
+        }
+    }
+    return null; // Return null if all retries fail
+};
+
+
+// Generate a new goal for a specific avatar
+app.post('/api/generate-new-goal', auth, async (req, res) => {
+    const { avatarId } = req.body;
+    try {
+        const newGoalText = await generateGoalWithRetries();
+
+        if (!newGoalText) {
+            console.error('Failed to generate goal after retries.');
+            return res.status(500).send({ error: 'Generated goal could not be retrieved.' });
+        }
+
+        const updateResult = await Avatar.findOneAndUpdate(
+            { _id: avatarId },
+            {
+                $push: {
+                    goals: {
+                        $each: [{ goal: newGoalText, status: 'Not Started' }],
+                        $slice: -5
+                    }
+                }
+            },
+            { new: true, runValidators: true }
+        );
+
+        if (!updateResult) {
+            return res.status(404).send({ error: 'Avatar not found' });
+        }
+
+        console.log(`New goal generated and saved for avatar ${avatarId}`);
+        res.status(200).send({ message: 'New goal generated successfully.' });
+    } catch (error) {
+        console.error(`Error generating new goal for avatar ${avatarId}:`, error);
+        res.status(500).send({ error: 'Error generating new goal.' });
+    }
+});
+
 // Test endpoint to call the generateGoalText function
 app.get('/api/test-generate-goal', async (req, res) => {
     try {
@@ -74,6 +127,7 @@ app.get('/api/test-generate-goal', async (req, res) => {
         res.status(500).send({ error: 'Error generating goal text.' });
     }
 });
+
 
 function sendEmail(to, subject, text) {
     const mailOptions = {
@@ -126,15 +180,16 @@ app.post('/api/generate-new-goal', auth, async (req, res) => {
             return 'Generated goal could not be retrieved.';
         });
 
-        const avatar = await Avatar.findById(avatarId);
-        if (!avatar) {
-            return res.status(404).send('Avatar not found');
+        if (!newGoalText) {
+            return res.status(500).send({ error: 'Error generating new goal.' });
         }
 
-        avatar.goals.push({ goal: newGoalText, status: 'Not Started' });
-        // Slice the goals to ensure only the latest 5 are kept
-        avatar.goals = avatar.goals.slice(-5);
-        await avatar.save();
+        await Avatar.findOneAndUpdate(
+            { _id: avatarId },
+            {
+                $push: { goals: { $each: [{ goal: newGoalText, status: 'Not Started' }], $slice: -5 } }
+            }
+        );
 
         console.log(`New goal generated and saved for avatar ${avatarId}`);
         res.status(200).send({ message: 'New goal generated successfully.' });
@@ -143,6 +198,7 @@ app.post('/api/generate-new-goal', auth, async (req, res) => {
         res.status(500).send({ error: 'Error generating new goal.' });
     }
 });
+
 
 
 
