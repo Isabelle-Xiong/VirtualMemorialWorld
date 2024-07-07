@@ -35,7 +35,7 @@ const useVirtualTime = (speedMultiplier) => {
         }
     }, [virtualSeconds]);
 
-    return { virtualSeconds, virtualDay, setVirtualSeconds, setVirtualDay };
+    return { virtualSeconds, virtualDay, setVirtualDay };
 };
 
 export default useVirtualTime;

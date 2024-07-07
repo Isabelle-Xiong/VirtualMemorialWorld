@@ -5,6 +5,7 @@ import axios from 'axios';
 const VirtualClock = ({ speedMultiplier, onTick }) => {
     const { virtualSeconds } = useVirtualTime(speedMultiplier);
     const lastTimeRef = useRef(virtualSeconds);
+    
 
     useEffect(() => {
         if (lastTimeRef.current !== virtualSeconds) {
@@ -53,7 +54,6 @@ const VirtualClock = ({ speedMultiplier, onTick }) => {
         const initializeIntervals = (avatarId) => {
             const statusUpdateInterval = randomInterval(2, 5) * 1800 * (1000 / speedMultiplier); // Convert days to milliseconds
             const newGoalInterval = randomInterval(5, 7) * 1800 * (1000 / speedMultiplier); // Convert days to milliseconds
-
             const statusUpdateTimer = setInterval(() => updateGoalStatus(avatarId), statusUpdateInterval);
             const newGoalTimer = setInterval(() => generateNewGoal(avatarId), newGoalInterval);
 
@@ -95,3 +95,4 @@ const VirtualClock = ({ speedMultiplier, onTick }) => {
 };
 
 export default VirtualClock;
+

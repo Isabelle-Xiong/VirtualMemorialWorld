@@ -3,13 +3,15 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb, faBullseye, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import '../Home.css';
+import useVirtualTime from '../hooks/useVirtualTime'; // Import the custom hook
 
 // Function to strip the prompt from the generated goal text
 const stripPrompt = (text, prompt = "Tell me about your goals.") => {
     return text.startsWith(prompt) ? text.slice(prompt.length).trim() : text;
 };
 
-function Home({ virtualTime, virtualDay, incrementDayManually }) {
+function Home({ speedMultiplier }) {
+    const { virtualDay, setVirtualDay } = useVirtualTime(speedMultiplier); // Destructure from hook
     const [avatars, setAvatars] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState(null);

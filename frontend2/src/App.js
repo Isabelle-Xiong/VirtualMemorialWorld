@@ -1,3 +1,4 @@
+
 import React, { useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
@@ -17,21 +18,61 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import useVirtualTime from './hooks/useVirtualTime';
+import axios from 'axios';
 
 function App() {
-  const { virtualSeconds, virtualDay, setVirtualSeconds, setVirtualDay } = useVirtualTime(48);
+  const { virtualSeconds, virtualDay, setVirtualDay } = useVirtualTime(48);
 
   const handleTick = useCallback((newVirtualTime) => {
-    setVirtualSeconds(newVirtualTime); // Update with the correct virtual time
-  }, [setVirtualSeconds]);
+    // No need for setVirtualSeconds here
+  }, []);
 
-  const incrementDayManually = () => {
-    setVirtualSeconds(0);
+  const fetchAvatars = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('No token found, please log in.');
+      return [];
+    }
+    try {
+      const response = await axios.get('http://localhost:5001/api/avatars', {
+        headers: { 'x-auth-token': token },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching avatars:', error);
+      return [];
+    }
+  };
+
+  const incrementDayAndGenerateGoals = async () => {
     setVirtualDay(prevDay => {
       const newDay = prevDay + 1;
       localStorage.setItem('virtualDay', newDay);
       return newDay;
     });
+
+    const avatars = await fetchAvatars();
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('No token found, please log in.');
+      return;
+    }
+
+    try {
+      // Update goal statuses and generate new goals for each avatar
+      for (const avatar of avatars) {
+        await axios.post('http://localhost:5001/api/update-goal-status', { avatarId: avatar._id }, {
+          headers: { 'x-auth-token': token },
+        });
+
+        await axios.post('http://localhost:5001/api/generate-new-goal', { avatarId: avatar._id }, {
+          headers: { 'x-auth-token': token },
+        });
+      }
+    } catch (error) {
+      console.error('Error incrementing day and generating goals:', error);
+    }
   };
 
   const formatVirtualTime = (seconds) => {
@@ -47,7 +88,7 @@ function App() {
         <div className="virtual-time">
           <h2>Virtual Time: {formatVirtualTime(virtualSeconds)}</h2>
           <h2>Virtual Day: {virtualDay}</h2>
-          <button onClick={incrementDayManually}>Increment Day Manually</button>
+          <button onClick={incrementDayAndGenerateGoals}>Increment Day Manually</button>
         </div>
         <Routes>
           <Route path="/" element={<Home virtualTime={virtualSeconds} virtualDay={virtualDay} />} />
