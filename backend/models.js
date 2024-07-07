@@ -78,6 +78,15 @@ const avatarSchema = new mongoose.Schema({
     relationships: [relationshipSchema],
 });
 
+// Pre-save middleware to slice the goals array to only keep the latest 5 goals
+avatarSchema.pre('save', function (next) {
+    if (this.goals.length > 5) {
+        this.goals = this.goals.slice(-5);
+    }
+    next();
+});
+
+
 const User = mongoose.model('User', userSchema);
 const Avatar = mongoose.model('Avatar', avatarSchema);
 

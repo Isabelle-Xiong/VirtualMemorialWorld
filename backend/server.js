@@ -107,6 +107,7 @@ app.post('/api/update-goal-status', auth, async (req, res) => {
                 goal.status = 'Completed';
             }
         });
+
         await avatar.save();
         console.log(`Goal statuses updated for avatar ${avatarId}`);
         res.status(200).send({ message: 'Goal statuses updated successfully.' });
@@ -116,36 +117,34 @@ app.post('/api/update-goal-status', auth, async (req, res) => {
     }
 });
 
-//Generate a new goal for a specific avatar
+// Generate a new goal for a specific avatar
 app.post('/api/generate-new-goal', auth, async (req, res) => {
     const { avatarId } = req.body;
     try {
-        const avatar = await Avatar.findById(avatarId);
-        if (!avatar) {
-            return res.status(404).send('Avatar not found');
-        }
-
         const newGoalText = await generateGoalText().catch(error => {
             console.error('Error generating goal text:', error);
             return 'Generated goal could not be retrieved.';
         });
 
-        // Add new goal
-        avatar.goals.push({ goal: newGoalText, status: 'Not Started' });
-
-        // Ensure only the latest 5 goals are kept
-        if (avatar.goals.length > 5) {
-            avatar.goals = avatar.goals.slice(-5);
+        const avatar = await Avatar.findById(avatarId);
+        if (!avatar) {
+            return res.status(404).send('Avatar not found');
         }
 
+        avatar.goals.push({ goal: newGoalText, status: 'Not Started' });
+        // Slice the goals to ensure only the latest 5 are kept
+        avatar.goals = avatar.goals.slice(-5);
         await avatar.save();
-        console.log(`New goal generated for avatar ${avatarId}`);
+
+        console.log(`New goal generated and saved for avatar ${avatarId}`);
         res.status(200).send({ message: 'New goal generated successfully.' });
     } catch (error) {
         console.error(`Error generating new goal for avatar ${avatarId}:`, error);
         res.status(500).send({ error: 'Error generating new goal.' });
     }
 });
+
+
 
 // Password reset request
 app.post('/api/request-reset-password', async (req, res) => {
