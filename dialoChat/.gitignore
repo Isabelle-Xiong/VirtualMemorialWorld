@@ -1,0 +1,23 @@
+# Node.js dependencies
+node_modules/
+
+# Python virtual environments
+venv/
+.env
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+
+# Build artifacts
+dist/
+build/
+out/
+
+# macOS specific file
+.DS_Store
+
+# Environment variables
+.env
