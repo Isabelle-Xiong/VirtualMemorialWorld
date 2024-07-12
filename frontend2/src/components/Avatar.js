@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../Avatar.css'; // Adjusted import path
+import { useParams, useNavigate } from 'react-router-dom';
 
 const personalityOptions = [
     'Adventurous', 'Artistic', 'Charismatic', 'Cheerful', 'Confident', 'Creative', 'Dependable',
@@ -17,6 +18,7 @@ const hobbyOptions = [
 ];
 
 function Avatar({ virtualTime }) { // Receive virtualTime as a prop
+    const navigate = useNavigate();
     const [name, setName] = useState('');
     const [picture, setPicture] = useState('');
     const [age, setAge] = useState('');
@@ -152,6 +154,7 @@ function Avatar({ virtualTime }) { // Receive virtualTime as a prop
                 { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes, jobs, goals },
                 { headers: { 'x-auth-token': token } }
             );
+            navigate('/');
             console.log('Avatar created:', response.data);
         } catch (error) {
             console.error('Error creating avatar:', error);
