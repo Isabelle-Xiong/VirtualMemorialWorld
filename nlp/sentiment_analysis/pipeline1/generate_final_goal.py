@@ -85,6 +85,14 @@ def count_repetitions(text, n=3):
     n_gram_counts = Counter(n_grams)
     repetitions = sum(count - 1 for count in n_gram_counts.values() if count > 1)
     return repetitions
+
+# Function to count individual word repetitions
+def count_word_repetitions(text):
+    words = text.split()
+    word_counts = Counter(words)
+    repetitions = sum(count - 1 for count in word_counts.values() if count > 1)
+    return repetitions
+
 # Classify and select the best goal based on score and penalize other pronouns and repetitions
 best_goal = None
 best_goal_score = -1

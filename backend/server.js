@@ -348,16 +348,44 @@ app.post('/api/avatars', auth, async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
+// Get avatar by id
+app.get('/api/avatars/:id', auth, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const avatar = await Avatar.findById(id);
+        if (!avatar) {
+            return res.status(404).send('Avatar not found');
+        }
+        console.log('Avatar retrieved:', avatar); // Debug log
+        res.send(avatar);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
-// Get avatar by ID
+// Get all avatars
 app.get('/api/avatars', auth, async (req, res) => {
     const avatars = await Avatar.find();
     res.send(avatars);
 });
-
 app.put('/api/avatars/:id', auth, async (req, res) => {
     const { id } = req.params;
-    const { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes, goals = [], jobs = [] } = req.body;
+    const {
+        name,
+        picture,
+        age,
+        birthday,
+        hobbies,
+        education,
+        career,
+        maritalStatus,
+        children = [],  // Provide default value
+        pets = [],      // Provide default value
+        personality,
+        specialNotes,
+        goals = [],     // Provide default value
+        jobs = []       // Provide default value
+    } = req.body;
 
     // Update relationships from children and pets
     const relationships = [
@@ -419,6 +447,7 @@ app.delete('/api/avatars/:id', auth, async (req, res) => {
     await Avatar.findByIdAndDelete(id);
     res.send({ message: 'Avatar deleted' });
 });
+
 app.get('/api/profile', auth, async (req, res) => {
     const user = await User.findById(req.user.userId);
     res.send({ username: user.username });
