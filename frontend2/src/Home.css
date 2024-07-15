@@ -24,7 +24,7 @@ body {
 }
 
 .avatar-card {
-    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    background: linear-gradient(145deg, #d2cdff, #ffe6fd);
     border-radius: 20px;
     padding: 20px;
     margin: 10px;
@@ -37,10 +37,15 @@ body {
 
 .avatars-title {
     font-family: 'Poppins', sans-serif;
+    /* Rounded and clean font */
     font-weight: bold;
-    font-size: 2.5rem;
-    color: #333333;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    font-size: 3rem;
+    /* Increase font size for more emphasis */
+    background: linear-gradient(145deg, #6a11cb, #2575fc);
+    /* Gradient effect */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .avatar-header {
@@ -124,7 +129,8 @@ body {
 }
 
 .button-group button {
-    background-color: #e4b8e4;
+    background: linear-gradient(145deg, #64b3f4, #c2e59c);
+    /* Vibrant gradient */
     color: white;
     border: none;
     border-radius: 20px;
@@ -135,11 +141,13 @@ body {
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    border: 1px solid #c5a6c5;
+    border: 1px solid #509aeb;
+    /* Slightly darker color for border */
 }
 
 .button-group button:hover {
-    background-color: #c5a6c5;
+    background-color: #509aeb;
+    /* Slightly darker for hover effect */
     transform: translateY(-2px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
@@ -148,6 +156,8 @@ body {
     font-size: 30px;
     margin: 5px;
     cursor: pointer;
+    color: #5ea3fd;
+    /* Light blue to match the theme */
 }
 
 .modal {

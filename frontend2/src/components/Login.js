@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../Auth.css';  // Ensure this line imports the new CSS file
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -23,30 +24,32 @@ function Login() {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="auth-container">
+            <h2 className="auth-title">Login</h2>
+            <form className="auth-form-container" onSubmit={handleSubmit}>
                 <div>
-                    <label>Username:</label>
+                    <label className="auth-label">Username:</label>
                     <input
                         type="text"
+                        className="auth-input"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
                     />
                 </div>
                 <div>
-                    <label>Password:</label>
+                    <label className="auth-label">Password:</label>
                     <input
                         type="password"
+                        className="auth-input"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit" className="auth-button">Login</button>
             </form>
-            <p>
+            <p className="auth-footer">
                 Forgot your password? <Link to="/request-reset-password">Reset it here</Link>
             </p>
         </div>

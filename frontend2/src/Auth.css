@@ -1,0 +1,86 @@
+/* Common styles for login and register components */
+.auth-container {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(145deg, #e0eafc, #cfdef3);
+    color: #333333;
+    margin: 0;
+    padding: 0;
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding-top: 80px;
+}
+
+.auth-form-container {
+    background: linear-gradient(145deg, #dfdcfb, #ffe6fd);
+    border-radius: 20px;
+    padding: 40px;
+    margin: 20px auto;
+    width: 400px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border: 1px solid #cfdef3;
+}
+
+.auth-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 3rem;
+    /* Increased font size for more emphasis */
+    background: linear-gradient(145deg, #6a11cb, #2575fc);
+    /* Gradient effect */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.auth-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: left;
+
+}
+
+.auth-input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid #cfdef3;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.auth-button {
+    background: linear-gradient(145deg, #79b3ff, #b3d9ff);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.auth-button:hover {
+    background: linear-gradient(145deg, #4e6cff, #79b3ff);
+    transform: scale(1.05);
+}
+
+.auth-footer {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.auth-footer a {
+    color: #79b3ff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.auth-footer a:hover {
+    color: #4e6cff;
+}
