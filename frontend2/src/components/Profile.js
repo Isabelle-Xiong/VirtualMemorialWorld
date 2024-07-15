@@ -1,19 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import '../Profile.css'; // Ensure this line includes the CSS file
 
 function Profile() {
     const [profile, setProfile] = useState(null);
+    const [avatars, setAvatars] = useState([]);
 
     useEffect(() => {
         const fetchProfile = async () => {
             const token = localStorage.getItem('token');
+            console.log('Token:', token); // Log to confirm token is present
             try {
-                const response = await axios.get('http://localhost:5001/api/profile', {
+                const userResponse = await axios.get('http://localhost:5001/api/profile', {
                     headers: { 'x-auth-token': token }
                 });
-                setProfile(response.data);
+                console.log('Profile response:', userResponse.data); // Log the response
+                setProfile(userResponse.data);
+
+                const avatarResponse = await axios.get('http://localhost:5001/api/user-avatars', {
+                    headers: { 'x-auth-token': token }
+                });
+                console.log('Avatars response:', avatarResponse.data); // Log the response
+                if (Array.isArray(avatarResponse.data)) {
+                    setAvatars(avatarResponse.data);
+                } else {
+                    console.error('Avatars response is not an array:', avatarResponse.data);
+                }
             } catch (error) {
-                console.error('Error fetching profile:', error);
+                console.error('Error fetching profile or avatars:', error);
             }
         };
 
@@ -25,75 +39,35 @@ function Profile() {
     }
 
     return (
-        <div className="container">
-            <h2 className="my-4">Profile</h2>
-            <div className="card">
-                <img src={profile.picture} className="card-img-top" alt={profile.name} />
-                <div className="card-body">
-                    <h5 className="card-title">{profile.name}</h5>
-                    <p className="card-text"><strong>Age:</strong> {profile.age}</p>
-                    <p className="card-text"><strong>Hobbies:</strong> {profile.hobbies}</p>
-                    <p className="card-text"><strong>Education:</strong> {profile.education}</p>
-                    <p className="card-text"><strong>Interested Career:</strong> {profile.career}</p>
-                    <p className="card-text"><strong>Marital Status:</strong> {profile.maritalStatus}</p>
-                    <p className="card-text"><strong>Children:</strong> {profile.children}</p>
-                    <p className="card-text"><strong>Pets:</strong> {profile.pets}</p>
-                    <p className="card-text"><strong>Personality:</strong> {profile.personality}</p>
-                    <p className="card-text"><strong>Special Notes:</strong> {profile.specialNotes}</p>
-
-                    <h4>Jobs and Occupations</h4>
-                    {profile.jobs?.map((job, index) => (
-                        <div key={index}>
-                            <p><strong>Title:</strong> {job.title}</p>
-                            <p><strong>Company:</strong> {job.company}</p>
-                            <p><strong>Start Date:</strong> {job.startDate}</p>
-                            <p><strong>End Date:</strong> {job.endDate}</p>
-                            <p><strong>Current Job:</strong> {job.isCurrent ? "Yes" : "No"}</p>
+        <div className="profile-container">
+            <h2 className="profile-title">Profile</h2>
+            <div className="profile-info">
+                <h5 className="profile-username">Username: {profile.username}</h5>
+                <p className="profile-email">Email: {profile.email}</p>
+            </div>
+            <h4 className="avatars-title">Avatars Created</h4>
+            <div className="profile-avatars-container">
+                {avatars.length > 0 ? (
+                    avatars.map((avatar) => (
+                        <div key={avatar._id} className="profile-avatar-card">
+                            <img src={avatar.picture} className="profile-avatar-img" alt={avatar.name} />
+                            <div className="profile-avatar-info">
+                                <h5 className="profile-avatar-name">{avatar.name}</h5>
+                                <p className="profile-avatar-text"><strong>Age:</strong> {avatar.age}</p>
+                                <p className="profile-avatar-text"><strong>Hobbies:</strong> {avatar.hobbies.join(', ')}</p>
+                                <p className="profile-avatar-text"><strong>Education:</strong> {avatar.education}</p>
+                                <p className="profile-avatar-text"><strong>Interested Career:</strong> {avatar.career.join(', ')}</p>
+                                <p className="profile-avatar-text"><strong>Marital Status:</strong> {avatar.maritalStatus}</p>
+                                <p className="profile-avatar-text"><strong>Children:</strong> {avatar.children.map(child => child.name).join(', ')}</p>
+                                <p className="profile-avatar-text"><strong>Pets:</strong> {avatar.pets.map(pet => pet.name).join(', ')}</p>
+                                <p className="profile-avatar-text"><strong>Personality:</strong> {avatar.personality.join(', ')}</p>
+                                <p className="profile-avatar-text"><strong>Special Notes:</strong> {avatar.specialNotes}</p>
+                            </div>
                         </div>
-                    ))}
-
-                    <h4>Pets</h4>
-                    {profile.pets?.map((pet, index) => (
-                        <div key={index}>
-                            <p><strong>Name:</strong> {pet.name}</p>
-                            <p><strong>Type:</strong> {pet.type}</p>
-                            <p><strong>Age:</strong> {pet.age}</p>
-                        </div>
-                    ))}
-
-                    <h4>Daily Routine</h4>
-                    {profile.dailyRoutine?.map((item, index) => (
-                        <div key={index}>
-                            <p><strong>Time:</strong> {item.time}</p>
-                            <p><strong>Event:</strong> {item.event}</p>
-                        </div>
-                    ))}
-
-                    <h4>Progression Log</h4>
-                    {profile.progressionLog?.map((log, index) => (
-                        <div key={index}>
-                            <p><strong>Date:</strong> {log.date}</p>
-                            <p><strong>Statement:</strong> {log.statement}</p>
-                        </div>
-                    ))}
-
-                    <h4>Relationships</h4>
-                    {profile.relationships?.map((relationship, index) => (
-                        <div key={index}>
-                            <p><strong>Type:</strong> {relationship.type}</p>
-                            <p><strong>Name:</strong> {relationship.name}</p>
-                            <p><strong>Since:</strong> {relationship.since}</p>
-                        </div>
-                    ))}
-
-                    <h4>Goals</h4>
-                    {profile.goals?.map((goal, index) => (
-                        <div key={index}>
-                            <p><strong>Goal:</strong> {goal.goal}</p>
-                            <p><strong>Status:</strong> {goal.status}</p>
-                        </div>
-                    ))}
-                </div>
+                    ))
+                ) : (
+                    <p>No avatars created yet.</p>
+                )}
             </div>
         </div>
     );

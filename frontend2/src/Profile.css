@@ -1,0 +1,90 @@
+.profile-container {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding-top: 80px;
+}
+
+.profile-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 3rem;
+    background: linear-gradient(#6a11cb, #2575fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+
+.profile-info {
+    text-align: left;
+    margin: 20px auto;
+    width: 400px;
+}
+
+.profile-username,
+.profile-email {
+    font-family: 'Indie Flower', cursive;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: black;
+}
+
+.avatars-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 2rem;
+    background: linear-gradient(#6a11cb, #2575fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 20px 0;
+}
+
+.profile-avatars-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    /* Add spacing between items */
+    margin: auto;
+}
+
+.profile-avatar-card {
+    background: linear-gradient(145deg, #cdc7ff, #f9dcf7);
+    /* Same gradient as home */
+    border-radius: 20px;
+    padding: 20px;
+    margin: 10px;
+    width: 500px;
+    /* Same width as home */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    color: #333333;
+    border: 1px solid #cfdef3;
+}
+
+.profile-avatar-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto;
+    display: block;
+    border: 3px solid #79b3ff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.profile-avatar-info {
+    margin-top: 15px;
+    width: 100%;
+    text-align: center;
+}
+
+.profile-avatar-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.profile-avatar-text {
+    font-size: 1rem;
+    color: #555;
+}

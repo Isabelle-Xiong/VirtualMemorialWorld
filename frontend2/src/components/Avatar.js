@@ -171,10 +171,14 @@ function Avatar({ virtualTime }) { // Receive virtualTime as a prop
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('No token found in localStorage');
+            return;
+        }
         try {
             const response = await axios.post(
                 'http://localhost:5001/api/avatars',
-                { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes, jobs, goals },
+                { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes, goals, jobs },
                 { headers: { 'x-auth-token': token } }
             );
             setAvatarId(response.data._id); // Set the avatarId from the response

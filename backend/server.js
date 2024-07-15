@@ -332,7 +332,8 @@ app.post('/api/avatars', auth, async (req, res) => {
         specialNotes,
         goals,
         jobs: jobDetails,
-        relationships
+        relationships,
+        userId: req.user.userId
     });
     try {
         const savedAvatar = await avatar.save();
@@ -359,6 +360,17 @@ app.get('/api/avatars/:id', auth, async (req, res) => {
         console.log('Avatar retrieved:', avatar); // Debug log
         res.send(avatar);
     } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+//get avatars under certain person's creation for profile.js
+app.get('/api/user-avatars', auth, async (req, res) => {
+    try {
+        const avatars = await Avatar.find({ userId: req.user.userId });
+        res.send(avatars);
+    } catch (error) {
+        console.error('Error fetching user avatars:', error);
         res.status(500).json({ error: error.message });
     }
 });
@@ -449,8 +461,19 @@ app.delete('/api/avatars/:id', auth, async (req, res) => {
 });
 
 app.get('/api/profile', auth, async (req, res) => {
-    const user = await User.findById(req.user.userId);
-    res.send({ username: user.username });
+    console.log('Profile route handler called'); // Log to confirm route handler is called
+    try {
+        const user = await User.findById(req.user.userId).select('username email');
+        if (!user) {
+            console.log('User not found'); // Log if user not found
+            return res.status(404).send('User not found');
+        }
+        console.log('User fetched:', user); // Log the user object
+        res.send(user);
+    } catch (error) {
+        console.error('Error fetching profile:', error);
+        res.status(500).send('Server error');
+    }
 });
 
 app.put('/api/profile', auth, async (req, res) => {

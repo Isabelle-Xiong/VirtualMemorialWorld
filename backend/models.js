@@ -84,7 +84,8 @@ const avatarSchema = new mongoose.Schema({
     eyeType: { type: String, default: 'Default' },
     eyebrowType: { type: String, default: 'Default' },
     mouthType: { type: String, default: 'Smile' },
-    skinColor: { type: String, default: 'Light' }
+    skinColor: { type: String, default: 'Light' },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 });
 
 // Pre-save middleware to slice the goals array to only keep the latest 5 goals
