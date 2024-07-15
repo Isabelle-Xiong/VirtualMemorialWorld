@@ -42,17 +42,6 @@ function Avatar({ virtualTime }) { // Receive virtualTime as a prop
     const [petType, setPetType] = useState('');
     const [petName, setPetName] = useState('');
     const [avatarId, setAvatarId] = useState(null);
-    const [avatarProps, setAvatarProps] = useState({
-        topType: "ShortHairShortFlat",
-        accessoriesType: "Blank",
-        hairColor: "BrownDark",
-        facialHairType: "Blank",
-        clotheType: "BlazerSweater",
-        eyeType: "Default",
-        eyebrowType: "Default",
-        mouthType: "Smile",
-        skinColor: "Light"
-    });
 
     useEffect(() => {
         const fetchAvatarData = async () => {
@@ -62,18 +51,7 @@ function Avatar({ virtualTime }) { // Receive virtualTime as a prop
                     headers: { 'x-auth-token': token },
                 });
                 const avatarData = response.data;
-                setAvatarId(avatarData._id);
-                setAvatarProps({
-                    topType: avatarData.topType || "ShortHairShortFlat",
-                    accessoriesType: avatarData.accessoriesType || "Blank",
-                    hairColor: avatarData.hairColor || "BrownDark",
-                    facialHairType: avatarData.facialHairType || "Blank",
-                    clotheType: avatarData.clotheType || "BlazerSweater",
-                    eyeType: avatarData.eyeType || "Default",
-                    eyebrowType: avatarData.eyebrowType || "Default",
-                    mouthType: avatarData.mouthType || "Smile",
-                    skinColor: avatarData.skinColor || "Light"
-                });
+                // Update avatar properties here if needed
             } catch (error) {
                 console.error('Error fetching avatar data:', error);
             }
@@ -486,23 +464,17 @@ function Avatar({ virtualTime }) { // Receive virtualTime as a prop
                     ))}
                     <button type="button" className="btn btn-primary" onClick={handleAddGoal}>Add Goal</button>
                 </div>
-                <div className="mb-3">
-                    <textarea
-                        className="form-control"
-                        placeholder="Special Notes"
-                        value={specialNotes}
-                        onChange={(e) => setSpecialNotes(e.target.value)}
-                    />
+                <div className="bottom-buttons">
+                    <button
+                        type="button"
+                        className="btn-customize"
+                        onClick={() => navigate('/customize-avatar')}
+                    >
+                        Customize Avatar
+                    </button>
+
+                    <button type="submit" className="btn-create-avatar">Create Avatar</button>
                 </div>
-                <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={() => navigate('/customize-avatar')}
-                >
-                    Customize Avatar
-                </button>
-                
-                <button type="submit" className="btn btn-create">Create Avatar</button>
             </form>
         </div>
     );

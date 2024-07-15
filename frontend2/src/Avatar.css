@@ -7,6 +7,11 @@
 .form-center {
     width: 100%;
     max-width: 600px;
+    background: linear-gradient(145deg, #d2cdff, #ffe6fd);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border: 1px solid #cfdef3;
 }
 
 .mb-3 {
@@ -35,37 +40,39 @@ button.btn-create {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
+    background: linear-gradient(145deg, #64b3f4, #c2e59c);
+    color: white;
 }
 
 button.btn-primary {
-    background-color: #007BFF;
+    background: linear-gradient(145deg, #64b3f4, #4e6cff);
     color: white;
 }
 
 button.btn-primary:hover {
-    background-color: #0056b3;
+    background-color: #3b5bbf;
     transform: scale(1.05);
 }
 
 button.btn-secondary {
-    background-color: #28a745;
+    background: linear-gradient(145deg, #79b3ff, #2b95ff);
     color: white;
 }
 
 button.btn-secondary:hover {
-    background-color: #218838;
+    background-color: #4e6cff;
     transform: scale(1.05);
 }
 
 button.btn-create {
-    background-color: #17a2b8;
+    background: linear-gradient(145deg, #64b3f4, #4e6cff);
     color: white;
     font-size: 18px;
     padding: 12px 24px;
 }
 
 button.btn-create:hover {
-    background-color: #138496;
+    background-color: #3b5bbf;
     transform: scale(1.05);
 }
 
@@ -78,4 +85,47 @@ button.btn-link {
 
 button.btn-link:hover {
     color: #0056b3;
+}
+
+button {
+    margin: 5px;
+}
+
+.bottom-buttons {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+    /* Adjust the spacing between buttons */
+}
+
+.bottom-buttons .btn-customize,
+.bottom-buttons .btn-create-avatar {
+    border: none;
+    border-radius: 30px;
+    padding: 12px 24px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    margin: 5px;
+}
+
+.bottom-buttons .btn-customize {
+    background: linear-gradient(145deg, #ff7f7f, #f6ac8f);
+    color: white;
+}
+
+.bottom-buttons .btn-customize:hover {
+    background-color: #ff6347;
+    transform: scale(1.05);
+}
+
+.bottom-buttons .btn-create-avatar {
+    background: linear-gradient(145deg, #f9b145, #8d2187);
+    color: white;
+}
+
+.bottom-buttons .btn-create-avatar:hover {
+    background-color: #d27d2d;
+    transform: scale(1.05);
 }
