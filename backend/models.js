@@ -76,6 +76,15 @@ const avatarSchema = new mongoose.Schema({
         }
     ],
     relationships: [relationshipSchema],
+    topType: { type: String, default: 'ShortHairShortFlat' },
+    accessoriesType: { type: String, default: 'Blank' },
+    hairColor: { type: String, default: 'BrownDark' },
+    facialHairType: { type: String, default: 'Blank' },
+    clotheType: { type: String, default: 'BlazerSweater' },
+    eyeType: { type: String, default: 'Default' },
+    eyebrowType: { type: String, default: 'Default' },
+    mouthType: { type: String, default: 'Smile' },
+    skinColor: { type: String, default: 'Light' }
 });
 
 // Pre-save middleware to slice the goals array to only keep the latest 5 goals

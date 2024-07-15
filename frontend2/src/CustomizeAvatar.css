@@ -1,0 +1,22 @@
+/* src/CustomizeAvatar.css */
+
+.container {
+    margin-top: 20px;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+.btn {
+    margin-top: 10px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.col-md-6 {
+    flex: 0 0 48%;
+}

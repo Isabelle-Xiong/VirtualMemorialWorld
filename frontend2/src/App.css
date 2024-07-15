@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: 'Roboto', sans-serif;
 }
 
 .App-logo {
@@ -32,10 +33,12 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
+
 .list-group-item {
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -53,4 +56,49 @@
 
 .list-group-item p {
   margin-bottom: 5px;
+}
+
+.virtual-time-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #ffafbd, #ffc3a0);
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  max-width: 250px;
+  border: 1px solid #ddd;
+  color: #ffffff;
+  z-index: 1000;
+}
+
+.virtual-time-container h2 {
+  font-size: 1.3rem;
+  color: #ffffff;
+  margin: 5px 0;
+  font-family: 'Roboto', sans-serif;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.virtual-time-container button {
+  background-color: #ff7f50;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  margin-top: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.virtual-time-container button:hover {
+  background-color: #ff6347;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }

@@ -19,6 +19,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import useVirtualTime from './hooks/useVirtualTime';
 import axios from 'axios';
+import CustomizeAvatar from './components/CustomizeAvatar';
+import './App.css';
+import Draggable from 'react-draggable';
 
 function App() {
   const { virtualSeconds, virtualDay, setVirtualDay } = useVirtualTime(48);
@@ -85,11 +88,13 @@ function App() {
     <Router>
       <div className="App">
         <Navigation />
-        <div className="virtual-time">
-          <h2>Virtual Time: {formatVirtualTime(virtualSeconds)}</h2>
-          <h2>Virtual Day: {virtualDay}</h2>
-          <button onClick={incrementDayAndGenerateGoals}>Increment Day Manually</button>
-        </div>
+        <Draggable>
+          <div className="virtual-time-container">
+            <h2>Virtual Time: {formatVirtualTime(virtualSeconds)}</h2>
+            <h2>Virtual Day: {virtualDay}</h2>
+            <button onClick={incrementDayAndGenerateGoals}>Increment Day Manually</button>
+          </div>
+        </Draggable>
         <Routes>
           <Route path="/" element={<Home virtualTime={virtualSeconds} virtualDay={virtualDay} />} />
           <Route path="/login" element={<Login />} />
@@ -114,6 +119,15 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/customize-avatar"
+            element={
+              <PrivateRoute>
+                <CustomizeAvatar />
+              </PrivateRoute>
+            }
+          />
+
           <Route
             path="/profile"
             element={

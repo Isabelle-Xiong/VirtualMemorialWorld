@@ -466,6 +466,28 @@ app.put('/api/profile', auth, async (req, res) => {
     res.send({ message: 'Password updated successfully' });
 });
 
+
+app.put('/api/save-avatar-customization/:id', auth, async (req, res) => {
+    try {
+        const avatarId = req.params.id;
+        const { avatarProps } = req.body;
+
+        const avatar = await Avatar.findByIdAndUpdate(
+            avatarId,
+            { $set: avatarProps },
+            { new: true }
+        );
+
+        if (!avatar) {
+            return res.status(404).json({ message: 'Avatar not found' });
+        }
+
+        res.json(avatar);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 // Endpoint to update avatar's routine and relationships based on virtual time
 app.post('/api/update-avatar-routine', auth, async (req, res) => {
     const { id, virtualTime } = req.body;

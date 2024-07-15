@@ -17,8 +17,11 @@ const hobbyOptions = [
     'Swimming', 'Other'
 ];
 
+
+
 function Avatar({ virtualTime }) { // Receive virtualTime as a prop
     const navigate = useNavigate();
+    const { id } = useParams();
     const [name, setName] = useState('');
     const [picture, setPicture] = useState('');
     const [age, setAge] = useState('');
@@ -38,6 +41,48 @@ function Avatar({ virtualTime }) { // Receive virtualTime as a prop
     const [childName, setChildName] = useState('');
     const [petType, setPetType] = useState('');
     const [petName, setPetName] = useState('');
+    const [avatarId, setAvatarId] = useState(null);
+    const [avatarProps, setAvatarProps] = useState({
+        topType: "ShortHairShortFlat",
+        accessoriesType: "Blank",
+        hairColor: "BrownDark",
+        facialHairType: "Blank",
+        clotheType: "BlazerSweater",
+        eyeType: "Default",
+        eyebrowType: "Default",
+        mouthType: "Smile",
+        skinColor: "Light"
+    });
+
+    useEffect(() => {
+        const fetchAvatarData = async () => {
+            const token = localStorage.getItem('token');
+            try {
+                const response = await axios.get(`http://localhost:5001/api/avatars/${id}`, {
+                    headers: { 'x-auth-token': token },
+                });
+                const avatarData = response.data;
+                setAvatarId(avatarData._id);
+                setAvatarProps({
+                    topType: avatarData.topType || "ShortHairShortFlat",
+                    accessoriesType: avatarData.accessoriesType || "Blank",
+                    hairColor: avatarData.hairColor || "BrownDark",
+                    facialHairType: avatarData.facialHairType || "Blank",
+                    clotheType: avatarData.clotheType || "BlazerSweater",
+                    eyeType: avatarData.eyeType || "Default",
+                    eyebrowType: avatarData.eyebrowType || "Default",
+                    mouthType: avatarData.mouthType || "Smile",
+                    skinColor: avatarData.skinColor || "Light"
+                });
+            } catch (error) {
+                console.error('Error fetching avatar data:', error);
+            }
+        };
+
+        if (id) {
+            fetchAvatarData();
+        }
+    }, [id]);
 
     // Job-related state variables
     const [jobs, setJobs] = useState([]);
@@ -154,6 +199,7 @@ function Avatar({ virtualTime }) { // Receive virtualTime as a prop
                 { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes, jobs, goals },
                 { headers: { 'x-auth-token': token } }
             );
+            setAvatarId(response.data._id); // Set the avatarId from the response
             navigate('/');
             console.log('Avatar created:', response.data);
         } catch (error) {
@@ -448,6 +494,14 @@ function Avatar({ virtualTime }) { // Receive virtualTime as a prop
                         onChange={(e) => setSpecialNotes(e.target.value)}
                     />
                 </div>
+                <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() => navigate('/customize-avatar')}
+                >
+                    Customize Avatar
+                </button>
+                
                 <button type="submit" className="btn btn-create">Create Avatar</button>
             </form>
         </div>

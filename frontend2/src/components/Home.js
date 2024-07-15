@@ -108,16 +108,15 @@ function Home({ speedMultiplier }) {
             </div>
         ));
     };
-
     return (
         <div className="container">
-            <h2 className="my-4">Avatars</h2>
+            <h2 className="my-4 avatars-title">Avatars</h2>
             <div className="avatars-container">
                 {Array.isArray(avatars) && avatars.length > 0 ? (
                     avatars.map((avatar) => (
                         <div key={avatar._id} className="avatar-card">
-                            <button className="btn btn-danger release-button" onClick={() => deleteAvatar(avatar._id)}>Release</button>
-                            <button className="btn btn-primary edit-button" onClick={() => window.location.href = `/edit-avatar/${avatar._id}`}>Edit</button>
+                            <button className="edit-button" onClick={() => window.location.href = `/edit-avatar/${avatar._id}`}>Edit</button>
+                            <button className="release-button" onClick={() => deleteAvatar(avatar._id)}>Release</button>
                             <div className="avatar-header">
                                 <img src={avatar.picture} alt={avatar.name} className="avatar-picture" />
                                 <h5 className="avatar-name">{avatar.name}</h5>
@@ -130,8 +129,8 @@ function Home({ speedMultiplier }) {
                                 <p><strong>Personality:</strong> {avatar.personality}</p>
                                 <p><strong>Special Notes:</strong> {avatar.specialNotes}</p>
                                 <div className="button-group">
-                                    <button className="btn btn-info" onClick={() => handleShowModal(avatar.relationships, 'relationships')}>Relationships</button>
-                                    <button className="btn btn-info" onClick={() => handleShowModal(avatar.jobs, 'jobs')}>Career</button>
+                                    <button className="button-group-btn" onClick={() => handleShowModal(avatar.relationships, 'relationships')}>Relationships</button>
+                                    <button className="button-group-btn" onClick={() => handleShowModal(avatar.jobs, 'jobs')}>Career</button>
                                 </div>
                             </div>
                             <div className="avatar-icons">
@@ -206,4 +205,4 @@ const hoverStyle = {
     zIndex: 2,
 };
 
-export default Home;
+export default Home
