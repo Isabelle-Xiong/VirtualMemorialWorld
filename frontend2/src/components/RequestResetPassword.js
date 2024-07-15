@@ -1,8 +1,8 @@
-// RequestResetPassword.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../Auth.css'; // Ensure you import the CSS file
 
 function RequestResetPassword() {
     const [email, setEmail] = useState('');
@@ -22,21 +22,24 @@ function RequestResetPassword() {
     };
 
     return (
-        <div>
-            <h2>Request Password Reset</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit">Request Password Reset</button>
-            </form>
-            {message && <p>{message}</p>}
+        <div className="auth-container">
+            <h2 className="auth-title">Request Password Reset</h2>
+            <div className="auth-form-container">
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label className="auth-label">Email:</label>
+                        <input
+                            type="email"
+                            className="auth-input"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="auth-button">Request Password Reset</button>
+                </form>
+                {message && <p>{message}</p>}
+            </div>
         </div>
     );
 }

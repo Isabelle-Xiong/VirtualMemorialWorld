@@ -187,7 +187,7 @@ function Avatar({ virtualTime }) { // Receive virtualTime as a prop
 
     return (
         <div className="container">
-            <h2 className="my-4">Create Avatar</h2>
+            <h2 className="auth-title">Create Avatar</h2>
             <form onSubmit={handleSubmit} className="form-center">
                 <div className="mb-3">
                     <input

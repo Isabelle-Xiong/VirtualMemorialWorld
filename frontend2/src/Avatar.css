@@ -4,6 +4,18 @@
     align-items: center;
 }
 
+.auth-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 3rem;
+    background: linear-gradient(145deg, #6a11cb, #2575fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
 .form-center {
     width: 100%;
     max-width: 600px;
@@ -55,7 +67,7 @@ button.btn-primary:hover {
 }
 
 button.btn-secondary {
-    background: linear-gradient(145deg, #79b3ff, #2b95ff);
+    background: linear-gradient(145deg, #79b3ff, #b3d9ff);
     color: white;
 }
 

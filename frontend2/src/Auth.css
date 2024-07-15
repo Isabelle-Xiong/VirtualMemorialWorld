@@ -1,4 +1,4 @@
-/* Common styles for login and register components */
+/* Common styles for login, register, and request reset password components */
 .auth-container {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(145deg, #e0eafc, #cfdef3);
@@ -25,9 +25,7 @@
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     font-size: 3rem;
-    /* Increased font size for more emphasis */
     background: linear-gradient(145deg, #6a11cb, #2575fc);
-    /* Gradient effect */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
@@ -39,7 +37,6 @@
     font-weight: bold;
     margin-bottom: 10px;
     text-align: left;
-
 }
 
 .auth-input {
