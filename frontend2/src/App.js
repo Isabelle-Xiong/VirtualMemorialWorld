@@ -92,8 +92,8 @@ function App() {
         <Navigation />
         <Draggable>
           <div className="virtual-time-container">
-            <h2>Virtual Time: {formatVirtualTime(virtualSeconds)}</h2>
-            <h2>Virtual Day: {virtualDay}</h2>
+            <h1>Virtual Time: {formatVirtualTime(virtualSeconds)}</h1>
+            <h1>Virtual Day: {virtualDay}</h1>
             <button onClick={incrementDayAndGenerateGoals}>Increment Day Manually</button>
           </div>
         </Draggable>

@@ -76,9 +76,9 @@
   z-index: 1000;
 }
 
-.virtual-time-container h2 {
+.virtual-time-container h1 {
   font-size: 1.3rem;
-  color: #ffffff;
+  color: white !important;
   margin: 5px 0;
   font-family: 'Roboto', sans-serif;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
