@@ -137,7 +137,15 @@ function Home({ speedMultiplier }) {
                                 <a href="#" className="avatar-creator" onClick={() => handleUserClick(avatar.userId?._id, avatar.userId?.username)}>
                                     {avatar.userId?.username}
                                 </a>
-                                <img src={avatar.picture} alt={avatar.name} className="avatar-picture" />
+                                {/* <img src={avatar.picture} alt={avatar.name} className="avatar-picture" /> */}
+                                <div className="avatar-picture-container">
+                                    <img
+                                        src={avatar.picture}
+                                        alt={avatar.name}
+                                        className="avatar-picture"
+                                        onClick={() => navigate(`/avatar-home/${avatar._id}`)}
+                                    />
+                                </div>
                                 <h5 className="avatar-name">{avatar.name}</h5>
                             </div>
                             <div className="avatar-details">

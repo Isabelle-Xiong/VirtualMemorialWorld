@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
 import Avatar from './components/Avatar';
+import AvatarHome from './components/AvatarHome'; 
 import EditAvatar from './components/EditAvatar';
 import Logout from './components/Logout';
 import Profile from './components/Profile';
@@ -161,6 +162,8 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path="/avatar-home/:id" element={<AvatarHome />} />
+          
         </Routes>
 
         <VirtualClock speedMultiplier={48} onTick={handleTick} />
