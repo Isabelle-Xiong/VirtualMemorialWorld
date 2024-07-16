@@ -5,6 +5,7 @@ import { faLightbulb, faBullseye, faCalendarAlt } from '@fortawesome/free-solid-
 import '../Home.css';
 import useVirtualTime from '../hooks/useVirtualTime'; // Import the custom hook
 import Chat from './Chat';
+import { useNavigate } from 'react-router-dom';
 
 // Function to strip the prompt from the generated goal text
 const stripPrompt = (text, prompt = "Tell me about your goals.") => {
@@ -19,6 +20,7 @@ function Home({ speedMultiplier }) {
     const [modalType, setModalType] = useState(null); // Add modalType state
     const [hoverContent, setHoverContent] = useState(null);
     const [selectedUser, setSelectedUser] = useState(null);
+    const navigate = useNavigate();
 
     const fetchAvatars = async () => {
         const token = localStorage.getItem('token');

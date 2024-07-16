@@ -1,0 +1,85 @@
+/* ChatUsers.css */
+.chat-users-container {
+    background: linear-gradient(to bottom, #e0eafc, #cfdef3);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+}
+
+.messages-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 3rem;
+    background: linear-gradient(145deg, #6a11cb, #2575fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chat-users-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.chat-user-item {
+    background: #fff;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.username {
+    font-size: 1.2rem;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+}
+
+.username:hover {
+    color: #007bff;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-button,
+.friend-request-button {
+    background: linear-gradient(145deg, #64b3f4, #4e6cff);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+}
+
+.chat-button:hover,
+.friend-request-button:hover {
+    background-color: #4e6cff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.chat-button .fa-comments,
+.friend-request-button .fa-user-friends {
+    margin-right: 5px;
+}

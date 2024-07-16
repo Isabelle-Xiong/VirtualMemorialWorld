@@ -1,11 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Rnd } from 'react-rnd';
 import '../Chat.css';
 
-const Chat = ({ recipientId, recipientUsername, onClose }) => {
+const Chat = ({ recipientId: propRecipientId, recipientUsername: propRecipientUsername, onClose }) => {
+    const { recipientId: paramRecipientId } = useParams();
+    const recipientId = propRecipientId || paramRecipientId;
+    const [recipientUsername, setRecipientUsername] = useState(propRecipientUsername);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
+    const navigate = useNavigate();
+
+    // Fetch recipient username if not provided
+    useEffect(() => {
+        if (!recipientUsername) {
+            const fetchRecipientUsername = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:5001/api/users/${recipientId}`, {
+                        headers: { 'x-auth-token': localStorage.getItem('token') },
+                    });
+                    setRecipientUsername(response.data.username);
+                } catch (error) {
+                    console.error('Error fetching recipient username:', error);
+                }
+            };
+
+            fetchRecipientUsername();
+        }
+    }, [recipientId, recipientUsername]);
 
     // Fetch messages whenever recipientId changes
     useEffect(() => {
@@ -50,8 +73,8 @@ const Chat = ({ recipientId, recipientUsername, onClose }) => {
         <Rnd default={{ x: 100, y: 100, width: 300, height: 400 }} minWidth={300} minHeight={400}>
             <div className="chat-window">
                 <div className="chat-header">
-                    <h4>Chat with {recipientUsername}</h4>
-                    <button onClick={onClose}>Close</button>
+                    <h4>Chat with {recipientUsername || 'Loading...'}</h4>
+                    <button onClick={() => onClose ? onClose() : navigate(-1)}>Close</button>
                 </div>
                 <div className="chat-body">
                     {Array.isArray(messages) && messages.map((message) => (

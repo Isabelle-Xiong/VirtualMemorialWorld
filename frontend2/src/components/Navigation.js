@@ -1,16 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faComments } from '@fortawesome/free-solid-svg-icons';
 import '../Navigation.css';
 
 function Navigation() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [chatUsers, setChatUsers] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Check login status from localStorage
         const token = localStorage.getItem('token');
-        setIsLoggedIn(!!token);
+        if (token) {
+            setIsLoggedIn(true);
+            fetchChatUsers(token);
+        }
     }, []);
+
+    const fetchChatUsers = async (token) => {
+        try {
+            const response = await axios.get('http://localhost:5001/api/chat-users', {
+                headers: { 'x-auth-token': token },
+            });
+            console.log('Chat users response:', response.data);
+            setChatUsers(Array.isArray(response.data) ? response.data : []);
+        } catch (error) {
+            console.error('Error fetching chat users:', error);
+        }
+    };
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -40,7 +58,20 @@ function Navigation() {
                         )}
                     </ul>
                     <ul className="navbar-nav ms-auto">
-                        {!isLoggedIn ? (
+                        {isLoggedIn ? (
+                            <>
+                                <li className="nav-item">
+                                    <button className="btn btn-link nav-link" onClick={() => navigate('/chat-users')}>
+                                        <FontAwesomeIcon icon={faComments} />
+                                    </button>
+                                </li>
+                                <li className="nav-item">
+                                    <button className="btn btn-link nav-link" onClick={handleLogout}>
+                                        Logout
+                                    </button>
+                                </li>
+                            </>
+                        ) : (
                             <>
                                 <li className="nav-item">
                                     <Link className="nav-link" to="/login">Login</Link>
@@ -49,10 +80,6 @@ function Navigation() {
                                     <Link className="nav-link" to="/register">Register</Link>
                                 </li>
                             </>
-                        ) : (
-                            <li className="nav-item">
-                                <button className="nav-link btn btn-link" onClick={handleLogout}>Logout</button>
-                            </li>
                         )}
                     </ul>
                 </div>

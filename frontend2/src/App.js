@@ -19,6 +19,9 @@ import CustomizeAvatar from './components/CustomizeAvatar';
 import './App.css';
 import Draggable from 'react-draggable';
 import RequestSecurityQuestion from './components/RequestSecurityQuestion';
+import ChatUsers from './components/ChatUsers';
+import Chat from './components/Chat';
+
 
 function App() {
   const { virtualSeconds, virtualDay, setVirtualDay } = useVirtualTime(48);
@@ -133,8 +136,24 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/chat-users"
+            element={
+              <PrivateRoute>
+                <ChatUsers />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/chat/:recipientId"
+            element={
+              <PrivateRoute>
+                <Chat />
+              </PrivateRoute>
+            }
+          />
         </Routes>
-        
+
         <VirtualClock speedMultiplier={48} onTick={handleTick} />
       </div>
     </Router>

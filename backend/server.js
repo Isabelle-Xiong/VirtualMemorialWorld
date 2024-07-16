@@ -86,6 +86,54 @@ app.get('/api/messages/:recipientId', auth, async (req, res) => {
     }
 });
 
+
+// Get user by ID
+app.get('/api/users/:id', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id).select('username');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.json(user);
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+//get all users who chatted with you
+app.get('/api/chat-users', auth, async (req, res) => {
+    try {
+        const userId = req.user.userId;
+
+        // Find unique chat users (both sender and receiver)
+        const messages = await Message.find({
+            $or: [
+                { sender: userId },
+                { receiver: userId }
+            ]
+        }).populate('sender receiver', 'username');
+
+        // Create a unique list of chat users
+        const chatUsersSet = new Set();
+        messages.forEach(message => {
+            if (message.sender._id.toString() !== userId) {
+                chatUsersSet.add(JSON.stringify(message.sender));
+            }
+            if (message.receiver._id.toString() !== userId) {
+                chatUsersSet.add(JSON.stringify(message.receiver));
+            }
+        });
+
+        const chatUsers = Array.from(chatUsersSet).map(user => JSON.parse(user));
+
+        res.json(chatUsers);
+    } catch (error) {
+        console.error('Error fetching chat users:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 // Send a new message
 app.post('/api/messages', auth, async (req, res) => {
     const { recipientId, content } = req.body;
