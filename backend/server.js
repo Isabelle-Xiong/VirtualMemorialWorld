@@ -52,6 +52,35 @@ app.post('/api/reset-password-with-security-question', async (req, res) => {
     res.send({ message: 'Password has been reset' });
 });
 
+// Reset password using token
+app.post('/api/reset-password/:token', async (req, res) => {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    try {
+        // Verify the token
+        const decoded = jwt.verify(token, 'your_jwt_secret');
+        const userId = decoded.userId;
+
+        // Find the user
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(400).json({ message: 'User not found' });
+        }
+
+        // Hash the new password
+        user.password = await bcrypt.hash(password, 10);
+
+        // Save the updated user
+        await user.save();
+
+        res.status(200).json({ message: 'Password has been reset successfully' });
+    } catch (error) {
+        console.error('Error resetting password:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 
 
 
