@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
     username: { type: String, unique: true },
     password: String,
     email: { type: String, unique: true, required: true },
@@ -17,15 +18,28 @@ const userSchema = new mongoose.Schema({
     ]
 });
 
-const messageSchema = new mongoose.Schema({
-    sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    receiver: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+const messageSchema = new Schema({
+    sender: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    receiver: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     content: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
 });
+const friendRequestSchema = new Schema({
+    sender: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    receiver: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    status: { type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending' },
+    createdAt: { type: Date, default: Date.now }
+});
 
+friendRequestSchema.index({ sender: 1, receiver: 1 }, { unique: true });
 
-const relationshipSchema = new mongoose.Schema({
+const friendSchema = new Schema({
+    user1: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    user2: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    createdAt: { type: Date, default: Date.now }
+});
+
+const relationshipSchema = new Schema({
     type: String,
     name: String,
     since: Date,
@@ -36,19 +50,19 @@ const relationshipSchema = new mongoose.Schema({
     }
 });
 
-const childSchema = new mongoose.Schema({
+const childSchema = new Schema({
     gender: String,
     name: String,
     age: Number,
     birthday: Date
 });
 
-const petSchema = new mongoose.Schema({
+const petSchema = new Schema({
     type: String,
     name: String
 });
 
-const jobSchema = new mongoose.Schema({
+const jobSchema = new Schema({
     title: String,
     company: String,
     startDate: Date,
@@ -56,19 +70,18 @@ const jobSchema = new mongoose.Schema({
     isCurrent: Boolean
 });
 
-
-const avatarSchema = new mongoose.Schema({
+const avatarSchema = new Schema({
     name: { type: String, required: true },
     picture: { type: String, required: true },
     age: { type: Number, required: true },
     birthday: { type: Date, required: true },
-    hobbies: { type: [String], required: true }, // Updated to accept arrays of strings
+    hobbies: { type: [String], required: true }, 
     education: { type: String, required: true },
-    career: { type: [String], required: true }, // Updated to accept arrays of strings
+    career: { type: [String], required: true }, 
     maritalStatus: { type: String, required: true },
     children: [childSchema],
     pets: [petSchema],
-    personality: { type: [String], required: true }, // Updated to accept arrays of strings
+    personality: { type: [String], required: true }, 
     specialNotes: String,
     goals: [
         {
@@ -99,7 +112,7 @@ const avatarSchema = new mongoose.Schema({
     eyebrowType: { type: String, default: 'Default' },
     mouthType: { type: String, default: 'Smile' },
     skinColor: { type: String, default: 'Light' },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true }
 });
 
 // Pre-save middleware to slice the goals array to only keep the latest 5 goals
@@ -110,9 +123,11 @@ avatarSchema.pre('save', function (next) {
     next();
 });
 
-
 const User = mongoose.model('User', userSchema);
 const Avatar = mongoose.model('Avatar', avatarSchema);
 const Message = mongoose.model('Message', messageSchema);
+const FriendRequest = mongoose.model('FriendRequest', friendRequestSchema);
+const Friend = mongoose.model('Friend', friendSchema);
 
-module.exports = { User, Avatar, Message};
+
+module.exports = { User, Avatar, Message, FriendRequest, Friend};

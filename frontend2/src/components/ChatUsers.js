@@ -3,11 +3,12 @@ import axios from 'axios';
 import Chat from './Chat';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserFriends, faComments } from '@fortawesome/free-solid-svg-icons';
-import '../ChatUsers.css'; // Make sure to create and import the CSS file for styling
+import '../ChatUsers.css'; 
 
 const ChatUsers = () => {
     const [chatUsers, setChatUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [friendRequestStatus, setFriendRequestStatus] = useState({});
 
     useEffect(() => {
         const fetchChatUsers = async () => {
@@ -34,9 +35,21 @@ const ChatUsers = () => {
         setSelectedUser({ userId, username });
     };
 
-    const sendFriendRequest = (userId) => {
-        console.log(`Send friend request to user with ID: ${userId}`);
-        // Implement friend request functionality here
+    const sendFriendRequest = async (userId) => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('No token found, please log in.');
+            return;
+        }
+
+        try {
+            const response = await axios.post('http://localhost:5001/api/friend-request', { receiverId: userId }, {
+                headers: { 'x-auth-token': token },
+            });
+            setFriendRequestStatus({ ...friendRequestStatus, [userId]: response.data.message });
+        } catch (error) {
+            console.error('Error sending friend request:', error);
+        }
     };
 
     return (
@@ -61,6 +74,9 @@ const ChatUsers = () => {
                             >
                                 <FontAwesomeIcon icon={faUserFriends} /> Send Friend Request
                             </button>
+                            {friendRequestStatus[user._id] && (
+                                <span className="friend-request-status">{friendRequestStatus[user._id]}</span>
+                            )}
                         </div>
                     </li>
                 ))}

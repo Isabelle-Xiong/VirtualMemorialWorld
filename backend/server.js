@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const path = require('path');
 const auth = require('./middleware/auth');
 const crypto = require('crypto');
-const { User, Avatar, Message} = require('./models');
+const { User, Avatar, Message, FriendRequest, Friend} = require('./models');
 const { spawn } = require('child_process');
 const textGeneratorPath = path.resolve(__dirname, '../nlp/sentiment_analysis/pipeline1/generate_final_goal.py');
 
@@ -146,7 +146,7 @@ app.post('/api/messages', auth, async (req, res) => {
         });
         await newMessage.save();
 
-        // Ensure only the latest 20 messages are stored
+        // Ensure only the latest 15 messages are stored
         await Message.deleteMany({
             $or: [
                 { sender: req.user.userId, receiver: recipientId },
@@ -157,13 +157,108 @@ app.post('/api/messages', auth, async (req, res) => {
                     { sender: req.user.userId, receiver: recipientId },
                     { sender: recipientId, receiver: req.user.userId }
                 ]
-            }).sort({ createdAt: -1 }).limit(20)).map(m => m._id) }
+            }).sort({ createdAt: -1 }).limit(15)).map(m => m._id) }
         });
 
         res.status(201).json(newMessage);
     } catch (error) {
         console.error('Error sending message:', error);
         res.status(500).json({ message: 'Error sending message' });
+    }
+});
+
+// Add the friend request route
+app.post('/api/friend-request', auth, async (req, res) => {
+    const { receiverId } = req.body;
+    const senderId = req.user.userId;
+
+    try {
+        // Check if a friend request already exists
+        const existingRequest = await FriendRequest.findOne({ sender: senderId, receiver: receiverId });
+        if (existingRequest) {
+            return res.status(400).json({ message: 'Friend request already sent.' });
+        }
+
+        const newFriendRequest = new FriendRequest({
+            sender: senderId,
+            receiver: receiverId,
+        });
+        await newFriendRequest.save();
+
+        res.status(200).json({ message: 'Friend request sent successfully.' });
+    } catch (error) {
+        console.error('Error sending friend request:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Get friend requests for the logged-in user
+app.get('/api/friend-requests', auth, async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const friendRequests = await FriendRequest.find({ receiver: userId })
+            .populate('sender', 'username')
+            .populate('receiver', 'username');
+        res.json(friendRequests);
+    } catch (error) {
+        console.error('Error fetching friend requests:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+// Handle accepting or declining a friend request
+app.post('/api/friend-request/respond', auth, async (req, res) => {
+    const { requestId, action } = req.body;
+
+    try {
+        const friendRequest = await FriendRequest.findById(requestId);
+
+        if (!friendRequest) {
+            return res.status(404).json({ message: 'Friend request not found.' });
+        }
+
+        if (action === 'accept') {
+            friendRequest.status = 'accepted';
+
+            // Create a new entry in the Friend collection
+            const newFriend = new Friend({
+                user1: friendRequest.sender,
+                user2: friendRequest.receiver,
+            });
+            await newFriend.save();
+        } else if (action === 'decline') {
+            friendRequest.status = 'rejected';
+        } else {
+            return res.status(400).json({ message: 'Invalid action.' });
+        }
+
+        await friendRequest.save();
+
+        // Optionally, you can delete the request from the database
+        await FriendRequest.findByIdAndDelete(requestId);
+
+        res.status(200).json({ message: `Friend request ${action}ed successfully.` });
+    } catch (error) {
+        console.error(`Error ${action}ing friend request:`, error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Get accepted friends for the logged-in user
+app.get('/api/friends', auth, async (req, res) => {
+    try {
+        const userId = req.user.userId;
+        const friends = await Friend.find({
+            $or: [{ user1: userId }, { user2: userId }]
+        }).populate('user1 user2', 'username');
+
+        const friendList = friends.map(friend => {
+            return friend.user1._id.toString() === userId ? friend.user2 : friend.user1;
+        });
+
+        res.json(friendList);
+    } catch (error) {
+        console.error('Error fetching accepted friends:', error);
+        res.status(500).json({ message: 'Server error' });
     }
 });
 

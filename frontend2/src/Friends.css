@@ -1,5 +1,5 @@
-/* ChatUsers.css */
-.chat-users-container {
+/* Friends.css */
+.friends-container {
     background: linear-gradient(to bottom, #e0eafc, #cfdef3);
     padding: 20px;
     border-radius: 20px;
@@ -11,23 +11,38 @@
     color: #333;
 }
 
-.messages-title {
+h2, h3 {
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
-    font-size: 3rem;
+    font-size: 2.5rem;
     background: linear-gradient(145deg, #6a11cb, #2575fc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.chat-users-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 20px 0;
+.friend-requests-section {
+    margin-top: 20px;
 }
 
-.chat-user-item {
+.friend-requests-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.friend-requests-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.friend-request-item {
     background: #fff;
     padding: 15px;
     margin: 10px 0;
@@ -38,17 +53,25 @@
     align-items: center;
 }
 
-.username {
-    font-size: 1.2rem;
-    color: #333;
-    text-decoration: none;
-    transition: color 0.3s;
-    font-weight: bold;
-    font-family: 'Poppins', sans-serif;
+.accepted-friends-section {
+    margin-top: 30px;
 }
 
-.username:hover {
-    color: #007bff;
+.accepted-friends-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.accepted-friend-item {
+    background: #fff;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .action-buttons {
@@ -56,8 +79,9 @@
     gap: 10px;
 }
 
-.chat-button,
-.friend-request-button {
+.accept-button,
+.decline-button,
+.chat-button {
     background: linear-gradient(145deg, #64b3f4, #4e6cff);
     color: white;
     border: none;
@@ -72,20 +96,16 @@
     align-items: center;
 }
 
-.chat-button:hover,
-.friend-request-button:hover {
+.accept-button:hover,
+.decline-button:hover,
+.chat-button:hover {
     background-color: #4e6cff;
     transform: translateY(-2px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
-.chat-button .fa-comments,
-.friend-request-button .fa-user-friends {
+.accept-button .fa-user-friends,
+.decline-button .fa-user-friends,
+.chat-button .fa-comments {
     margin-right: 5px;
-}
-
-.friend-request-status {
-    margin-left: 10px;
-    font-size: 0.9rem;
-    color: #6a11cb;
 }

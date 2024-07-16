@@ -21,6 +21,7 @@ import Draggable from 'react-draggable';
 import RequestSecurityQuestion from './components/RequestSecurityQuestion';
 import ChatUsers from './components/ChatUsers';
 import Chat from './components/Chat';
+import Friends from './components/Friends';
 
 
 function App() {
@@ -149,6 +150,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Chat />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/friends"
+            element={
+              <PrivateRoute>
+                <Friends />
               </PrivateRoute>
             }
           />

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComments } from '@fortawesome/free-solid-svg-icons';
+import { faComments, faUserFriends } from '@fortawesome/free-solid-svg-icons';
 import '../Navigation.css';
 
 function Navigation() {
@@ -60,6 +60,11 @@ function Navigation() {
                     <ul className="navbar-nav ms-auto">
                         {isLoggedIn ? (
                             <>
+                                <li className="nav-item">
+                                    <button className="btn btn-link nav-link" onClick={() => navigate('/friends')}>
+                                        <FontAwesomeIcon icon={faUserFriends} />
+                                    </button>
+                                </li>
                                 <li className="nav-item">
                                     <button className="btn btn-link nav-link" onClick={() => navigate('/chat-users')}>
                                         <FontAwesomeIcon icon={faComments} />
