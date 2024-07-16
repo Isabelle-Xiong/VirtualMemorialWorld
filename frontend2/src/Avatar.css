@@ -1,5 +1,3 @@
-
-
 .container {
     display: flex;
     flex-direction: column;
@@ -49,6 +47,7 @@ button.btn-primary,
 button.btn-secondary,
 button.btn-create {
     border: none;
+    margin-top: 10px;
     border-radius: 20px;
     padding: 10px 20px;
     font-size: 16px;
@@ -143,5 +142,3 @@ button {
     background-color: #d27d2d;
     transform: scale(1.05);
 }
-
-
