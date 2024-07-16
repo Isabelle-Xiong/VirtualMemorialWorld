@@ -1,7 +1,7 @@
 /* home.css */
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(145deg, #e0eafc, #cfdef3);
+    background: linear-gradient(#e0eafc, #cfdef3);
     color: #333333;
     margin: 0;
     padding: 0;
@@ -12,7 +12,7 @@ body {
     margin: auto;
     text-align: center;
     padding-top: 80px;
-    background: linear-gradient(145deg, #e0eafc, #cfdef3);
+    background: linear-gradient(#e0eafc, #cfdef3);
     color: #333333;
     font-family: 'Poppins', sans-serif;
 }
@@ -226,4 +226,16 @@ body {
 .relationship-card p,
 .job-card p {
     margin: 6px 0;
+}
+
+.avatar-creator {
+    font-family: 'Courgette', cursive;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: white;
+    text-decoration: underline;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLightbulb, faBullseye, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import '../Home.css';
 import useVirtualTime from '../hooks/useVirtualTime'; // Import the custom hook
+import Chat from './Chat';
 
 // Function to strip the prompt from the generated goal text
 const stripPrompt = (text, prompt = "Tell me about your goals.") => {
@@ -17,6 +18,7 @@ function Home({ speedMultiplier }) {
     const [modalContent, setModalContent] = useState(null);
     const [modalType, setModalType] = useState(null); // Add modalType state
     const [hoverContent, setHoverContent] = useState(null);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     const fetchAvatars = async () => {
         const token = localStorage.getItem('token');
@@ -53,6 +55,18 @@ function Home({ speedMultiplier }) {
         } catch (error) {
             console.error('Error deleting avatar:', error);
         }
+    };
+
+    const handleUserClick = (userId, username) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const decodedToken = JSON.parse(atob(token.split('.')[1]));
+            if (decodedToken.userId === userId) {
+                console.error("You cannot chat with yourself.");
+                return;
+            }
+        }
+        setSelectedUser({ userId, username });
     };
 
     const handleShowModal = (content, type) => {
@@ -118,6 +132,9 @@ function Home({ speedMultiplier }) {
                             <button className="edit-button" onClick={() => window.location.href = `/edit-avatar/${avatar._id}`}>Edit</button>
                             <button className="release-button" onClick={() => deleteAvatar(avatar._id)}>Release</button>
                             <div className="avatar-header">
+                                <a href="#" className="avatar-creator" onClick={() => handleUserClick(avatar.userId?._id, avatar.userId?.username)}>
+                                    {avatar.userId?.username}
+                                </a>
                                 <img src={avatar.picture} alt={avatar.name} className="avatar-picture" />
                                 <h5 className="avatar-name">{avatar.name}</h5>
                             </div>
@@ -180,6 +197,13 @@ function Home({ speedMultiplier }) {
                         <p>No details available.</p>
                     )}
                 </div>
+            )}
+            {selectedUser && (
+                <Chat
+                    recipientId={selectedUser.userId}
+                    recipientUsername={selectedUser.username}
+                    onClose={() => setSelectedUser(null)}
+                />
             )}
         </div>
     );

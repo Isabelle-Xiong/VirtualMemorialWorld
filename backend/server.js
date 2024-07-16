@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const path = require('path');
 const auth = require('./middleware/auth');
 const crypto = require('crypto');
-const { User, Avatar } = require('./models');
+const { User, Avatar, Message} = require('./models');
 const { spawn } = require('child_process');
 const textGeneratorPath = path.resolve(__dirname, '../nlp/sentiment_analysis/pipeline1/generate_final_goal.py');
 
@@ -25,17 +25,6 @@ mongoose.connect(mongoUri, {
 }).catch(err => {
     console.error('Error connecting to MongoDB:', err);
 });
-
-
-// Request security question
-// app.post('/api/request-security-question', async (req, res) => {
-//     const { username } = req.body;
-//     const user = await User.findOne({ username });
-//     if (!user) {
-//         return res.status(400).send({ message: 'User not found' });
-//     }
-//     res.send({ securityQuestion: user.securityQuestion });
-// });
 
 // Verify security question and reset password
 app.post('/api/reset-password-with-security-question', async (req, res) => {
@@ -81,8 +70,54 @@ app.post('/api/reset-password/:token', async (req, res) => {
     }
 });
 
+// Get messages between two users
+app.get('/api/messages/:recipientId', auth, async (req, res) => {
+    try {
+        const messages = await Message.find({
+            $or: [
+                { sender: req.user.userId, receiver: req.params.recipientId },
+                { sender: req.params.recipientId, receiver: req.user.userId }
+            ]
+        }).sort('createdAt');
+        res.json(messages);
+    } catch (error) {
+        console.error('Error fetching messages:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
 
+// Send a new message
+app.post('/api/messages', auth, async (req, res) => {
+    const { recipientId, content } = req.body;
 
+    try {
+        const newMessage = new Message({
+            sender: req.user.userId,
+            receiver: recipientId,
+            content,
+        });
+        await newMessage.save();
+
+        // Ensure only the latest 20 messages are stored
+        await Message.deleteMany({
+            $or: [
+                { sender: req.user.userId, receiver: recipientId },
+                { sender: recipientId, receiver: req.user.userId }
+            ],
+            _id: { $nin: (await Message.find({
+                $or: [
+                    { sender: req.user.userId, receiver: recipientId },
+                    { sender: recipientId, receiver: req.user.userId }
+                ]
+            }).sort({ createdAt: -1 }).limit(20)).map(m => m._id) }
+        });
+
+        res.status(201).json(newMessage);
+    } catch (error) {
+        console.error('Error sending message:', error);
+        res.status(500).json({ message: 'Error sending message' });
+    }
+});
 
 // Function to execute the Python script and get the generated goal
 const generateGoalText = () => {
@@ -165,35 +200,6 @@ app.post('/api/generate-new-goal', auth, async (req, res) => {
     }
 });
 
-
-// // Generate a new goal for a specific avatar
-// app.post('/api/generate-new-goal', auth, async (req, res) => {
-//     const { avatarId } = req.body;
-//     try {
-//         const newGoalText = await generateGoalText().catch(error => {
-//             console.error('Error generating goal text:', error);
-//             return 'Generated goal could not be retrieved.';
-//         });
-
-//         if (!newGoalText) {
-//             return res.status(500).send({ error: 'Error generating new goal.' });
-//         }
-
-//         await Avatar.findOneAndUpdate(
-//             { _id: avatarId },
-//             {
-//                 $push: { goals: { $each: [{ goal: newGoalText, status: 'Not Started' }], $slice: -5 } }
-//             }
-//         );
-
-//         console.log(`New goal generated and saved for avatar ${avatarId}`);
-//         res.status(200).send({ message: 'New goal generated successfully.' });
-//     } catch (error) {
-//         console.error(`Error generating new goal for avatar ${avatarId}:`, error);
-//         res.status(500).send({ error: 'Error generating new goal.' });
-//     }
-// });
-
 // Test endpoint to call the generateGoalText function
 app.get('/api/test-generate-goal', async (req, res) => {
     try {
@@ -204,7 +210,6 @@ app.get('/api/test-generate-goal', async (req, res) => {
         res.status(500).send({ error: 'Error generating goal text.' });
     }
 });
-
 
 
 // Update goal statuses for a specific avatar
@@ -282,7 +287,7 @@ app.post('/api/request-security-question', async (req, res) => {
 
         // Generate a token for resetting the password
         const token = jwt.sign({ userId: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
-        
+
         // Log the token
         console.log('Generated token:', token);
 
@@ -421,9 +426,14 @@ app.get('/api/user-avatars', auth, async (req, res) => {
 
 // Get all avatars
 app.get('/api/avatars', auth, async (req, res) => {
-    const avatars = await Avatar.find();
-    res.send(avatars);
+    try {
+        const avatars = await Avatar.find().populate('userId', 'username');
+        res.send(avatars);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 });
+
 app.put('/api/avatars/:id', auth, async (req, res) => {
     const { id } = req.params;
     const {

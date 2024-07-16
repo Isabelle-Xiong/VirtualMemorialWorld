@@ -17,6 +17,14 @@ const userSchema = new mongoose.Schema({
     ]
 });
 
+const messageSchema = new mongoose.Schema({
+    sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    receiver: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    content: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now },
+});
+
+
 const relationshipSchema = new mongoose.Schema({
     type: String,
     name: String,
@@ -105,5 +113,6 @@ avatarSchema.pre('save', function (next) {
 
 const User = mongoose.model('User', userSchema);
 const Avatar = mongoose.model('Avatar', avatarSchema);
+const Message = mongoose.model('Message', messageSchema);
 
-module.exports = { User, Avatar };
+module.exports = { User, Avatar, Message};
