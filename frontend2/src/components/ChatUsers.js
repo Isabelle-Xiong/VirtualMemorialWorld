@@ -8,6 +8,7 @@ import '../ChatUsers.css';
 const ChatUsers = () => {
     const [chatUsers, setChatUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [acceptedFriends, setAcceptedFriends] = useState([]);
     const [friendRequestStatus, setFriendRequestStatus] = useState({});
 
     useEffect(() => {
@@ -28,7 +29,25 @@ const ChatUsers = () => {
             }
         };
 
+        const fetchAcceptedFriends = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('No token found, please log in.');
+                return;
+            }
+
+            try {
+                const response = await axios.get('http://localhost:5001/api/friends', {
+                    headers: { 'x-auth-token': token },
+                });
+                setAcceptedFriends(Array.isArray(response.data) ? response.data : []);
+            } catch (error) {
+                console.error('Error fetching accepted friends:', error);
+            }
+        };
+
         fetchChatUsers();
+        fetchAcceptedFriends();
     }, []);
 
     const handleUserClick = (userId, username) => {
@@ -52,6 +71,10 @@ const ChatUsers = () => {
         }
     };
 
+    const isFriend = (userId) => {
+        return acceptedFriends.some(friend => friend._id === userId);
+    };
+
     return (
         <div className="chat-users-container">
             <h2 className="messages-title">Messages</h2>
@@ -68,12 +91,14 @@ const ChatUsers = () => {
                             >
                                 <FontAwesomeIcon icon={faComments} /> Chat
                             </button>
-                            <button
-                                className="friend-request-button"
-                                onClick={() => sendFriendRequest(user._id)}
-                            >
-                                <FontAwesomeIcon icon={faUserFriends} /> Send Friend Request
-                            </button>
+                            {!isFriend(user._id) && (
+                                <button
+                                    className="friend-request-button"
+                                    onClick={() => sendFriendRequest(user._id)}
+                                >
+                                    <FontAwesomeIcon icon={faUserFriends} /> Send Friend Request
+                                </button>
+                            )}
                             {friendRequestStatus[user._id] && (
                                 <span className="friend-request-status">{friendRequestStatus[user._id]}</span>
                             )}

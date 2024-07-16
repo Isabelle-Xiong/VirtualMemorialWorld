@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserFriends, faChevronDown, faChevronUp, faComments } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faComments } from '@fortawesome/free-solid-svg-icons';
 import '../Friends.css';
 import Chat from './Chat';
 
@@ -84,12 +84,11 @@ const Friends = () => {
 
     return (
         <div className="friends-container">
-            <h2>Friends</h2>
+            <h2>Friend Requests</h2>
             <div className="friend-requests-section">
-                <div className="friend-requests-header" onClick={() => setShowRequests(!showRequests)}>
-                    <h3>Friend Requests</h3>
+                <button className="toggle-button" onClick={() => setShowRequests(!showRequests)}>
                     <FontAwesomeIcon icon={showRequests ? faChevronUp : faChevronDown} />
-                </div>
+                </button>
                 {showRequests && (
                     <ul className="friend-requests-list">
                         {friendRequests.map(request => (
@@ -100,13 +99,13 @@ const Friends = () => {
                                         className="accept-button"
                                         onClick={() => handleRequestAction(request._id, 'accept')}
                                     >
-                                        Accept
+                                        Confirm
                                     </button>
                                     <button
                                         className="decline-button"
                                         onClick={() => handleRequestAction(request._id, 'decline')}
                                     >
-                                        Decline
+                                        Delete
                                     </button>
                                 </div>
                             </li>
@@ -114,8 +113,8 @@ const Friends = () => {
                     </ul>
                 )}
             </div>
+            <h2>Accepted Friends</h2>
             <div className="accepted-friends-section">
-                <h3>Accepted Friends</h3>
                 <ul className="accepted-friends-list">
                     {acceptedFriends.map(friend => (
                         <li key={friend._id} className="accepted-friend-item">

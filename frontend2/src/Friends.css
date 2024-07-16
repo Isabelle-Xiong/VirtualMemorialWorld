@@ -1,17 +1,16 @@
-/* Friends.css */
 .friends-container {
     background: linear-gradient(to bottom, #e0eafc, #cfdef3);
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    width: 80%;
+    width: 50%;
     margin: auto;
     text-align: center;
     font-family: 'Poppins', sans-serif;
     color: #333;
 }
 
-h2, h3 {
+h2 {
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     font-size: 2.5rem;
@@ -19,13 +18,16 @@ h2, h3 {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
 }
 
-.friend-requests-section {
+.friend-requests-section,
+.accepted-friends-section {
     margin-top: 20px;
 }
 
-.friend-requests-header {
+.friend-requests-header,
+.accepted-friends-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -34,49 +36,64 @@ h2, h3 {
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
 }
 
-.friend-requests-list {
-    list-style-type: none;
-    padding: 0;
-    margin: 10px 0;
-}
-
-.friend-request-item {
-    background: #fff;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.accepted-friends-section {
-    margin-top: 30px;
-}
-
+/* Friend Requests */
+.friend-requests-list,
 .accepted-friends-list {
     list-style-type: none;
     padding: 0;
     margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Center the list items */
 }
 
+.friend-request-item,
 .accepted-friend-item {
-    background: #fff;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #f0f0f0;
+    padding: 10px 20px;
+    margin: 5px 0;
+    border-radius: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    max-width: 500px;
+    /* Adjust to fit your layout */
 }
 
-.action-buttons {
+.friend-request-item span,
+.accepted-friend-item span {
+    flex: 1;
+    text-align: center;
+    /* Center the username */
+}
+
+.friend-request-item .action-buttons,
+.accepted-friend-item .chat-button {
+    margin-left: 10px;
+}
+
+.friend-requests-header {
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    background: none;
+    border: none;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+.toggle-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
 }
 
 .accept-button,
@@ -86,8 +103,8 @@ h2, h3 {
     color: white;
     border: none;
     border-radius: 20px;
-    padding: 10px 20px;
-    font-size: 14px;
+    padding: 5px 10px;
+    font-size: 12px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
@@ -102,10 +119,4 @@ h2, h3 {
     background-color: #4e6cff;
     transform: translateY(-2px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-}
-
-.accept-button .fa-user-friends,
-.decline-button .fa-user-friends,
-.chat-button .fa-comments {
-    margin-right: 5px;
 }
