@@ -3,7 +3,6 @@
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(145deg, #e0eafc, #cfdef3);
     color: #333333;
-    margin: 0;
     padding: 0;
     width: 80%;
     margin: auto;
@@ -80,4 +79,31 @@
 
 .auth-footer a:hover {
     color: #4e6cff;
+}
+
+.security-questions-container {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #cfdef3;
+}
+
+.security-question {
+    margin-bottom: 20px;
+}
+
+.security-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.security-dropdown {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid #cfdef3;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
