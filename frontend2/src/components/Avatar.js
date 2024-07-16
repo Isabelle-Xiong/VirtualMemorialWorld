@@ -465,8 +465,19 @@ function Avatar({ virtualTime }) { // Receive virtualTime as a prop
                             </select>
                             <button type="button" className="btn btn-link btn-sm" onClick={() => handleRemoveGoal(index)}>x</button>
                         </div>
+
+
                     ))}
                     <button type="button" className="btn btn-primary" onClick={handleAddGoal}>Add Goal</button>
+                </div>
+                <div className="mb-3">
+                    <textarea
+                        className="form-control"
+                        placeholder="Special Notes"
+                        value={specialNotes}
+                        onChange={(e) => setSpecialNotes(e.target.value)}
+                        rows="3"
+                    />
                 </div>
                 <div className="bottom-buttons">
                     <button
