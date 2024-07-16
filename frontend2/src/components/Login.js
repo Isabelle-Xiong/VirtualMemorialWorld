@@ -2,8 +2,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import '../Auth.css';  // Ensure this line imports the new CSS file
 
 function Login() {
@@ -15,11 +13,9 @@ function Login() {
         try {
             const response = await axios.post('http://localhost:5001/api/login', { username, password });
             localStorage.setItem('token', response.data.token);
-            toast.success('Login successful');
             window.location.href = '/';
         } catch (error) {
             console.error('Error logging in:', error);
-            toast.error('Error logging in');
         }
     };
 

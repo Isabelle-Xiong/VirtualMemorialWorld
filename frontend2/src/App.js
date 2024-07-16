@@ -1,4 +1,3 @@
-
 import React, { useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/Home';
@@ -10,18 +9,16 @@ import Logout from './components/Logout';
 import Profile from './components/Profile';
 import PrivateRoute from './components/PrivateRoute';
 import Navigation from './components/Navigation';
-import RequestResetPassword from './components/RequestResetPassword';
 import ResetPassword from './components/ResetPassword';
 import VerifyEmail from './components/VerifyEmail';
 import VirtualClock from './components/VirtualClock';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import useVirtualTime from './hooks/useVirtualTime';
 import axios from 'axios';
 import CustomizeAvatar from './components/CustomizeAvatar';
 import './App.css';
 import Draggable from 'react-draggable';
+import RequestSecurityQuestion from './components/RequestSecurityQuestion';
 
 function App() {
   const { virtualSeconds, virtualDay, setVirtualDay } = useVirtualTime(48);
@@ -100,7 +97,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/request-reset-password" element={<RequestResetPassword />} />
+          <Route path="/request-reset-password" element={<RequestSecurityQuestion />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/verify-email/:token" element={<VerifyEmail />} />
           <Route
@@ -137,7 +134,7 @@ function App() {
             }
           />
         </Routes>
-        <ToastContainer />
+        
         <VirtualClock speedMultiplier={48} onTick={handleTick} />
       </div>
     </Router>

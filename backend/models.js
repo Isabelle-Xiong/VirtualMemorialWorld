@@ -8,7 +8,13 @@ const userSchema = new mongoose.Schema({
     resetPasswordExpires: Date,
     emailVerificationToken: String,
     emailVerificationExpires: Date,
-    isEmailVerified: { type: Boolean, default: false }
+    isEmailVerified: { type: Boolean, default: false },
+    securityQuestions: [
+        {
+            question: { type: String, required: true },
+            answer: { type: String, required: true }
+        }
+    ]
 });
 
 const relationshipSchema = new mongoose.Schema({

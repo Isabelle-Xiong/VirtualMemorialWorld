@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const auth = require('./middleware/auth');
-const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const { User, Avatar } = require('./models');
 const { spawn } = require('child_process');
@@ -27,14 +26,34 @@ mongoose.connect(mongoUri, {
     console.error('Error connecting to MongoDB:', err);
 });
 
-// Nodemailer configuration
-const transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: 'your-email@gmail.com',
-        pass: 'your-email-password'
+
+// Request security question
+app.post('/api/request-security-question', async (req, res) => {
+    const { username } = req.body;
+    const user = await User.findOne({ username });
+    if (!user) {
+        return res.status(400).send({ message: 'User not found' });
     }
+    res.send({ securityQuestion: user.securityQuestion });
 });
+
+// Verify security question and reset password
+app.post('/api/reset-password-with-security-question', async (req, res) => {
+    const { username, securityAnswer, newPassword } = req.body;
+    const user = await User.findOne({ username });
+    if (!user) {
+        return res.status(400).send({ message: 'User not found' });
+    }
+    if (user.securityAnswer !== securityAnswer) {
+        return res.status(400).send({ message: 'Incorrect security answer' });
+    }
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+    res.send({ message: 'Password has been reset' });
+});
+
+
+
 
 // Function to execute the Python script and get the generated goal
 const generateGoalText = () => {
@@ -117,6 +136,35 @@ app.post('/api/generate-new-goal', auth, async (req, res) => {
     }
 });
 
+
+// // Generate a new goal for a specific avatar
+// app.post('/api/generate-new-goal', auth, async (req, res) => {
+//     const { avatarId } = req.body;
+//     try {
+//         const newGoalText = await generateGoalText().catch(error => {
+//             console.error('Error generating goal text:', error);
+//             return 'Generated goal could not be retrieved.';
+//         });
+
+//         if (!newGoalText) {
+//             return res.status(500).send({ error: 'Error generating new goal.' });
+//         }
+
+//         await Avatar.findOneAndUpdate(
+//             { _id: avatarId },
+//             {
+//                 $push: { goals: { $each: [{ goal: newGoalText, status: 'Not Started' }], $slice: -5 } }
+//             }
+//         );
+
+//         console.log(`New goal generated and saved for avatar ${avatarId}`);
+//         res.status(200).send({ message: 'New goal generated successfully.' });
+//     } catch (error) {
+//         console.error(`Error generating new goal for avatar ${avatarId}:`, error);
+//         res.status(500).send({ error: 'Error generating new goal.' });
+//     }
+// });
+
 // Test endpoint to call the generateGoalText function
 app.get('/api/test-generate-goal', async (req, res) => {
     try {
@@ -128,22 +176,6 @@ app.get('/api/test-generate-goal', async (req, res) => {
     }
 });
 
-
-function sendEmail(to, subject, text) {
-    const mailOptions = {
-        from: 'your-email@gmail.com',
-        to,
-        subject,
-        text
-    };
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-}
 
 
 // Update goal statuses for a specific avatar
@@ -171,84 +203,54 @@ app.post('/api/update-goal-status', auth, async (req, res) => {
     }
 });
 
-// Generate a new goal for a specific avatar
-app.post('/api/generate-new-goal', auth, async (req, res) => {
-    const { avatarId } = req.body;
-    try {
-        const newGoalText = await generateGoalText().catch(error => {
-            console.error('Error generating goal text:', error);
-            return 'Generated goal could not be retrieved.';
-        });
 
-        if (!newGoalText) {
-            return res.status(500).send({ error: 'Error generating new goal.' });
-        }
-
-        await Avatar.findOneAndUpdate(
-            { _id: avatarId },
-            {
-                $push: { goals: { $each: [{ goal: newGoalText, status: 'Not Started' }], $slice: -5 } }
-            }
-        );
-
-        console.log(`New goal generated and saved for avatar ${avatarId}`);
-        res.status(200).send({ message: 'New goal generated successfully.' });
-    } catch (error) {
-        console.error(`Error generating new goal for avatar ${avatarId}:`, error);
-        res.status(500).send({ error: 'Error generating new goal.' });
-    }
-});
-
-
-
-
-// Password reset request
-app.post('/api/request-reset-password', async (req, res) => {
-    const { email } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) {
-        return res.status(400).send('User not found');
-    }
-    const token = crypto.randomBytes(20).toString('hex');
-    user.resetPasswordToken = token;
-    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-    await user.save();
-    const resetLink = `http://localhost:3000/reset-password/${token}`;
-    sendEmail(user.email, 'Password Reset', `Click here to reset your password: ${resetLink}`);
-    res.send({ message: 'Password reset email sent' });
-});
-
-// Reset password
-app.post('/api/reset-password/:token', async (req, res) => {
-    const { token } = req.params;
-    const { password } = req.body;
-    const user = await User.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } });
-    if (!user) {
-        return res.status(400).send('Password reset token is invalid or has expired');
-    }
-    user.password = await bcrypt.hash(password, 10);
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
-    await user.save();
-    res.send({ message: 'Password has been reset' });
-});
 
 // Register user
 app.post('/api/register', async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, password, securityQuestions } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const emailVerificationToken = crypto.randomBytes(20).toString('hex');
     const user = new User({
         username,
-        password: hashedPassword,
         email,
-        emailVerificationToken,
-        emailVerificationExpires: Date.now() + 3600000 // 1 hour
+        password: hashedPassword,
+        securityQuestions
     });
-    await user.save();
-    const verificationLink = `http://localhost:3000/verify-email/${emailVerificationToken}`;
-    sendEmail(user.email, 'Email Verification', `Click here to verify your email: ${verificationLink}`);
-    res.send(user);
+    try {
+        await user.save();
+        res.send({ message: 'Registration successful' });
+    } catch (error) {
+        console.error('Error registering:', error);
+        res.status(500).send('Error registering user');
+    }
+});
+
+// Verify security questions
+app.post('/api/request-security-question', async (req, res) => {
+    const { username, answers } = req.body;
+
+    try {
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(400).json({ message: 'User not found' });
+        }
+
+        const areAnswersCorrect = user.securityQuestions.every((question, index) => {
+            return question.answer === answers[index];
+        });
+
+        if (!areAnswersCorrect) {
+            return res.status(400).json({ message: 'Security answers are incorrect' });
+        }
+
+        // Generate a token for resetting the password
+        const token = jwt.sign({ userId: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
+
+        // Respond with the token
+        res.status(200).json({ message: 'Security questions answered correctly', token });
+    } catch (error) {
+        console.error('Error verifying security questions:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
 });
 
 // Verify email

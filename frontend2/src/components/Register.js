@@ -1,14 +1,31 @@
-// Register.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import '../Auth.css';  // Ensure this line imports the new CSS file
+import '../Auth.css';
+
+const securityQuestions = [
+    "What is your favorite color?",
+    "What is your favorite vegetable?",
+    "What is your favorite animal?"
+];
+
+const securityAnswers = [
+    ["Red", "Blue", "Green", "Yellow", "Black", "White"],
+    ["Carrot", "Broccoli", "Spinach", "Pepper", "Tomato", "Potato"],
+    ["Dog", "Cat", "Bird", "Fish", "Horse", "Elephant"]
+];
 
 function Register() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [answers, setAnswers] = useState(securityAnswers.map(arr => arr[0]));
+    const [message, setMessage] = useState('');
+
+    const handleAnswerChange = (index, value) => {
+        const newAnswers = [...answers];
+        newAnswers[index] = value;
+        setAnswers(newAnswers);
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -16,13 +33,18 @@ function Register() {
             const response = await axios.post('http://localhost:5001/api/register', {
                 username,
                 email,
-                password
+                password,
+                securityQuestions: [
+                    { question: securityQuestions[0], answer: answers[0] },
+                    { question: securityQuestions[1], answer: answers[1] },
+                    { question: securityQuestions[2], answer: answers[2] }
+                ]
             });
-            toast.success('Registration successful');
+            setMessage('Registration successful!');
             window.location.href = '/login';
         } catch (error) {
             console.error('Error registering:', error);
-            toast.error('Error registering');
+            setMessage('Error registering. Please try again.');
         }
     };
 
@@ -60,7 +82,26 @@ function Register() {
                         required
                     />
                 </div>
+                <div className="security-questions-container">
+                    <h3>Security Questions</h3>
+                    {securityQuestions.map((question, index) => (
+                        <div key={index} className="security-question">
+                            <label className="security-label">{question}:</label>
+                            <select
+                                className="security-dropdown"
+                                value={answers[index]}
+                                onChange={(e) => handleAnswerChange(index, e.target.value)}
+                                required
+                            >
+                                {securityAnswers[index].map((answer, answerIndex) => (
+                                    <option key={answerIndex} value={answer}>{answer}</option>
+                                ))}
+                            </select>
+                        </div>
+                    ))}
+                </div>
                 <button type="submit" className="auth-button">Register</button>
+                {message && <p>{message}</p>}
             </form>
         </div>
     );
