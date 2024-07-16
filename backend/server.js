@@ -28,14 +28,14 @@ mongoose.connect(mongoUri, {
 
 
 // Request security question
-app.post('/api/request-security-question', async (req, res) => {
-    const { username } = req.body;
-    const user = await User.findOne({ username });
-    if (!user) {
-        return res.status(400).send({ message: 'User not found' });
-    }
-    res.send({ securityQuestion: user.securityQuestion });
-});
+// app.post('/api/request-security-question', async (req, res) => {
+//     const { username } = req.body;
+//     const user = await User.findOne({ username });
+//     if (!user) {
+//         return res.status(400).send({ message: 'User not found' });
+//     }
+//     res.send({ securityQuestion: user.securityQuestion });
+// });
 
 // Verify security question and reset password
 app.post('/api/reset-password-with-security-question', async (req, res) => {
@@ -58,7 +58,7 @@ app.post('/api/reset-password-with-security-question', async (req, res) => {
 // Function to execute the Python script and get the generated goal
 const generateGoalText = () => {
     return new Promise((resolve, reject) => {
-        const pythonProcess = spawn('python3', [textGeneratorPath, "Tell me about your goals."]);
+        const pythonProcess = spawn('python3', [textGeneratorPath, "Tell me about your goals."]); //python3
 
         let result = '';
         pythonProcess.stdout.on('data', (data) => {
@@ -228,22 +228,34 @@ app.post('/api/register', async (req, res) => {
 app.post('/api/request-security-question', async (req, res) => {
     const { username, answers } = req.body;
 
+    console.log('Request received with username:', username);
+    console.log('Request received with answers:', answers);
+
     try {
         const user = await User.findOne({ username });
         if (!user) {
+            console.log('User not found');
             return res.status(400).json({ message: 'User not found' });
         }
+
+        console.log('User found:', user);
 
         const areAnswersCorrect = user.securityQuestions.every((question, index) => {
             return question.answer === answers[index];
         });
 
+        console.log('Are answers correct:', areAnswersCorrect);
+
         if (!areAnswersCorrect) {
+            console.log('Security answers are incorrect');
             return res.status(400).json({ message: 'Security answers are incorrect' });
         }
 
         // Generate a token for resetting the password
         const token = jwt.sign({ userId: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
+        
+        // Log the token
+        console.log('Generated token:', token);
 
         // Respond with the token
         res.status(200).json({ message: 'Security questions answered correctly', token });
@@ -252,6 +264,7 @@ app.post('/api/request-security-question', async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+
 
 // Verify email
 app.get('/api/verify-email/:token', async (req, res) => {
