@@ -4,7 +4,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
 import Avatar from './components/Avatar';
-import AvatarHome from './components/AvatarHome'; 
+import AvatarHome from './components/AvatarHome';
 import EditAvatar from './components/EditAvatar';
 import Logout from './components/Logout';
 import Profile from './components/Profile';
@@ -93,13 +93,15 @@ function App() {
     <Router>
       <div className="App">
         <Navigation />
-        <Draggable>
-          <div className="virtual-time-container">
-            <h1>Virtual Time: {formatVirtualTime(virtualSeconds)}</h1>
-            <h1>Virtual Day: {virtualDay}</h1>
-            <button onClick={incrementDayAndGenerateGoals}>Increment Day Manually</button>
-          </div>
-        </Draggable>
+        {isLoggedIn && (
+          <Draggable>
+            <div className="virtual-time-container">
+              <h1>Virtual Time: {formatVirtualTime(virtualSeconds)}</h1>
+              <h1>Virtual Day: {virtualDay}</h1>
+              <button onClick={incrementDayAndGenerateGoals}>Increment Day Manually</button>
+            </div>
+          </Draggable>
+        )}
         <Routes>
           <Route path="/" element={isLoggedIn ? <Home virtualTime={virtualSeconds} virtualDay={virtualDay} /> : <LandingPage />} />
           <Route path="/login" element={<Login />} />
@@ -166,7 +168,7 @@ function App() {
             }
           />
           <Route path="/avatar-home/:id" element={<AvatarHome />} />
-          
+
         </Routes>
 
         <VirtualClock speedMultiplier={48} onTick={handleTick} />
