@@ -23,6 +23,7 @@ import RequestSecurityQuestion from './components/RequestSecurityQuestion';
 import ChatUsers from './components/ChatUsers';
 import Chat from './components/Chat';
 import Friends from './components/Friends';
+import LandingPage from './components/LandingPage';
 
 
 function App() {
@@ -86,6 +87,8 @@ function App() {
     return `${virtualHours.toString().padStart(2, '0')}:${virtualMinutes.toString().padStart(2, '0')}`;
   };
 
+  const isLoggedIn = !!localStorage.getItem('token'); // Check if the user is logged in
+
   return (
     <Router>
       <div className="App">
@@ -98,7 +101,7 @@ function App() {
           </div>
         </Draggable>
         <Routes>
-          <Route path="/" element={<Home virtualTime={virtualSeconds} virtualDay={virtualDay} />} />
+          <Route path="/" element={isLoggedIn ? <Home virtualTime={virtualSeconds} virtualDay={virtualDay} /> : <LandingPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/logout" element={<Logout />} />
