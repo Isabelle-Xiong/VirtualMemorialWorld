@@ -2,9 +2,12 @@
 body {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(to bottom, #e0eafc, #cfdef3);
+    background-size: cover;
+    background-attachment: fixed;
     color: #333333;
     margin: 0;
     padding: 0;
+    position: relative;
 }
 
 .container {
@@ -12,6 +15,7 @@ body {
     margin: auto;
     text-align: center;
     padding-top: 80px;
+    background: linear-gradient(to bottom, #e0eafc, black);
     color: #333333;
     font-family: 'Poppins', sans-serif;
 }
