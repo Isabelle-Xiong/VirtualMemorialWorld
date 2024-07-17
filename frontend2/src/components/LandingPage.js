@@ -1,5 +1,7 @@
+// src/components/LandingPage.js
 import React from 'react';
-import styles from '../LandingPage.module.css'; 
+import styles from '../LandingPage.module.css';
+import EarthModel from './EarthModel'; // Import the EarthModel component
 
 function LandingPage() {
     return (
@@ -20,6 +22,7 @@ function LandingPage() {
             <section className={styles.section}>
                 <h2>About Our World</h2>
                 <p>Our virtual memorial world allows you to create avatars for your deceased loved ones, and watch as the world progresses and new relationships form.</p>
+                <EarthModel /> {/* Add the EarthModel component here */}
             </section>
 
             <div className={styles.separator}></div> {/* Separator */}
