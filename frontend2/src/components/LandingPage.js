@@ -1,7 +1,7 @@
-// src/components/LandingPage.js
 import React from 'react';
 import styles from '../LandingPage.module.css';
-import EarthModel from './EarthModel'; // Import the EarthModel component
+import EarthModel from './EarthModel';
+import Typing from 'react-typing-effect';
 
 function LandingPage() {
     return (
@@ -13,16 +13,29 @@ function LandingPage() {
             <section className={styles.hero}>
                 <div className={styles.heroContent}>
                     <h1>Create a lasting memory in a virtual world</h1>
-                    <p>Welcome to a place where memories live on.</p>
+                    <Typing
+                        className={styles.typingText}
+                        text="Welcome to a place where memories live on."
+                        speed={50}    // Adjust this value to make the typing faster
+                        eraseDelay={1000}  // Adjust this value to change the delay before erasing starts
+                    />
                 </div>
             </section>
 
             <div className={styles.separator}></div> {/* Separator */}
 
-            <section className={styles.section}>
-                <h2>About Our World</h2>
-                <p>Our virtual memorial world allows you to create avatars for your deceased loved ones, and watch as the world progresses and new relationships form.</p>
-                <EarthModel /> {/* Add the EarthModel component here */}
+            <section className={`${styles.section} ${styles.aboutSection}`}>
+                <div className={styles.content}>
+                    <div className={styles.text}>
+                        <div className={styles.textContainer}>
+                            <h2>About Our World</h2>
+                            <p>Our virtual memorial world allows you to create avatars for your deceased loved ones, and watch as the world progresses and new relationships form.</p>
+                        </div>
+                    </div>
+                    <div className={styles.model}>
+                        <EarthModel />
+                    </div>
+                </div>
             </section>
 
             <div className={styles.separator}></div> {/* Separator */}

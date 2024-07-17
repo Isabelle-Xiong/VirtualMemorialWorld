@@ -1,4 +1,3 @@
-// src/components/EarthModel.js
 import React from 'react';
 import { Canvas, useLoader } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
@@ -8,11 +7,11 @@ const EarthModel = () => {
     const gltf = useLoader(GLTFLoader, '/models/earth-model/source/earth-cartoon.glb');
 
     return (
-        <Canvas>
+        <Canvas style={{ height: '70vh', width: '70vw' }} camera={{ position: [0, 0, 20] }}>
             <ambientLight intensity={0.4} />
             <directionalLight position={[10, 10, 5]} intensity={1.5} />
-            <primitive object={gltf.scene} scale={0.5} />
-            <OrbitControls />
+            <primitive object={gltf.scene} scale={6} position={[0, 0, 0]} /> {/* Adjust scale to be slightly larger */}
+            <OrbitControls enableZoom={false} /> {/* Disable zoom */}
         </Canvas>
     );
 };
