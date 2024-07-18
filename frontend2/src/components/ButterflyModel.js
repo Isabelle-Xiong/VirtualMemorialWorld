@@ -1,6 +1,5 @@
 import React, { Suspense, useEffect, useRef } from 'react';
 import { Canvas, useLoader, useFrame } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
 
@@ -20,6 +19,14 @@ const Model = () => {
                 mixer.update(0.01);
             };
             animate();
+        }
+    }, [gltf]);
+
+    useEffect(() => {
+        if (butterflyRef.current) {
+            // Apply rotation to make the butterfly upright and facing the correct direction
+            butterflyRef.current.rotation.x = Math.PI / 2; // Make the butterfly upright
+            butterflyRef.current.rotation.y = Math.PI; // Adjust the facing direction
         }
     }, [gltf]);
 
@@ -56,7 +63,6 @@ const ButterflyModel = () => {
             <Suspense fallback={null}>
                 <Model />
             </Suspense>
-            <OrbitControls enableZoom={false} />
         </Canvas>
     );
 };
