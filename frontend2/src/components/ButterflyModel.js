@@ -25,11 +25,23 @@ const Model = () => {
 
     useFrame((state) => {
         if (butterflyRef.current) {
-            // Update the butterfly position to fly around in a random fashion
-            const t = state.clock.getElapsedTime();
-            butterflyRef.current.position.x = Math.sin(t) * 2;
-            butterflyRef.current.position.y = Math.sin(t * 1.5) * 1.5;
-            butterflyRef.current.position.z = Math.cos(t) * 2;
+            const t = state.clock.getElapsedTime() * 0.4; // Adjust speed here
+            let newX = Math.sin(t) * 10; // Increase range here
+            let newY = Math.sin(t * 1.5) * 7.5; // Increase range here
+            let newZ = Math.cos(t) * 10; // Increase range here
+
+            // Calculate the distance from the camera
+            const distance = Math.sqrt(newX ** 2 + newY ** 2 + newZ ** 2);
+
+            // If the butterfly is too close to the camera, move it farther away
+            if (distance < 5) {
+                const scale = 5 / distance; // Scale factor to push the butterfly away
+                newX *= scale;
+                newY *= scale;
+                newZ *= scale;
+            }
+
+            butterflyRef.current.position.set(newX, newY, newZ);
         }
     });
 
@@ -38,7 +50,7 @@ const Model = () => {
 
 const ButterflyModel = () => {
     return (
-        <Canvas style={{ height: '80vh', width: '30vw' }} camera={{ position: [0, 0, 10] }}>
+        <Canvas style={{ height: '100vh', width: '100vw' }} camera={{ position: [0, 0, 10] }}>
             <ambientLight intensity={0.5} />
             <directionalLight position={[10, 10, 5]} intensity={1.5} />
             <Suspense fallback={null}>

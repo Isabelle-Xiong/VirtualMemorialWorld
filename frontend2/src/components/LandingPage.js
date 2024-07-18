@@ -5,6 +5,28 @@ import ButterflyModel from './ButterflyModel';
 import Typing from 'react-typing-effect';
 
 function LandingPage() {
+    const reviews = [
+        {
+            text: "A beautiful way to keep my grandma's memory alive.",
+            author: "Jane D.",
+            imageUrl: "https://randomuser.me/api/portraits/women/1.jpg"
+        },
+        {
+            text: "This world brings me peace and comfort.",
+            author: "John S.",
+            imageUrl: "https://randomuser.me/api/portraits/men/1.jpg"
+        },
+        {
+            text: "A touching and heartfelt experience.",
+            author: "Emily R.",
+            imageUrl: "https://randomuser.me/api/portraits/women/2.jpg"
+        },
+        {
+            text: "An innovative way to cherish our loved ones.",
+            author: "Michael T.",
+            imageUrl: "https://randomuser.me/api/portraits/men/2.jpg"
+        }
+    ];
     return (
         <div className={styles.landingPage}>
             <header className={styles.landingHeader}>
@@ -47,26 +69,20 @@ function LandingPage() {
             </section>
 
             <section className={`${styles.section} ${styles.testimonialSection}`}>
-                <div className={styles.content}>
-                    <div className={styles.textContainer}>
-                        <h2>Reviews</h2>
-                        <div className={styles.testimonial}>
-                            "A beautiful way to keep my grandmother's memory alive."
-                            <span className={styles.author}> - Jane D.</span>
-                        </div>
-                        <div className={styles.testimonial}>
-                            "This world brings me peace and comfort."
-                            <span className={styles.author}> - John S.</span>
-                        </div>
+                <h2 className={styles.reviewTitle}>What Our Users Say</h2>
+                {reviews.map((review, index) => (
+                    <div key={index} className={styles.reviewCard}>
+                        <img src={review.imageUrl} alt={review.author} className={styles.reviewImage} />
+                        <p className={styles.reviewText}>“{review.text}”</p>
+                        <span className={styles.reviewAuthor}>- {review.author}</span>
                     </div>
-                    <div className={styles.butterflyModelContainer}>
-                        <Suspense fallback={<div>Loading...</div>}>
-                            <ButterflyModel />
-                        </Suspense>
-                    </div>
+                ))}
+                <div className={styles.butterflyModelContainer}>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <ButterflyModel />
+                    </Suspense>
                 </div>
             </section>
-
             <footer className={styles.landingFooter}>
                 <p>&copy; 2024 Virtual Memorial World. All rights reserved.</p>
             </footer>

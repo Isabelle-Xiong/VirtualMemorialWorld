@@ -110,6 +110,12 @@
     background: url('https://images.nightcafe.studio/jobs/cYkyUz7xdyE5i8Mru4wE/cYkyUz7xdyE5i8Mru4wE--1--nai2s.jpg?tr\u003dw-1600,c-at_max') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
+    position: relative;
+    /* Added this line */
+    overflow: hidden;
+    /* Prevent overflow */
+    padding: 4em 1em;
+    /* Ensure sufficient padding */
 }
 
 .section h2 {
@@ -134,33 +140,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.657);
     border-radius: 10px;
     padding: 1em;
     max-width: 500px;
     margin-right: 2em;
 }
 
-.testimonial {
-    margin: 1em 0;
-    font-family: 'Indie Flower', cursive;
-    font-weight: 400;
-    font-size: 1.2em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.author {
-    display: block;
-    margin-top: 0.5em;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 1em;
-    color: #555;
-}
 
 .landingFooter {
     background: #333;
@@ -176,9 +162,114 @@
 }
 
 .butterflyModelContainer {
-    max-width: 500px;
-    height: 70vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none; /* So it doesn't interfere with other interactions */
+    z-index: 10; /* Ensure it's above other content */
+}
+
+.reviews {
     display: flex;
-    justify-content: right;
-    align-items: right;
+    overflow-x: auto;
+    padding: 1em 0;
+}
+
+.reviewCard {
+    background-image: url('https://static.vecteezy.com/system/resources/thumbnails/013/399/706/small/pink-cloud-illustration-free-png.png');
+    background-size: contain;
+    /* Ensure the background covers the entire card */
+    background-repeat: no-repeat;
+    /* Prevent repeating */
+    border: none;
+    /* Remove border */
+    box-shadow: none;
+    /* Remove box shadow */
+    padding: 5em 2em 5em 3em;
+    margin: 1em;
+    width: 400px;
+    /* Increase width */
+    height: 400px;
+    /* Increase height */
+    text-align: center;
+    position: absolute;
+    animation: float 6s ease-in-out infinite;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.reviewTitle {
+    position: absolute;
+    top: 3em;
+    left: 4em;
+    font-size: 2em;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.reviewCard:nth-child(2) {
+    top: 35%;
+    left: 10%;
+}
+
+.reviewCard:nth-child(3) {
+    top: 15%;
+    left: 40%;
+}
+
+.reviewCard:nth-child(4) {
+    top: 55%;
+    left: 30%;
+}
+
+.reviewCard:nth-child(5) {
+    top: 35%;
+    left: 60%;
+}
+
+.reviewImage {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    margin-bottom: 0.5em;
+}
+
+.reviewText {
+    font-family: 'Indie Flower', cursive;
+    font-weight: 400;
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
+    padding: 0.5em;
+    text-align: center;
+    display: block;
+}
+
+.reviewAuthor {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1em;
+    color: #555;
+    margin-top: 0.5em;
+}
+
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-40px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
 }
