@@ -48,37 +48,39 @@ function RequestSecurityQuestion() {
     };
 
     return (
-        <div className="auth-container">
-            <h2 className="auth-title">Answer Security Questions</h2>
-            <form className="auth-form-container" onSubmit={handleSubmit}>
-                <div>
-                    <label className="auth-label">Username:</label>
-                    <input
-                        type="text"
-                        className="auth-input"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                {predefinedQuestions.map((question, index) => (
-                    <div key={index}>
-                        <label className="auth-label">{question}</label>
-                        <select
+        <div className="auth-page">
+            <div className="auth-container">
+                <h2 className="auth-title">Answer Security Questions</h2>
+                <form className="auth-form-container" onSubmit={handleSubmit}>
+                    <div>
+                        <label className="auth-label">Username:</label>
+                        <input
+                            type="text"
                             className="auth-input"
-                            value={answers[index]}
-                            onChange={(e) => handleAnswerChange(index, e.target.value)}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             required
-                        >
-                            {securityAnswers[index].map((answer, answerIndex) => (
-                                <option key={answerIndex} value={answer}>{answer}</option>
-                            ))}
-                        </select>
+                        />
                     </div>
-                ))}
-                <button type="submit" className="auth-button">Submit</button>
-            </form>
-            {message && <p>{message}</p>}
+                    {predefinedQuestions.map((question, index) => (
+                        <div key={index}>
+                            <label className="auth-label">{question}</label>
+                            <select
+                                className="auth-input"
+                                value={answers[index]}
+                                onChange={(e) => handleAnswerChange(index, e.target.value)}
+                                required
+                            >
+                                {securityAnswers[index].map((answer, answerIndex) => (
+                                    <option key={answerIndex} value={answer}>{answer}</option>
+                                ))}
+                            </select>
+                        </div>
+                    ))}
+                    <button type="submit" className="auth-button">Submit</button>
+                </form>
+                {message && <p>{message}</p>}
+            </div>
         </div>
     );
 }

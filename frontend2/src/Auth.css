@@ -1,21 +1,39 @@
-/* Common styles for login, register, and request reset password components */
+/* Auth.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Courgette&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+.auth-page {
+    background: url('https://imagedelivery.net/9sCnq8t6WEGNay0RAQNdvQ/UUID-cl90fshqp1191740vmqy48yiapxm/public') no-repeat center center fixed;
+    background-size: cover;
+    background-color: rgba(255, 255, 255, 0.363); /* More opaque overlay */
+    background-blend-mode: lighten;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 .auth-container {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(145deg, #e0eafc, #cfdef3);
+    background: transparent; /* Transparent background to blend with the page */
     color: #333333;
     padding: 0;
-    width: 80%;
+    width: 100%;
+    max-width: 400px; /* Max width for the container */
     margin: auto;
     text-align: center;
-    padding-top: 80px;
+    box-shadow: none; /* Remove shadow */
+    border-radius: 20px;
 }
 
 .auth-form-container {
     background: linear-gradient(#dfdcfb, #ffe6fd);
     border-radius: 20px;
     padding: 40px;
-    margin: 20px auto;
-    width: 400px;
+    margin: 0 auto; /* Remove margin to center */
+    width: 100%; /* Adjust to take full width */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     border: 1px solid #cfdef3;
 }

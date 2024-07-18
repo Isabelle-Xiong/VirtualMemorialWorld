@@ -49,60 +49,62 @@ function Register() {
     };
 
     return (
-        <div className="auth-container">
-            <h2 className="auth-title">Register</h2>
-            <form className="auth-form-container" onSubmit={handleSubmit}>
-                <div>
-                    <label className="auth-label">Username:</label>
-                    <input
-                        type="text"
-                        className="auth-input"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label className="auth-label">Email:</label>
-                    <input
-                        type="email"
-                        className="auth-input"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label className="auth-label">Password:</label>
-                    <input
-                        type="password"
-                        className="auth-input"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div className="security-questions-container">
-                    <h3>Security Questions</h3>
-                    {securityQuestions.map((question, index) => (
-                        <div key={index} className="security-question">
-                            <label className="security-label">{question}:</label>
-                            <select
-                                className="security-dropdown"
-                                value={answers[index]}
-                                onChange={(e) => handleAnswerChange(index, e.target.value)}
-                                required
-                            >
-                                {securityAnswers[index].map((answer, answerIndex) => (
-                                    <option key={answerIndex} value={answer}>{answer}</option>
-                                ))}
-                            </select>
-                        </div>
-                    ))}
-                </div>
-                <button type="submit" className="auth-button">Register</button>
-                {message && <p>{message}</p>}
-            </form>
+        <div className="auth-page">
+            <div className="auth-container">
+                <h2 className="auth-title">Register</h2>
+                <form className="auth-form-container" onSubmit={handleSubmit}>
+                    <div>
+                        <label className="auth-label">Username:</label>
+                        <input
+                            type="text"
+                            className="auth-input"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label className="auth-label">Email:</label>
+                        <input
+                            type="email"
+                            className="auth-input"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label className="auth-label">Password:</label>
+                        <input
+                            type="password"
+                            className="auth-input"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="security-questions-container">
+                        <h3>Security Questions</h3>
+                        {securityQuestions.map((question, index) => (
+                            <div key={index} className="security-question">
+                                <label className="security-label">{question}:</label>
+                                <select
+                                    className="security-dropdown"
+                                    value={answers[index]}
+                                    onChange={(e) => handleAnswerChange(index, e.target.value)}
+                                    required
+                                >
+                                    {securityAnswers[index].map((answer, answerIndex) => (
+                                        <option key={answerIndex} value={answer}>{answer}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        ))}
+                    </div>
+                    <button type="submit" className="auth-button">Register</button>
+                    {message && <p>{message}</p>}
+                </form>
+            </div>
         </div>
     );
 }
