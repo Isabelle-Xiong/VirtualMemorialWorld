@@ -209,11 +209,13 @@ function Home({ speedMultiplier }) {
                 </div>
             )}
             {selectedUser && (
-                <Chat
-                    recipientId={selectedUser.userId}
-                    recipientUsername={selectedUser.username}
-                    onClose={() => setSelectedUser(null)}
-                />
+                <div className="chat-container">
+                    <Chat
+                        recipientId={selectedUser.userId}
+                        recipientUsername={selectedUser.username}
+                        onClose={() => setSelectedUser(null)}
+                    />
+                </div>
             )}
         </div>
     );
