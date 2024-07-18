@@ -95,8 +95,8 @@
     flex: 3;
     /* Reduce Earth model container flex size */
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: right;
+    align-items: right;
 }
 
 .aboutSection {

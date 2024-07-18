@@ -7,7 +7,7 @@ const EarthModel = () => {
     const gltf = useLoader(GLTFLoader, '/models/earth-model/source/earth-cartoon.glb');
 
     return (
-        <Canvas style={{ height: '70vh', width: '70vw' }} camera={{ position: [0, 0, 20] }}>
+        <Canvas style={{ height: '80vh', width: '50vw' }} camera={{ position: [0, 0, 20] }}>
             <ambientLight intensity={0.4} />
             <directionalLight position={[10, 10, 5]} intensity={1.5} />
             <primitive object={gltf.scene} scale={6} position={[0, 0, 0]} /> {/* Adjust scale to be slightly larger */}
