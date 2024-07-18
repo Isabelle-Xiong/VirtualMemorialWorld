@@ -10,18 +10,23 @@
 }
 
 .landingHeader {
-    background: #333; /* Dark grey background */
+    background: #333;
+    /* Dark grey background */
     padding: 1em;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .landingHeader h1 {
-    font-family: 'Courgette', cursive; /* Updated font */
-    font-size: 3em; /* Increased font size */
-    color: #fff; /* White text color */
+    font-family: 'Courgette', cursive;
+    /* Updated font */
+    font-size: 3em;
+    /* Increased font size */
+    color: #fff;
+    /* White text color */
     margin: 0;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Text shadow for better readability */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    /* Text shadow for better readability */
 }
 
 .hero {
@@ -34,11 +39,13 @@
     align-items: center;
     text-align: center;
     padding: 5em 1em;
-    min-height: 100vh; /* Make the hero section full viewport height */
+    min-height: 100vh;
+    /* Make the hero section full viewport height */
 }
 
 .heroContent {
-    background: rgba(0, 0, 0, 0.5); /* To make text more readable */
+    background: rgba(0, 0, 0, 0.5);
+    /* To make text more readable */
     padding: 2em;
     border-radius: 10px;
 }
@@ -56,54 +63,87 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 4em 1em; /* Increased padding for larger height */
-    text-align: left; /* Align text to the left */
+    padding: 4em 1em;
+    /* Increased padding for larger height */
+    text-align: left;
+    /* Align text to the left */
     background: #fff;
-    min-height: 100vh; /* Make each section full viewport height */
+    min-height: 100vh;
+    /* Make each section full viewport height */
 }
 
 .section .content {
     display: flex;
-    justify-content: space-between; /* Space items around to avoid squishing */
+    justify-content: space-between;
+    /* Space items around to avoid squishing */
     align-items: center;
     width: 100%;
-    max-width: 1400px; /* Adjust max width for better spacing */
+    max-width: 1400px;
+    /* Adjust max width for better spacing */
     margin: 0 auto;
 }
 
 .section .text {
-    flex: 2; /* Increase text container flex size */
+    flex: 2;
+    /* Increase text container flex size */
     padding: 2em;
-    text-align: left; /* Align text to the left */
+    text-align: left;
+    /* Align text to the left */
 }
 
 .section .model {
-    flex: 3; /* Reduce Earth model container flex size */
+    flex: 3;
+    /* Reduce Earth model container flex size */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .aboutSection {
-    background: url('https://media.istockphoto.com/id/695419912/photo/beautiful-clear-twilight-night-sky-sunset-background.jpg?s=612x612&w=0&k=20&c=gWZTNSSLxGZUzR8ZyNoChK2D49gkKHs7XY7MmDLuulc=') no-repeat center center;
+    background: url('https://static.vecteezy.com/system/resources/previews/004/770/350/non_2x/sunset-and-orange-cloud-and-blue-dawn-sky-with-cloud-horizontal-lines-motion-effect-on-background-from-sunshine-free-photo.jpg') no-repeat center center;
+    /* https://c4.wallpaperflare.com/wallpaper/994/603/831/spots-glow-background-wallpaper-preview.jpg */
     background-size: cover;
+    background-attachment: fixed;
 }
+
+.featuresSection {
+    background: url('https://w0.peakpx.com/wallpaper/139/13/HD-wallpaper-blue-mixed-paint-aesthetic-background-blue-aesthetic.jpg') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.testimonialSection {
+    background: url('https://img.freepik.com/free-vector/abstract-style-bokeh-background_23-2148459410.jpg') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
 
 .section h2 {
     margin-bottom: 1em;
-    color: #4a90e2; /* Updated color */
-    font-family: 'Poppins', sans-serif; /* Updated font */
-    font-weight: 600; /* Bold font */
-    font-size: 3em; /* Reverted font size */
+    color: #4a90e2;
+    /* Updated color */
+    font-family: 'Poppins', sans-serif;
+    /* Updated font */
+    font-weight: 600;
+    /* Bold font */
+    font-size: 3em;
+    /* Reverted font size */
 }
 
 .section p {
-    font-family: 'Poppins', sans-serif; /* Updated font */
-    font-weight: 400; /* Normal weight */
-    color: #fff; /* Lighter gray color for text */
-    line-height: 1.6; /* Increased line height for readability */
-    max-width: 800px; /* Limit width for better readability */
-    font-size: 1.2em; /* Reverted font size */
+    font-family: 'Poppins', sans-serif;
+    /* Updated font */
+    font-weight: 400;
+    /* Normal weight */
+    color: #fff;
+    /* Lighter gray color for text */
+    line-height: 1.6;
+    /* Increased line height for readability */
+    max-width: 800px;
+    /* Limit width for better readability */
+    font-size: 1.2em;
+    /* Reverted font size */
 }
 
 .textContainer {
@@ -115,28 +155,52 @@
     margin: 0 auto;
 }
 
-.testimonial, .feature {
+.testimonial,
+.feature {
     margin: 1em 0;
-    font-family: 'Poppins', sans-serif; /* Updated font */
-    font-weight: 400; /* Normal weight */
+    font-family: 'Poppins', sans-serif;
+    /* Updated font */
+    font-weight: 400;
+    /* Normal weight */
 }
 
 .landingFooter {
-    background: #333; /* Dark grey background */
+    background: #333;
+    /* Dark grey background */
     padding: 1em;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    color: #fff; /* White text color */
+    color: #fff;
+    /* White text color */
 }
 
 .separator {
-    width: 100%; /* Full width */
+    width: 100%;
+    /* Full width */
     height: 2px;
     background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0) 100%);
-    margin: 0; /* Remove margin to connect sections directly */
+    margin: 0;
+    /* Remove margin to connect sections directly */
 }
 
 .typingText {
-    font-size: 1.5em; /* Adjust the font size as needed */
+    font-size: 1.5em;
+    /* Adjust the font size as needed */
     margin-top: 0.5em;
+}
+
+.butterflyModelContainer {
+    width: 50%;
+    height: 70vh;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.testimonialContainer {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
