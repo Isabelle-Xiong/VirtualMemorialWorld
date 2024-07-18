@@ -30,7 +30,7 @@
 }
 
 .hero {
-    background: url('https://images.unsplash.com/photo-1605214101860-84e51cf4c0db?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHNpbGhvdWV0dGV8ZW58MHx8MHx8fDA%3D') no-repeat center center;
+    background: url('https://img.freepik.com/free-photo/anime-style-mountains-landscape_23-2151135141.jpg?t=st=1721266068~exp=1721269668~hmac=fc9d6883178537630f1ef4d0f421bfb018382afe121e286f28a7fd75627d0cfd&w=1480') no-repeat center center;
     background-attachment: fixed;
     background-size: cover;
     color: #fff;
@@ -100,20 +100,19 @@
 }
 
 .aboutSection {
-    background: url('https://media.istockphoto.com/id/1061786490/photo/sky-in-the-pink-and-blue-colors-effect-of-light-pastel-colored-of-sunset-clouds-cloud-on-the.webp?b=1&s=170667a&w=0&k=20&c=0AoS-SBEN6tc9MzdshdPz7P2-VKf2qxhK4JTHKPfjjM=') no-repeat center center;
-    /* https://c4.wallpaperflare.com/wallpaper/994/603/831/spots-glow-background-wallpaper-preview.jpg */
+    background: url('https://wallpapercave.com/wp/wp6289040.jpg') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
 }
 
 .featuresSection {
-    background: url('https://wallpapers.com/images/featured/pink-blue-crts0e3t0y64opy8.jpg') no-repeat center center;
+    background: url('https://wallpapers-clan.com/wp-content/uploads/2024/04/blue-pink-aesthetic-clouds-desktop-wallpaper-preview.jpg') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
 }
 
 .testimonialSection {
-    background: url('https://img.freepik.com/free-vector/abstract-style-bokeh-background_23-2148459410.jpg') no-repeat center center;
+    background: url('https://images.nightcafe.studio/jobs/cYkyUz7xdyE5i8Mru4wE/cYkyUz7xdyE5i8Mru4wE--1--nai2s.jpg?tr\u003dw-1600,c-at_max') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
 }
