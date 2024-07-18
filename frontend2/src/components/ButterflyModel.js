@@ -24,9 +24,9 @@ const Model = () => {
 
     useEffect(() => {
         if (butterflyRef.current) {
-            // Apply rotation to make the butterfly upright and facing the correct direction
-            butterflyRef.current.rotation.x = Math.PI / 2; // Make the butterfly upright
-            butterflyRef.current.rotation.y = Math.PI; // Adjust the facing direction
+            // Apply rotation to make the butterfly upright and facing the left direction
+            butterflyRef.current.rotation.x = Math.PI/2; // Make the butterfly upright
+            butterflyRef.current.rotation.y = Math.PI; // Adjust the facing direction to left
         }
     }, [gltf]);
 
