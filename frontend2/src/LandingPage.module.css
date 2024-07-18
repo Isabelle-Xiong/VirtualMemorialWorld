@@ -135,8 +135,7 @@
     /* Updated font */
     font-weight: 400;
     /* Normal weight */
-    color: #fff;
-    /* Lighter gray color for text */
+    color: #333; /* Dark gray color for text */
     line-height: 1.6;
     /* Increased line height for readability */
     max-width: 800px;
@@ -145,6 +144,7 @@
     /* Reverted font size */
 }
 
+
 .textContainer {
     display: flex;
     flex-direction: column;
@@ -152,6 +152,9 @@
     align-items: flex-start;
     max-width: 800px;
     margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.5); /* Translucent whitish-gray background */
+    border-radius: 10px; /* Rounded corners */
+    padding: 1em; /* Optional: add some padding inside the container */
 }
 
 .testimonial,
@@ -193,13 +196,6 @@
     height: 70vh;
     margin: 0 auto;
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.testimonialContainer {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: right;
+    align-items: right;
 }

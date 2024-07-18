@@ -38,7 +38,7 @@ const Model = () => {
 
 const ButterflyModel = () => {
     return (
-        <Canvas style={{ height: '70vh', width: '70vw' }} camera={{ position: [0, 0, 10] }}>
+        <Canvas style={{ height: '80vh', width: '50vw' }} camera={{ position: [0, 0, 10] }}>
             <ambientLight intensity={0.5} />
             <directionalLight position={[10, 10, 5]} intensity={1.5} />
             <Suspense fallback={null}>

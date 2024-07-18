@@ -42,17 +42,19 @@ function LandingPage() {
             <div className={styles.separator}></div>
 
             <section className={`${styles.section} ${styles.featuresSection}`}>
-                <h2>Features</h2>
-                <div className={styles.feature}>Create and customize avatars</div>
-                <div className={styles.feature}>Autonomous world progression</div>
-                <div className={styles.feature}>Form new relationships and memories</div>
+                <div className={styles.textContainer}>
+                    <h2>Features</h2>
+                    <div className={styles.feature}>Create and customize avatars</div>
+                    <div className={styles.feature}>Autonomous world progression</div>
+                    <div className={styles.feature}>Form new relationships and memories</div>
+                </div>
             </section>
 
             <div className={styles.separator}></div>
 
             <section className={`${styles.section} ${styles.testimonialSection}`}>
-                <h2>What Our Users Say</h2>
-                <div className={styles.testimonialContainer}>
+                <div className={styles.textContainer}>
+                    <h2>What Our Users Say</h2>
                     <div className={styles.testimonial}>"A beautiful way to keep my grandmother's memory alive." - Jane D.</div>
                     <div className={styles.testimonial}>"This world brings me peace and comfort." - John S.</div>
                 </div>
