@@ -1,7 +1,8 @@
-// src/components/LandingPage.js
-import React from 'react';
+import React, { Suspense } from 'react';
 import styles from '../LandingPage.module.css';
-import EarthModel from './EarthModel'; // Import the EarthModel component
+import EarthModel from './EarthModel';
+import ButterflyModel from './ButterflyModel';
+import Typing from 'react-typing-effect';
 
 function LandingPage() {
     return (
@@ -13,33 +14,53 @@ function LandingPage() {
             <section className={styles.hero}>
                 <div className={styles.heroContent}>
                     <h1>Create a lasting memory in a virtual world</h1>
-                    <p>Welcome to a place where memories live on.</p>
+                    <Typing
+                        className={styles.typingText}
+                        text="Welcome to a place where memories live on."
+                        speed={50}
+                        eraseDelay={1000}
+                    />
                 </div>
             </section>
 
-            <div className={styles.separator}></div> {/* Separator */}
+            <div className={styles.separator}></div>
 
-            <section className={styles.section}>
-                <h2>About Our World</h2>
-                <p>Our virtual memorial world allows you to create avatars for your deceased loved ones, and watch as the world progresses and new relationships form.</p>
-                <EarthModel /> {/* Add the EarthModel component here */}
+            <section className={`${styles.section} ${styles.aboutSection}`}>
+                <div className={styles.content}>
+                    <div className={styles.text}>
+                        <div className={styles.textContainer}>
+                            <h2>About Our World</h2>
+                            <p>Our virtual memorial world allows you to create avatars for your deceased loved ones, and watch as the world progresses and new relationships form.</p>
+                        </div>
+                    </div>
+                    <div className={styles.model}>
+                        <EarthModel />
+                    </div>
+                </div>
             </section>
 
-            <div className={styles.separator}></div> {/* Separator */}
+            <div className={styles.separator}></div>
 
-            <section className={styles.section}>
+            <section className={`${styles.section} ${styles.featuresSection}`}>
                 <h2>Features</h2>
                 <div className={styles.feature}>Create and customize avatars</div>
                 <div className={styles.feature}>Autonomous world progression</div>
                 <div className={styles.feature}>Form new relationships and memories</div>
             </section>
 
-            <div className={styles.separator}></div> {/* Separator */}
+            <div className={styles.separator}></div>
 
-            <section className={styles.section}>
+            <section className={`${styles.section} ${styles.testimonialSection}`}>
                 <h2>What Our Users Say</h2>
-                <div className={styles.testimonial}>"A beautiful way to keep my grandmother's memory alive." - Jane D.</div>
-                <div className={styles.testimonial}>"This world brings me peace and comfort." - John S.</div>
+                <div className={styles.testimonialContainer}>
+                    <div className={styles.testimonial}>"A beautiful way to keep my grandmother's memory alive." - Jane D.</div>
+                    <div className={styles.testimonial}>"This world brings me peace and comfort." - John S.</div>
+                </div>
+                <div className={styles.butterflyModelContainer}>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <ButterflyModel />
+                    </Suspense>
+                </div>
             </section>
 
             <footer className={styles.landingFooter}>
