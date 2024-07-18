@@ -23,8 +23,6 @@ function LandingPage() {
                 </div>
             </section>
 
-            <div className={styles.separator}></div>
-
             <section className={`${styles.section} ${styles.aboutSection}`}>
                 <div className={styles.content}>
                     <div className={styles.text}>
@@ -39,8 +37,6 @@ function LandingPage() {
                 </div>
             </section>
 
-            <div className={styles.separator}></div>
-
             <section className={`${styles.section} ${styles.featuresSection}`}>
                 <div className={styles.textContainer}>
                     <h2>Features</h2>
@@ -50,18 +46,24 @@ function LandingPage() {
                 </div>
             </section>
 
-            <div className={styles.separator}></div>
-
             <section className={`${styles.section} ${styles.testimonialSection}`}>
-                <div className={styles.textContainer}>
-                    <h2>What Our Users Say</h2>
-                    <div className={styles.testimonial}>"A beautiful way to keep my grandmother's memory alive." - Jane D.</div>
-                    <div className={styles.testimonial}>"This world brings me peace and comfort." - John S.</div>
-                </div>
-                <div className={styles.butterflyModelContainer}>
-                    <Suspense fallback={<div>Loading...</div>}>
-                        <ButterflyModel />
-                    </Suspense>
+                <div className={styles.content}>
+                    <div className={styles.textContainer}>
+                        <h2>Reviews</h2>
+                        <div className={styles.testimonial}>
+                            "A beautiful way to keep my grandmother's memory alive."
+                            <span className={styles.author}> - Jane D.</span>
+                        </div>
+                        <div className={styles.testimonial}>
+                            "This world brings me peace and comfort."
+                            <span className={styles.author}> - John S.</span>
+                        </div>
+                    </div>
+                    <div className={styles.butterflyModelContainer}>
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <ButterflyModel />
+                        </Suspense>
+                    </div>
                 </div>
             </section>
 
