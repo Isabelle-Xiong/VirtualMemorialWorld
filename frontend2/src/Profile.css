@@ -1,8 +1,11 @@
 .profile-container {
-    width: 80%;
-    margin: auto;
-    text-align: center;
-    padding-top: 80px;
+    font-family: 'Poppins', sans-serif;
+    background: url('https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg') no-repeat center center fixed; /* Add your preferred background image URL */
+    background-size: cover;
+    color: #333333;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh; /* Ensure it covers the full viewport height */
 }
 
 .profile-title {

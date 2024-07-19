@@ -125,7 +125,7 @@ function Home({ speedMultiplier }) {
         ));
     };
     return (
-        <div className="container">
+        <div className="home-container">
             <h2 className="my-4 avatars-title">Avatars</h2>
             <div className="avatars-container">
                 {Array.isArray(avatars) && avatars.length > 0 ? (

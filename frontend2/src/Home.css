@@ -1,25 +1,23 @@
 /* home.css */
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to bottom, #e0eafc, #cfdef3);
-    background-size: cover;
-    background-attachment: fixed;
     color: #333333;
     margin: 0;
     padding: 0;
     position: relative;
 }
 
-.container {
-    width: 80%;
+.home-container {
+    background: url('https://imgcdn.stablediffusionweb.com/2024/4/8/0168bc30-3785-42d4-8da3-428c4194e863.jpg') no-repeat center center fixed;
+    background-size: cover;
+    width: 100%;
     margin: auto;
     text-align: center;
     padding-top: 80px;
-    background: linear-gradient(to bottom, #e0eafc, black);
     color: #333333;
     font-family: 'Poppins', sans-serif;
+    min-height: 100vh; /* Ensure it covers the full viewport height */
 }
-
 .avatars-container {
     display: flex;
     flex-wrap: wrap;
