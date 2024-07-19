@@ -73,7 +73,7 @@ function Profile() {
                         </div>
                     ))
                 ) : (
-                    <p>No avatars created yet.</p>
+                    <p></p>
                 )}
             </div>
         </div>

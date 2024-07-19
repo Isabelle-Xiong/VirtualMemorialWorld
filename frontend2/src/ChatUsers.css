@@ -61,6 +61,7 @@ h2.messages-title {
     color: #333;
     font-family: 'Rancho', cursive;
     font-size: 1.2rem;
+    text-decoration: none;
 }
 
 .action-buttons {

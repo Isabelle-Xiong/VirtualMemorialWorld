@@ -255,3 +255,13 @@ body.home-page h2.my-4.avatars-title {
     bottom: 500px; /* Adjust position as needed */
     right: 20px; /* Adjust position as needed */
 }
+
+.home-chat-container {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; /* Ensure it is above other elements */
+    width: 80%; /* Adjust as needed */
+    max-width: 600px; /* Adjust as needed */
+}
