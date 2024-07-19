@@ -83,15 +83,29 @@
     margin-right: 2em;
 }
 
+@keyframes gradient-move {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 .aboutSection .sectionTitle {
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     font-size: 3em;
     background: linear-gradient(145deg, #00bfff, #ff7abc);
+    background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     margin-bottom: 20px;
+    animation: gradient-move 5s ease infinite;
 }
 
 .testimonialSection .content {
