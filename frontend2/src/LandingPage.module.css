@@ -42,6 +42,11 @@
     background: rgba(0, 0, 0, 0.5);
     padding: 2em;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -5em;
+    /* Adjust this value as needed to move it up */
 }
 
 .hero h1 {
@@ -77,6 +82,17 @@
     justify-content: center;
 }
 
+.aboutSection .sectionTitle {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 3em;
+    background: linear-gradient(145deg, #00bfff, #ff7abc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+}
+
 .testimonialSection .content {
     justify-content: flex-end;
 }
@@ -106,19 +122,40 @@
     background-attachment: fixed;
 }
 
+.featuresSection .sectionTitle {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 3em;
+    background: linear-gradient(145deg, #ff99cc, #ffcc66);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+}
+
 .testimonialSection {
     background: url('https://images.nightcafe.studio/jobs/cYkyUz7xdyE5i8Mru4wE/cYkyUz7xdyE5i8Mru4wE--1--nai2s.jpg?tr\u003dw-1600,c-at_max') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
     position: relative;
-    /* Added this line */
     overflow: hidden;
-    /* Prevent overflow */
-    padding: 4em 1em;
-    /* Ensure sufficient padding */
 }
 
-.section h2 {
+.testimonialSection .sectionTitle {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 3em;
+    background: linear-gradient(145deg, #761af8, #ffb69a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 3em;
+    left: 4em;
+    margin: 0;
+}
+
+.section .section-title {
     margin-bottom: 0.6em;
     color: #4a90e2;
     font-family: 'Poppins', sans-serif;
@@ -126,7 +163,7 @@
     font-size: 3em;
 }
 
-.section p {
+.section .section-description {
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     color: #333;
@@ -147,7 +184,6 @@
     margin-right: 2em;
 }
 
-
 .landingFooter {
     background: #333;
     padding: 1em;
@@ -167,8 +203,8 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    pointer-events: none; /* So it doesn't interfere with other interactions */
-    z-index: 10; /* Ensure it's above other content */
+    pointer-events: none;
+    z-index: 10;
 }
 
 .reviews {
@@ -180,19 +216,13 @@
 .reviewCard {
     background-image: url('https://static.vecteezy.com/system/resources/thumbnails/013/399/706/small/pink-cloud-illustration-free-png.png');
     background-size: contain;
-    /* Ensure the background covers the entire card */
     background-repeat: no-repeat;
-    /* Prevent repeating */
     border: none;
-    /* Remove border */
     box-shadow: none;
-    /* Remove box shadow */
     padding: 5em 2em 5em 3em;
     margin: 1em;
     width: 400px;
-    /* Increase width */
     height: 400px;
-    /* Increase height */
     text-align: center;
     position: absolute;
     animation: float 6s ease-in-out infinite;
@@ -211,7 +241,6 @@
     color: #333;
     font-family: 'Poppins', sans-serif;
 }
-
 
 .reviewCard:nth-child(2) {
     top: 35%;
@@ -258,7 +287,6 @@
     color: #555;
     margin-top: 0.5em;
 }
-
 
 @keyframes float {
     0% {

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComments, faUserFriends } from '@fortawesome/free-solid-svg-icons';
 import '../Navigation.css';
+import ScrollReveal from 'scrollreveal';
 
 function Navigation() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -16,6 +17,13 @@ function Navigation() {
             setIsLoggedIn(true);
             fetchChatUsers(token);
         }
+
+        ScrollReveal().reveal('.reveal', {
+            origin: 'top',
+            distance: '50px',
+            duration: 1000,
+            easing: 'ease-in-out',
+        });
     }, []);
 
     const fetchChatUsers = async (token) => {
@@ -38,7 +46,7 @@ function Navigation() {
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container-fluid">
+            <div className="container-fluid reveal">
                 <Link className="navbar-brand" to="/">Virtual Memorial World</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
