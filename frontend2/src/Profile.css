@@ -15,46 +15,82 @@ body.profile-page {
     border-radius: 20px;
 }
 
-.profile-title {
+.profile-title, .avatars-title {
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     font-size: 3rem;
-    background: linear-gradient(145deg, #6a11cb, #2575fc);
+    background: linear-gradient( #ffae00, #fcff50, #ff4400); /* Lighter in the middle for a 3D effect */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2), 0 0 10px rgba(255, 140, 0, 0.709), 0 0 20px rgba(255, 140, 0, 0.8); /* Enhanced glow effect */
     text-align: center;
     margin-bottom: 1rem;
 }
 
 .profile-info {
-    text-align: left;
+    display: flex;
+    flex-direction: column; /* Arrange items vertically */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     margin: 20px auto;
     width: 100%;
     max-width: 600px;
-    background: linear-gradient(145deg, #d2cdff, #ffe6fd);
     border-radius: 20px;
     padding: 20px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     border: 1px solid #cfdef3;
-
 }
 
-.profile-username,
-.profile-email {
-    font-family: 'Indie Flower', cursive;
+
+.profile-info .profile-username, .profile-info .profile-email {
+    background: none;
+    padding: 0;
+    border: none;
+}
+.profile-username, .profile-email {
+    font-family: 'Poppins', sans-serif;
     font-weight: bold;
-    font-size: 1.2rem;
-    color: #333;
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    padding: 10px 20px;
+    display: inline-block;
+    position: relative;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Adding shadow */
+    text-align: center;
+    margin-bottom: 10px; /* Add some space between username and email */
+}
+
+.profile-username::after, .profile-email::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    text-shadow: rgba(0, 0, 0, 0.717); /* Subtle glow effect */
+    filter: blur(10px); 
+    z-index: -1;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
 }
 
 .avatars-title {
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     font-size: 2rem;
-    background: linear-gradient(145deg, #6a11cb, #2575fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    text-align: center;
     margin: 20px 0;
 }
 
@@ -67,17 +103,17 @@ body.profile-page {
 }
 
 .profile-avatar-card {
-    background: linear-gradient(145deg, #cdc7ff, #f9dcf7);
+    background: linear-gradient(145deg, #ffabb9, #f9d7d1);
     border-radius: 20px;
     padding: 20px;
     margin: 10px;
     width: 500px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     position: relative;
     color: #333333;
     border: 1px solid #cfdef3;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.731), 0 4px 6px rgba(0, 0, 0, 0.703); /* Outer shadows for depth */
+    transition: transform 0.3s, box-shadow 0.3s;
 }
-
 .profile-avatar-img {
     width: 150px;
     height: 150px;
