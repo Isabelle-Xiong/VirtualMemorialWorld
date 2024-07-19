@@ -80,6 +80,7 @@
 .aboutSection .content,
 .featuresSection .content {
     justify-content: center;
+    margin-right: 2em;
 }
 
 .aboutSection .sectionTitle {
