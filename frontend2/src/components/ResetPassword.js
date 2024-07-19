@@ -25,22 +25,20 @@ function ResetPassword() {
         <div className="auth-page">
             <div className="auth-container">
                 <h2 className="auth-title">Reset Password</h2>
-                <div className="auth-form-container">
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-3">
-                            <label className="auth-label">New Password:</label>
-                            <input
-                                type="password"
-                                className="auth-input"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <button type="submit" className="auth-button">Reset Password</button>
-                    </form>
-                    {message && <p>{message}</p>}
-                </div>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label className="auth-label">New Password:</label>
+                        <input
+                            type="password"
+                            className="auth-input"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="auth-button">Reset Password</button>
+                </form>
+                {message && <p>{message}</p>}
             </div>
         </div>
     );

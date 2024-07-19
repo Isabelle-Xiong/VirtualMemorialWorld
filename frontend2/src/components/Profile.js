@@ -7,6 +7,13 @@ function Profile() {
     const [avatars, setAvatars] = useState([]);
 
     useEffect(() => {
+        document.body.classList.add('profile-page');
+        return () => {
+            document.body.classList.remove('profile-page');
+        };
+    }, []);
+
+    useEffect(() => {
         const fetchProfile = async () => {
             const token = localStorage.getItem('token');
             console.log('Token:', token); // Log to confirm token is present

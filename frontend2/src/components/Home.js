@@ -40,6 +40,13 @@ function Home({ speedMultiplier }) {
     };
 
     useEffect(() => {
+        document.body.classList.add('home-page');
+        return () => {
+            document.body.classList.remove('home-page');
+        };
+    }, []);
+
+    useEffect(() => {
         fetchAvatars();
     }, []); // Fetch avatars once on component mount
 
