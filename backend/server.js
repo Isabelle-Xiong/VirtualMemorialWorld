@@ -10,6 +10,8 @@ const crypto = require('crypto');
 const { User, Avatar, Message, FriendRequest, Friend } = require('./models');
 const { spawn } = require('child_process');
 const textGeneratorPath = path.resolve(__dirname, '../nlp/sentiment_analysis/pipeline1/generate_final_goal.py');
+const routineItems = require('./routineItems');
+const moment = require('moment');
 
 
 const app = express();
@@ -267,7 +269,7 @@ app.get('/api/friends', auth, async (req, res) => {
 // Function to execute the Python script and get the generated goal
 const generateGoalText = () => {
     return new Promise((resolve, reject) => {
-        const pythonProcess = spawn('python3', [textGeneratorPath, "Tell me about your goals."]); //python3
+        const pythonProcess = spawn('python', [textGeneratorPath, "Tell me about your goals."]); //python3
 
         let result = '';
         pythonProcess.stdout.on('data', (data) => {
@@ -342,6 +344,53 @@ app.post('/api/generate-new-goal', auth, async (req, res) => {
     } catch (error) {
         console.error(`Error generating new goal for avatar ${avatarId}:`, error);
         res.status(500).send({ error: 'Error generating new goal.' });
+    }
+});
+
+// Generate a new routine for a specific avatar
+app.post('/api/generate-new-routine', auth, async (req, res) => {
+    const { avatarId } = req.body;
+    try {
+        // Generate multiple routine items
+        const newRoutineItems = [];
+        const numItems = 5; // Number of routine items to add
+
+        for (let i = 0; i < numItems; i++) {
+            const randomIndex = Math.floor(Math.random() * routineItems.length);
+            const newRoutineItem = routineItems[randomIndex];
+            newRoutineItems.push({ event: newRoutineItem.event, time: newRoutineItem.time });
+        }
+
+        // Sort the routine items by time
+        newRoutineItems.sort((a, b) => moment(a.time, 'hh:mm A').isBefore(moment(b.time, 'hh:mm A')) ? -1 : 1);
+
+        // Print the generated and sorted routine items for debugging
+        console.log('Generated and sorted routine items:', newRoutineItems);
+
+        if (newRoutineItems.length === 0) {
+            console.error('Failed to generate routine.');
+            return res.status(500).send({ error: 'Generated routine could not be retrieved.' });
+        }
+
+        const updateResult = await Avatar.findOneAndUpdate(
+            { _id: avatarId },
+            {
+                $set: {
+                    dailyRoutine: newRoutineItems
+                }
+            },
+            { new: true, runValidators: true }
+        );
+
+        if (!updateResult) {
+            return res.status(404).send({ error: 'Avatar not found' });
+        }
+
+        console.log(`New routine generated and saved for avatar ${avatarId}`);
+        res.status(200).send({ message: 'New routine generated successfully.' });
+    } catch (error) {
+        console.error(`Error generating new routine for avatar ${avatarId}:`, error);
+        res.status(500).send({ error: 'Error generating new routine.' });
     }
 });
 

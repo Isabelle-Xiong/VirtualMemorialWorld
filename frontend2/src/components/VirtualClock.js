@@ -49,15 +49,35 @@ const VirtualClock = ({ speedMultiplier, onTick }) => {
             }
         };
 
+        const generateNewRoutine = async (avatarId) => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('No token found, please log in.');
+                return;
+            }
+
+            try {
+                const response = await axios.post('http://localhost:5001/api/generate-new-routine', { avatarId }, {
+                    headers: { 'x-auth-token': token }
+                });
+                console.log(`New routine generated for avatar ${avatarId}:`, response.data);
+            } catch (error) {
+                console.error(`Error generating new routine for avatar ${avatarId}:`, error);
+            }
+        };
+
         const randomInterval = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
         const initializeIntervals = (avatarId) => {
             const statusUpdateInterval = randomInterval(2, 5) * 1800 * (1000 / speedMultiplier); // Convert days to milliseconds
             const newGoalInterval = randomInterval(5, 7) * 1800 * (1000 / speedMultiplier); // Convert days to milliseconds
+            const newRoutineInterval = 1800 * (1000 / speedMultiplier); // 1 day in milliseconds
+
             const statusUpdateTimer = setInterval(() => updateGoalStatus(avatarId), statusUpdateInterval);
             const newGoalTimer = setInterval(() => generateNewGoal(avatarId), newGoalInterval);
+            const newRoutineTimer = setInterval(() => generateNewRoutine(avatarId), newRoutineInterval);
 
-            return { statusUpdateTimer, newGoalTimer };
+            return { statusUpdateTimer, newGoalTimer, newRoutineTimer };
         };
 
         let intervals = [];
@@ -73,7 +93,7 @@ const VirtualClock = ({ speedMultiplier, onTick }) => {
                     headers: { 'x-auth-token': token },
                 });
                 response.data.forEach(avatar => {
-                    const { statusUpdateTimer, newGoalTimer } = initializeIntervals(avatar._id);
+                    const { statusUpdateTimer, newGoalTimer, newRoutineTimer} = initializeIntervals(avatar._id);
                     intervals.push({ avatarId: avatar._id, statusUpdateTimer, newGoalTimer });
                 });
             } catch (error) {
@@ -84,9 +104,10 @@ const VirtualClock = ({ speedMultiplier, onTick }) => {
         fetchAvatars();
 
         return () => {
-            intervals.forEach(({ statusUpdateTimer, newGoalTimer }) => {
+            intervals.forEach(({ statusUpdateTimer, newGoalTimer , newRoutineTimer}) => {
                 clearInterval(statusUpdateTimer);
                 clearInterval(newGoalTimer);
+                clearInterval(newRoutineTimer)
             });
         };
     }, [speedMultiplier]);
