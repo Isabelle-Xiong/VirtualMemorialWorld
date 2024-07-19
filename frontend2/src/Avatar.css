@@ -4,6 +4,47 @@ body.avatar-page {
     font-family: 'Poppins', sans-serif;
 }
 
+.title-container {
+    position: relative;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+body.avatar-page h2.my-4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    font-size: 3rem;
+    background: linear-gradient(145deg, #00f7ff, #ff4593);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+    animation: gradientMove 5s infinite alternate;
+    -webkit-text-stroke: 1.4px #000000; /* Border around each letter for WebKit browsers */
+}
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 50% 75%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    75% {
+        background-position: 50% 25%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+
 button.btn-primary {
     background: linear-gradient(145deg, #64b3f4, #4e6cff);
     color: white;

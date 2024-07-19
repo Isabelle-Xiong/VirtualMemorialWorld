@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../Avatar.css';
 import { useParams, useNavigate } from 'react-router-dom';
+import GlslCanvas from 'glslCanvas';
 
 const personalityOptions = [
     'Adventurous', 'Artistic', 'Charismatic', 'Cheerful', 'Confident', 'Creative', 'Dependable',
@@ -16,6 +17,7 @@ const hobbyOptions = [
     'Crafting', 'Collecting', 'Gaming', 'Yoga', 'Meditation', 'Fitness', 'Cycling', 'Running',
     'Swimming', 'Other'
 ];
+
 
 
 
@@ -43,6 +45,7 @@ function Avatar({ virtualTime }) { // Receive virtualTime as a prop
     const [petName, setPetName] = useState('');
     const [avatarId, setAvatarId] = useState(null);
 
+    
     useEffect(() => {
         document.body.classList.add('avatar-page');
         return () => {
@@ -68,6 +71,7 @@ function Avatar({ virtualTime }) { // Receive virtualTime as a prop
             fetchAvatarData();
         }
     }, [id]);
+
 
     // Job-related state variables
     const [jobs, setJobs] = useState([]);
@@ -198,7 +202,7 @@ function Avatar({ virtualTime }) { // Receive virtualTime as a prop
 
     return (
         <div className="container">
-            <h2 className="auth-title">Create Avatar</h2>
+            <h2 class="my-4">Create Avatar</h2>
             <form onSubmit={handleSubmit} className="form-center">
                 <div className="mb-3">
                     <input
