@@ -39,7 +39,7 @@ body.home-page {
     border: 1px solid #cfdef3;
 }
 
-.avatars-title {
+body.home-page h2.my-4.avatars-title {
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     font-size: 3rem;
@@ -47,6 +47,8 @@ body.home-page {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
 .avatar-header {

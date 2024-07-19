@@ -15,11 +15,11 @@ body.edit-avatar-page {
     border-radius: 20px;
 }
 
-h2.my-4 {
+body.edit-avatar-page h2.my-4 {
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     font-size: 3rem;
-    background: linear-gradient(145deg, #6a11cb, #2575fc);
+    background: linear-gradient(145deg, #d4abff, #2d79fd);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
