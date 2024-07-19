@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../Avatar.css'; // Adjusted import path
+import '../Avatar.css';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const personalityOptions = [
@@ -42,6 +42,13 @@ function Avatar({ virtualTime }) { // Receive virtualTime as a prop
     const [petType, setPetType] = useState('');
     const [petName, setPetName] = useState('');
     const [avatarId, setAvatarId] = useState(null);
+
+    useEffect(() => {
+        document.body.classList.add('avatar-page');
+        return () => {
+            document.body.classList.remove('avatar-page');
+        };
+    }, []);
 
     useEffect(() => {
         const fetchAvatarData = async () => {

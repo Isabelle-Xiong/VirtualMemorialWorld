@@ -12,6 +12,13 @@ const Friends = () => {
     const [showRequests, setShowRequests] = useState(true);
 
     useEffect(() => {
+        document.body.classList.add('friends-page');
+        return () => {
+            document.body.classList.remove('friends-page');
+        };
+    }, []);
+
+    useEffect(() => {
         const fetchFriendRequests = async () => {
             const token = localStorage.getItem('token');
             if (!token) {

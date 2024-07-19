@@ -12,6 +12,13 @@ const ChatUsers = () => {
     const [friendRequestStatus, setFriendRequestStatus] = useState({});
 
     useEffect(() => {
+        document.body.classList.add('chat-users-page');
+        return () => {
+            document.body.classList.remove('chat-users-page');
+        };
+    }, []);
+
+    useEffect(() => {
         const fetchChatUsers = async () => {
             const token = localStorage.getItem('token');
             if (!token) {

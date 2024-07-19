@@ -1,4 +1,10 @@
 /* ChatUsers.css */
+body.chat-users-page {
+    background: url('https://www.itl.cat/pngfile/big/260-2602667_some-bis-biswas-scenery-wallpaper-hot-air-balloon.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+}
+
 .chat-users-container {
     background: linear-gradient(to bottom, #e0eafc, #cfdef3);
     padding: 20px;
