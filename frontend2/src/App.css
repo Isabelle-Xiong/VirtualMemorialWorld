@@ -66,14 +66,16 @@
   background: linear-gradient(145deg, #ffafbd, #ffc3a0);
   border-radius: 15px;
   padding: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), inset 0 -1px 1px rgba(0, 0, 0, 0.05);
   position: fixed;
   top: 20px;
   right: 20px;
   max-width: 250px;
-  border: 1px solid #ddd;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   color: #ffffff;
   z-index: 1000;
+  transform: translateZ(0);
+  perspective: 1000px;
 }
 
 .virtual-time-container h1 {
@@ -81,7 +83,7 @@
   color: white !important;
   margin: 5px 0;
   font-family: 'Roboto', sans-serif;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.6);
 }
 
 .virtual-time-container button {
