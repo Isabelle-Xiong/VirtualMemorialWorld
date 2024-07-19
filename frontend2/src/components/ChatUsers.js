@@ -3,7 +3,7 @@ import axios from 'axios';
 import Chat from './Chat';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserFriends, faComments } from '@fortawesome/free-solid-svg-icons';
-import '../ChatUsers.css'; 
+import '../ChatUsers.css';
 
 const ChatUsers = () => {
     const [chatUsers, setChatUsers] = useState([]);
@@ -69,10 +69,11 @@ const ChatUsers = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:5001/api/friend-request', { receiverId: userId }, {
+            await axios.post('http://localhost:5001/api/friend-request', { receiverId: userId }, {
                 headers: { 'x-auth-token': token },
             });
-            setFriendRequestStatus({ ...friendRequestStatus, [userId]: response.data.message });
+            // Remove the line that sets the friend request status
+            // setFriendRequestStatus({ ...friendRequestStatus, [userId]: response.data.message });
         } catch (error) {
             console.error('Error sending friend request:', error);
         }

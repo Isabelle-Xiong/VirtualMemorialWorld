@@ -80,16 +80,18 @@
 .aboutSection .content,
 .featuresSection .content {
     justify-content: center;
-    margin-right: 2em;
+    margin-left: 15em;
 }
 
 @keyframes gradient-move {
     0% {
         background-position: 0% 50%;
     }
+
     50% {
         background-position: 100% 50%;
     }
+
     100% {
         background-position: 0% 50%;
     }
@@ -160,14 +162,14 @@
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     font-size: 3em;
-    color: #fff; 
-    text-shadow: 
-        0 0 5px #fff, 
-        0 0 10px #fff, 
-        0 0 15px #ff00d0, 
-        0 0 20px #ff00ff, 
-        0 0 25px #ff00ff, 
-        0 0 30px #ff00ff, 
+    color: #fff;
+    text-shadow:
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 15px #ff00d0,
+        0 0 20px #ff00ff,
+        0 0 25px #ff00ff,
+        0 0 30px #ff00ff,
         0 0 35px #ff00ff;
     position: absolute;
     top: 3em;
