@@ -110,7 +110,7 @@ body.profile-page {
     width: 500px;
     position: relative;
     color: #333333;
-    border: 1px solid #cfdef3;
+    border: 1px solid #ffad64;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.731), 0 4px 6px rgba(0, 0, 0, 0.703); /* Outer shadows for depth */
     transition: transform 0.3s, box-shadow 0.3s;
 }
@@ -121,7 +121,7 @@ body.profile-page {
     object-fit: cover;
     margin: 0 auto;
     display: block;
-    border: 3px solid #79b3ff;
+    border: 3px solid #ffd579;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 

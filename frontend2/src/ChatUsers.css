@@ -1,4 +1,3 @@
-/* ChatUsers.css */
 body.chat-users-page {
     background: url('https://www.itl.cat/pngfile/big/260-2602667_some-bis-biswas-scenery-wallpaper-hot-air-balloon.jpg') no-repeat center center fixed;
     background-size: cover;
@@ -6,92 +5,87 @@ body.chat-users-page {
 }
 
 .chat-users-container {
-    background: linear-gradient(to bottom, #e0eafc, #cfdef3);
-    padding: 20px;
+    background: url('https://media.istockphoto.com/id/1435226192/photo/beautiful-particles-with-shallow-depth-of-field-abstract-art-and-craft-background-colors-blue.webp?b=1&s=170667a&w=0&k=20&c=DInnY_lpZw77eImoqZjpxYubda7zTyH5mYQpOrg57Gc=') no-repeat center center;
+    background-size: cover;
+    padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    width: 80%;
-    margin: auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    width: 60%;
+    margin: 40px auto;
     text-align: center;
-    font-family: 'Poppins', sans-serif;
     color: #333;
 }
 
-.messages-title {
+h2.messages-title {
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
-    font-size: 3rem;
-    background: linear-gradient(145deg, #6a11cb, #2575fc);
+    font-size: 2.5rem;
+    background: linear-gradient(145deg, #c67cff, #1e44ffcd, #ff00ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
 }
 
 .chat-users-list {
     list-style-type: none;
     padding: 0;
-    margin: 20px 0;
+    margin: 10px 0;
 }
 
 .chat-user-item {
-    background: #fff;
-    padding: 15px;
+    background: #f0f0f0;
+    flex: 1;
+    text-align: center;
+    font-family: 'Indie Flower', cursive;
+    font-size: 1.5rem;
+    padding: 15px 25px;
     margin: 10px 0;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin: 0 auto 20px;
+    position: relative;
 }
 
-.username {
-    font-size: 1.2rem;
-    color: #333;
-    text-decoration: none;
-    transition: color 0.3s;
+.chat-user-item .username {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
     font-weight: bold;
-    font-family: 'Poppins', sans-serif;
-}
-
-.username:hover {
-    color: #007bff;
+    color: #333;
+    font-family: 'Rancho', cursive;
+    font-size: 1.2rem;
 }
 
 .action-buttons {
     display: flex;
     gap: 10px;
+    margin-left: 20px;
 }
 
 .chat-button,
 .friend-request-button {
-    background: linear-gradient(145deg, #64b3f4, #4e6cff);
+    background: linear-gradient(145deg, #ff9966, #ff5e62);
     color: white;
     border: none;
     border-radius: 20px;
-    padding: 10px 20px;
+    padding: 10px 15px;
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .chat-button:hover,
 .friend-request-button:hover {
-    background-color: #4e6cff;
+    background-color: #ff5e62;
     transform: translateY(-2px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-}
-
-.chat-button .fa-comments,
-.friend-request-button .fa-user-friends {
-    margin-right: 5px;
-}
-
-.friend-request-status {
-    margin-left: 10px;
-    font-size: 0.9rem;
-    color: #6a11cb;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }

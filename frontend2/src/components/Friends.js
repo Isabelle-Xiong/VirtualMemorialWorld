@@ -91,7 +91,7 @@ const Friends = () => {
 
     return (
         <div className="friends-container">
-            <h2>Friend Requests</h2>
+            <h2 className="friends-title">Friend Requests</h2>
             <div className="friend-requests-section">
                 <button className="toggle-button" onClick={() => setShowRequests(!showRequests)}>
                     <FontAwesomeIcon icon={showRequests ? faChevronUp : faChevronDown} />
@@ -120,7 +120,7 @@ const Friends = () => {
                     </ul>
                 )}
             </div>
-            <h2>Accepted Friends</h2>
+            <h2 className="friends-title">Accepted Friends</h2>
             <div className="accepted-friends-section">
                 <ul className="accepted-friends-list">
                     {acceptedFriends.map(friend => (

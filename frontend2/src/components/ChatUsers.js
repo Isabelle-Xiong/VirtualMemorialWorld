@@ -103,7 +103,7 @@ const ChatUsers = () => {
                                     className="friend-request-button"
                                     onClick={() => sendFriendRequest(user._id)}
                                 >
-                                    <FontAwesomeIcon icon={faUserFriends} /> Send Friend Request
+                                    <FontAwesomeIcon icon={faUserFriends} /> Add Friend
                                 </button>
                             )}
                             {friendRequestStatus[user._id] && (
