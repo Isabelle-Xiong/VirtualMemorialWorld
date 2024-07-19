@@ -35,14 +35,31 @@ function LandingPage() {
             distance: '50px',
             duration: 1000,
             easing: 'ease-in-out',
+            reset: true,
         });
-
 
         ScrollReveal().reveal('.reveal-bottom', {
             origin: 'bottom',
             distance: '50px',
             duration: 1000,
             easing: 'ease-in-out',
+            reset: true,
+        });
+
+        ScrollReveal().reveal('.reveal-left', {
+            origin: 'left',
+            distance: '50px',
+            duration: 1000,
+            easing: 'ease-in-out',
+            reset: true,
+        });
+
+        ScrollReveal().reveal('.reveal-right', {
+            origin: 'right',
+            distance: '50px',
+            duration: 1000,
+            easing: 'ease-in-out',
+            reset: true,
         });
     }, []);
 
@@ -56,7 +73,7 @@ function LandingPage() {
                 <div className={`${styles.heroContent} reveal-bottom`}>
                     <h1 className="reveal-bottom">Create a lasting memory in a virtual world</h1>
                     <Typing
-                        className={styles.typingText}
+                        className={`${styles.typingText} reveal-bottom`}
                         text="Welcome to a place where memories live on."
                         speed={50}
                         eraseDelay={1000}
@@ -66,31 +83,31 @@ function LandingPage() {
 
             <section className={`${styles.section} ${styles.aboutSection}`}>
                 <div className={styles.content}>
-                    <div className={styles.text}>
-                        <div className={`${styles.textContainer} reveal`}>
-                            <h2 className={`${styles.sectionTitle} reveal`}>About Our World</h2>
-                            <p>Our virtual memorial world allows you to create avatars for your deceased loved ones, and watch as the world progresses and new relationships form.</p>
+                    <div className={`${styles.text}`}>
+                        <div className={`${styles.textContainer} reveal-left`}>
+                            <h2 className={`${styles.sectionTitle} reveal-top`}>About Our World</h2>
+                            <p className="reveal-bottom">Our virtual memorial world allows you to create avatars for your deceased loved ones, and watch as the world progresses and new relationships form.</p>
                         </div>
                     </div>
-                    <div className={styles.model}>
+                    <div className={`${styles.model} reveal-right`}>
                         <EarthModel />
                     </div>
                 </div>
             </section>
 
             <section className={`${styles.section} ${styles.featuresSection}`}>
-                <div className={`${styles.textContainer} reveal`}>
-                    <h2 className={`${styles.sectionTitle} reveal`}>Features</h2>
-                    <div className={`${styles.feature} reveal`}>Create and customize avatars</div>
-                    <div className={`${styles.feature} reveal`}>Autonomous world progression</div>
-                    <div className={`${styles.feature} reveal`}>Form new relationships and memories</div>
+                <div className={`${styles.textContainer} reveal-bottom`}>
+                    <h2 className={`${styles.sectionTitle} reveal-top`}>Features</h2>
+                    <div className={`${styles.feature} reveal-left`}>Create and customize avatars</div>
+                    <div className={`${styles.feature} reveal-left`}>Autonomous world progression</div>
+                    <div className={`${styles.feature} reveal-left`}>Form new relationships and memories</div>
                 </div>
             </section>
 
             <section className={`${styles.section} ${styles.testimonialSection}`}>
-                <h2 className={`${styles.sectionTitle} ${styles.testimonialTitle} reveal`}>What Our Users Say</h2>
+                <h2 className={`${styles.sectionTitle} ${styles.testimonialTitle} reveal-left`}>What Our Users Say</h2>
                 {reviews.map((review, index) => (
-                    <div key={index} className={`${styles.reviewCard} reveal`}>
+                    <div key={index} className={`${styles.reviewCard} reveal-bottom`}>
                         <img src={review.imageUrl} alt={review.author} className={styles.reviewImage} />
                         <p className={styles.reviewText}>“{review.text}”</p>
                         <span className={styles.reviewAuthor}>- {review.author}</span>

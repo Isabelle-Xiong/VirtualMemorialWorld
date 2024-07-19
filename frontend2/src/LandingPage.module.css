@@ -146,10 +146,15 @@
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     font-size: 3em;
-    background: linear-gradient(145deg, #761af8, #ffb69a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    color: #fff; 
+    text-shadow: 
+        0 0 5px #fff, 
+        0 0 10px #fff, 
+        0 0 15px #ff00d0, 
+        0 0 20px #ff00ff, 
+        0 0 25px #ff00ff, 
+        0 0 30px #ff00ff, 
+        0 0 35px #ff00ff;
     position: absolute;
     top: 3em;
     left: 4em;
