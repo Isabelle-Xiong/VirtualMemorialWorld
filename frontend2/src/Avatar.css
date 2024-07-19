@@ -99,7 +99,6 @@ button {
     gap: 20px;
 }
 
-.bottom-buttons .btn-customize,
 .bottom-buttons .btn-create-avatar {
     border: none;
     border-radius: 30px;
@@ -108,16 +107,6 @@ button {
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
     margin: 5px;
-}
-
-.bottom-buttons .btn-customize {
-    background: linear-gradient(145deg, #ff7f7f, #f6ac8f);
-    color: white;
-}
-
-.bottom-buttons .btn-customize:hover {
-    background-color: #ff6347;
-    transform: scale(1.05);
 }
 
 .bottom-buttons .btn-create-avatar {

@@ -491,14 +491,6 @@ function Avatar({ virtualTime }) { // Receive virtualTime as a prop
                     />
                 </div>
                 <div className="bottom-buttons">
-                    <button
-                        type="button"
-                        className="btn-customize"
-                        onClick={() => navigate('/customize-avatar')}
-                    >
-                        Customize Avatar
-                    </button>
-
                     <button type="submit" className="btn-create-avatar">Create Avatar</button>
                 </div>
             </form>
