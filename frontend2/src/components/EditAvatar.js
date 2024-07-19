@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import '../EditAvatar.css';
+
 
 const personalityOptions = [
     'Adventurous', 'Artistic', 'Charismatic', 'Cheerful', 'Confident', 'Creative', 'Dependable',
@@ -29,6 +31,13 @@ function EditAvatar() {
     const [customHobby, setCustomHobby] = useState('');
     const [personality, setPersonality] = useState([]);
     const [personalityTrait, setPersonalityTrait] = useState('');
+
+    useEffect(() => {
+        document.body.classList.add('edit-avatar-page');
+        return () => {
+            document.body.classList.remove('edit-avatar-page');
+        };
+    }, []);
 
     useEffect(() => {
         const fetchAvatar = async () => {
