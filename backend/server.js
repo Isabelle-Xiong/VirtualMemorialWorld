@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const path = require('path');
 const auth = require('./middleware/auth');
 const crypto = require('crypto');
-const { User, Avatar, Message, FriendRequest, Friend} = require('./models');
+const { User, Avatar, Message, FriendRequest, Friend } = require('./models');
 const { spawn } = require('child_process');
 const textGeneratorPath = path.resolve(__dirname, '../nlp/sentiment_analysis/pipeline1/generate_final_goal.py');
 
@@ -152,12 +152,14 @@ app.post('/api/messages', auth, async (req, res) => {
                 { sender: req.user.userId, receiver: recipientId },
                 { sender: recipientId, receiver: req.user.userId }
             ],
-            _id: { $nin: (await Message.find({
-                $or: [
-                    { sender: req.user.userId, receiver: recipientId },
-                    { sender: recipientId, receiver: req.user.userId }
-                ]
-            }).sort({ createdAt: -1 }).limit(15)).map(m => m._id) }
+            _id: {
+                $nin: (await Message.find({
+                    $or: [
+                        { sender: req.user.userId, receiver: recipientId },
+                        { sender: recipientId, receiver: req.user.userId }
+                    ]
+                }).sort({ createdAt: -1 }).limit(15)).map(m => m._id)
+            }
         });
 
         res.status(201).json(newMessage);
@@ -185,7 +187,7 @@ app.post('/api/friend-request', auth, async (req, res) => {
         });
         await newFriendRequest.save();
 
-        res.status(200).json({ message: 'Friend request sent successfully.' });
+        res.status(200).json({ message: 'Sent' });
     } catch (error) {
         console.error('Error sending friend request:', error);
         res.status(500).json({ message: 'Server error' });

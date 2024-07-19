@@ -28,3 +28,49 @@ body.avatar-home-page h2.my-4 {
     -webkit-text-stroke: 2px black;
     transform: scaleY(1.1); /* Stretch text vertically */
 }
+
+.camera-icon-container {
+    position: relative;
+    margin-top: 20px;
+}
+
+.camera-icon {
+    width: 64px;
+    height: 64px;
+    cursor: pointer;
+    transition: filter 0.3s ease;
+}
+
+.camera-icon-container:hover .camera-icon {
+    filter: brightness(0.8); /* Darken the camera icon on hover */
+}
+
+.camera-icon-options {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translate(0, -50%);
+    width: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.camera-icon-container:hover .camera-icon-options {
+    opacity: 1;
+    transform: translate(0, -50%) scale(1);
+}
+
+.camera-icon-option {
+    width: 48px;
+    height: 48px;
+    transform: scale(0);
+    transition: transform 0.3s ease;
+    margin: 4px 0;
+}
+
+.camera-icon-container:hover .camera-icon-option {
+    transform: scale(1);
+}

@@ -39,7 +39,25 @@ function AvatarHome() {
     return (
         <div className="container">
             <h2 className="my-4">{avatarName}'s Home</h2>
-            {/* Add your content here */}
+            <div className="camera-icon-container">
+                <img 
+                    src="https://icons.iconarchive.com/icons/iconarchive/outline-camera/512/Flat-Red-Big-Camera-icon.png" 
+                    alt="Camera Icon" 
+                    className="camera-icon" 
+                />
+                <div className="camera-icon-options">
+                    <img 
+                        src="https://cdn-icons-png.freepik.com/512/2611/2611312.png" 
+                        alt="Play" 
+                        className="camera-icon-option" 
+                    />
+                    <img 
+                        src="https://cdn-icons-png.flaticon.com/512/1004/1004733.png" 
+                        alt="Add" 
+                        className="camera-icon-option" 
+                    />
+                </div>
+            </div>
         </div>
     );
 }
