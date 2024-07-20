@@ -5,6 +5,7 @@ import '../PlayMemories.css';
 function PlayMemories({ avatarId, onClose }) {
     const [memories, setMemories] = useState([]);
     const trackRef = useRef(null);
+    const intervalRef = useRef(null);
 
     useEffect(() => {
         const fetchMemories = async () => {
@@ -26,6 +27,7 @@ function PlayMemories({ avatarId, onClose }) {
         const handleOnDown = e => {
             if (trackRef.current) {
                 trackRef.current.dataset.mouseDownAt = e.clientX;
+                clearInterval(intervalRef.current);
             }
         };
 
@@ -33,6 +35,7 @@ function PlayMemories({ avatarId, onClose }) {
             if (trackRef.current) {
                 trackRef.current.dataset.mouseDownAt = "0";
                 trackRef.current.dataset.prevPercentage = trackRef.current.dataset.percentage;
+                startLoop();
             }
         };
 
@@ -45,18 +48,20 @@ function PlayMemories({ avatarId, onClose }) {
 
                 const percentage = (mouseDelta / maxDelta) * -100,
                     nextPercentageUnconstrained = parseFloat(trackRef.current.dataset.prevPercentage || 0) + percentage,
-                    nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100);
+                    nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -200); // Adjust to -200 for loop
 
                 trackRef.current.dataset.percentage = nextPercentage;
 
-                trackRef.current.animate({
-                    transform: `translate(${nextPercentage}%, -50%)`
-                }, { duration: 1200, fill: "forwards" });
+                trackRef.current.style.transform = `translate(${nextPercentage}%, -50%)`;
 
                 for (const image of trackRef.current.getElementsByClassName("image")) {
-                    image.animate({
-                        objectPosition: `${100 + nextPercentage}% center`
-                    }, { duration: 1200, fill: "forwards" });
+                    image.style.objectPosition = `${100 + nextPercentage}% center`;
+                }
+
+                if (nextPercentage <= -100) {
+                    trackRef.current.dataset.percentage = "0";
+                    trackRef.current.dataset.prevPercentage = "0";
+                    trackRef.current.style.transform = `translate(0%, -50%)`;
                 }
             }
         };
@@ -68,6 +73,26 @@ function PlayMemories({ avatarId, onClose }) {
         window.addEventListener('mousemove', handleOnMove);
         window.addEventListener('touchmove', (e) => handleOnMove(e.touches[0]));
 
+        const startLoop = () => {
+            intervalRef.current = setInterval(() => {
+                if (trackRef.current) {
+                    let currentPercentage = parseFloat(trackRef.current.dataset.percentage) || 0;
+                    let nextPercentage = currentPercentage - 0.1;
+                    if (nextPercentage <= -100) {
+                        nextPercentage = 0;
+                    }
+                    trackRef.current.dataset.percentage = nextPercentage;
+
+                    trackRef.current.style.transform = `translate(${nextPercentage}%, -50%)`;
+                    for (const image of trackRef.current.getElementsByClassName("image")) {
+                        image.style.objectPosition = `${100 + nextPercentage}% center`;
+                    }
+                }
+            }, 50);
+        };
+
+        startLoop();
+
         return () => {
             window.removeEventListener('mousedown', handleOnDown);
             window.removeEventListener('touchstart', (e) => handleOnDown(e.touches[0]));
@@ -75,20 +100,29 @@ function PlayMemories({ avatarId, onClose }) {
             window.removeEventListener('touchend', (e) => handleOnUp(e.touches[0]));
             window.removeEventListener('mousemove', handleOnMove);
             window.removeEventListener('touchmove', (e) => handleOnMove(e.touches[0]));
+            clearInterval(intervalRef.current);
         };
     }, [avatarId]);
+
+    const duplicateMemories = (memories) => {
+        return [...memories, ...memories];
+    }
+
+    const duplicatedMemories = duplicateMemories(memories);
 
     return (
         <div className="play-memories-overlay">
             <div className="play-memories-content">
                 <button className="close-button" onClick={onClose}>X</button>
                 <div id="image-track" ref={trackRef} data-mouse-down-at="0" data-prev-percentage="0">
-                    {Array.isArray(memories) && memories.length > 0 ? memories.map((memory, index) => (
+                    {Array.isArray(duplicatedMemories) && duplicatedMemories.length > 0 ? duplicatedMemories.map((memory, index) => (
                         <div key={index} className="memory">
-                            <h3>{memory.title}</h3>
-                            {Array.isArray(memory.photos) && memory.photos.map((photo, photoIndex) => (
-                                <img key={photoIndex} className="image" src={photo} alt={`Memory ${index} Photo ${photoIndex}`} draggable="false" />
-                            ))}
+                            <h3 className="memory-title">{memory.title}</h3>
+                            <div className="memory-photos">
+                                {Array.isArray(memory.photos) && memory.photos.map((photo, photoIndex) => (
+                                    <img key={photoIndex} className="image" src={photo} alt={`Memory ${index} Photo ${photoIndex}`} draggable="false" />
+                                ))}
+                            </div>
                             {memory.soundtrack && (
                                 <div className="soundtrack">
                                     <h4>Soundtrack</h4>
