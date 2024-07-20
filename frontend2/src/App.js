@@ -24,6 +24,8 @@ import ChatUsers from './components/ChatUsers';
 import Chat from './components/Chat';
 import Friends from './components/Friends';
 import LandingPage from './components/LandingPage';
+import AddMemories from './components/AddMemories';
+
 
 
 function App() {
@@ -168,6 +170,7 @@ function App() {
             }
           />
           <Route path="/avatar-home/:id" element={<AvatarHome />} />
+          <Route path="/add-memories/:id" element={<AddMemories />} />
 
         </Routes>
 

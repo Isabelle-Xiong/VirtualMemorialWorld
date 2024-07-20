@@ -19,14 +19,16 @@ body.avatar-home-page {
 body.avatar-home-page h2.my-4 {
     font-family: 'Press Start 2P', cursive;
     font-weight: bold;
-    font-size: 2.3rem; /* Increased font size */
+    font-size: 2.3rem;
+    /* Increased font size */
     background: url('https://img.freepik.com/free-photo/rustic-wood-panel_53876-16245.jpg') repeat;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center;
     margin-bottom: 1rem;
     -webkit-text-stroke: 2px black;
-    transform: scaleY(1.1); /* Stretch text vertically */
+    transform: scaleY(1.1);
+    /* Stretch text vertically */
 }
 
 .camera-icon-container {
@@ -37,12 +39,12 @@ body.avatar-home-page h2.my-4 {
 .camera-icon {
     width: 64px;
     height: 64px;
-    cursor: pointer;
     transition: filter 0.3s ease;
 }
 
 .camera-icon-container:hover .camera-icon {
-    filter: brightness(0.8); /* Darken the camera icon on hover */
+    filter: brightness(0.8);
+    /* Darken the camera icon on hover */
 }
 
 .camera-icon-options {
@@ -69,6 +71,8 @@ body.avatar-home-page h2.my-4 {
     transform: scale(0);
     transition: transform 0.3s ease;
     margin: 4px 0;
+    cursor: pointer;
+    /* Change cursor on hover */
 }
 
 .camera-icon-container:hover .camera-icon-option {

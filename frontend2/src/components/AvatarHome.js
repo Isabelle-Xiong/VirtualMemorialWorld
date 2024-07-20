@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../AvatarHome.css';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function AvatarHome() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [avatarName, setAvatarName] = useState('');
 
     useEffect(() => {
@@ -55,6 +56,7 @@ function AvatarHome() {
                         src="https://cdn-icons-png.flaticon.com/512/1004/1004733.png" 
                         alt="Add" 
                         className="camera-icon-option" 
+                        onClick={() => navigate(`/add-memories/${id}`)} 
                     />
                 </div>
             </div>

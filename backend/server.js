@@ -12,6 +12,8 @@ const { spawn } = require('child_process');
 const textGeneratorPath = path.resolve(__dirname, '../nlp/sentiment_analysis/pipeline1/generate_final_goal.py');
 const routineItems = require('./routineItems');
 const moment = require('moment');
+const multer = require('multer');
+const ffmpeg = require('fluent-ffmpeg');
 
 
 const app = express();
@@ -269,7 +271,7 @@ app.get('/api/friends', auth, async (req, res) => {
 // Function to execute the Python script and get the generated goal
 const generateGoalText = () => {
     return new Promise((resolve, reject) => {
-        const pythonProcess = spawn('python', [textGeneratorPath, "Tell me about your goals."]); //python3
+        const pythonProcess = spawn('python3', [textGeneratorPath, "Tell me about your goals."]); //python
 
         let result = '';
         pythonProcess.stdout.on('data', (data) => {
@@ -449,6 +451,101 @@ app.post('/api/register', async (req, res) => {
     } catch (error) {
         console.error('Error registering:', error);
         res.status(500).send('Error registering user');
+    }
+});
+
+
+
+// Multer configuration
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, `${Date.now()}-${file.originalname}`);
+    }
+});
+
+const upload = multer({ storage: storage });
+
+app.post('/api/avatars/:id/memories', auth, upload.fields([{ name: 'photos', maxCount: 10 }, { name: 'soundtrack', maxCount: 1 }]), async (req, res) => {
+    const { id } = req.params;
+    const { title } = req.body;
+
+    try {
+        const avatar = await Avatar.findById(id);
+        if (!avatar) {
+            return res.status(404).send('Avatar not found');
+        }
+
+        const memory = {
+            title,
+            photos: req.files['photos'] ? req.files['photos'].map(file => file.path) : []
+        };
+
+        avatar.memories.push(memory);
+
+        if (req.files['soundtrack']) {
+            const soundtrackFile = req.files['soundtrack'][0];
+            const soundtrackPath = soundtrackFile.path;
+            const fileExtension = path.extname(soundtrackPath).toLowerCase();
+            let truncatedSoundtrackPath;
+
+            if (fileExtension === '.mp4') {
+                truncatedSoundtrackPath = `uploads/truncated-${Date.now()}.mp3`;
+
+                ffmpeg(soundtrackPath)
+                    .setDuration(45)
+                    .toFormat('mp3')
+                    .output(truncatedSoundtrackPath)
+                    .on('end', async () => {
+                        const soundtrack = {
+                            title,
+                            file: truncatedSoundtrackPath,
+                            duration: 45 // Set the duration to 45 seconds
+                        };
+
+                        avatar.soundtracks.push(soundtrack);
+                        await avatar.save();
+
+                        res.status(201).json(avatar);
+                    })
+                    .on('error', err => {
+                        console.error('Error processing soundtrack:', err);
+                        res.status(500).send('Error processing soundtrack');
+                    })
+                    .run();
+            } else {
+                truncatedSoundtrackPath = `uploads/truncated-${Date.now()}-${path.basename(soundtrackPath)}`;
+
+                ffmpeg(soundtrackPath)
+                    .setDuration(45)
+                    .output(truncatedSoundtrackPath)
+                    .on('end', async () => {
+                        const soundtrack = {
+                            title,
+                            file: truncatedSoundtrackPath,
+                            duration: 45 // Set the duration to 45 seconds
+                        };
+
+                        avatar.soundtracks.push(soundtrack);
+                        await avatar.save();
+
+                        res.status(201).json(avatar);
+                    })
+                    .on('error', err => {
+                        console.error('Error processing soundtrack:', err);
+                        res.status(500).send('Error processing soundtrack');
+                    })
+                    .run();
+            }
+        } else {
+            await avatar.save();
+            res.status(201).json(avatar);
+        }
+    } catch (error) {
+        console.error('Error adding memory:', error);
+        res.status(500).send('Server error');
     }
 });
 

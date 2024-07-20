@@ -18,6 +18,20 @@ const userSchema = new Schema({
     ]
 });
 
+const memorySchema = new Schema({
+    title: { type: String, required: true },
+    photos: [{ type: String }], // Store photo URLs or file paths
+    createdAt: { type: Date, default: Date.now }
+});
+
+const soundtrackSchema = new Schema({
+    title: { type: String, required: true },
+    file: { type: String }, // Store soundtrack URL or file path
+    duration: { type: Number, required: true }, // Store duration in seconds
+    createdAt: { type: Date, default: Date.now }
+});
+
+
 const messageSchema = new Schema({
     sender: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     receiver: { type: Schema.Types.ObjectId, ref: 'User', required: true },
@@ -112,7 +126,9 @@ const avatarSchema = new Schema({
     eyebrowType: { type: String, default: 'Default' },
     mouthType: { type: String, default: 'Smile' },
     skinColor: { type: String, default: 'Light' },
-    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true }
+    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    memories: [memorySchema], // Add this line
+    soundtracks: [soundtrackSchema], // Add this line
 });
 
 // Pre-save middleware to slice the goals array to only keep the latest 5 goals
