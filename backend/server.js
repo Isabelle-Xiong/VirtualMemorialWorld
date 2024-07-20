@@ -43,6 +43,22 @@ app.get('/api/avatars/:id/memories', auth, async (req, res) => {
         res.status(500).send('Server error');
     }
 });
+
+// Fetch soundtracks for a specific avatar
+app.get('/api/avatars/:id/soundtracks', auth, async (req, res) => {
+    try {
+        const avatarId = req.params.id;
+        const avatar = await Avatar.findById(avatarId).select('soundtracks');
+        if (!avatar) {
+            return res.status(404).send('Avatar not found');
+        }
+        res.json({ soundtracks: avatar.soundtracks.map(track => track.file) }); // Ensure the response includes the soundtracks key
+    } catch (error) {
+        console.error('Error fetching soundtracks:', error);
+        res.status(500).send('Server error');
+    }
+});
+
 // Verify security question and reset password
 app.post('/api/reset-password-with-security-question', async (req, res) => {
     const { username, securityAnswer, newPassword } = req.body;

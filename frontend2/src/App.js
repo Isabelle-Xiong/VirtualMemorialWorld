@@ -30,6 +30,15 @@ import PlayMemories from './components/PlayMemories';
 
 
 function App() {
+
+  const handlePlayMemoriesClose = () => {
+    document.body.classList.remove('play-memories-body');
+  };
+
+  const handlePlayMemoriesOpen = () => {
+    document.body.classList.add('play-memories-body');
+  };
+
   const { virtualSeconds, virtualDay, setVirtualDay } = useVirtualTime(48);
 
   const handleTick = useCallback((newVirtualTime) => {
@@ -172,7 +181,7 @@ function App() {
           />
           <Route path="/avatar-home/:id" element={<AvatarHome />} />
           <Route path="/add-memories/:id" element={<AddMemories />} />
-          <Route path="/play-memories/:id" element={<PlayMemories />} />
+          <Route path="/play-memories/:id" element={<PlayMemories onClose={handlePlayMemoriesClose} />} />
 
         </Routes>
 

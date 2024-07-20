@@ -1,4 +1,4 @@
-body {
+body.play-memories-body {
     margin: 0;
     overflow: hidden;
 }
@@ -12,7 +12,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #1b1b1ba7;
+    background: #1b1b1ba7; 
 }
 
 .play-memories-content {
@@ -25,7 +25,7 @@ body {
     padding: 20px;
 }
 
-.close-button {
+.play-memories-close-button {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -37,7 +37,7 @@ body {
     z-index: 10;
 }
 
-#image-track {
+#play-memories-image-track {
     display: flex;
     gap: 4vmin;
     position: absolute;
@@ -47,36 +47,36 @@ body {
     user-select: none;
 }
 
-.memory {
+.play-memories-memory {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: auto;
 }
 
-.memory-title {
+.play-memories-memory-title {
     text-align: center;
     width: 100%;
     color: white;
     margin-bottom: 1rem;
 }
 
-.memory-photos {
+.play-memories-memory-photos {
     display: flex;
-    gap: 4vmin;
+    gap: 4vmin; /* Ensure equal spacing between photos */
 }
 
-.memory-photos .image {
+.play-memories-memory-photos .play-memories-image {
     width: 40vmin;
     height: 56vmin;
     object-fit: cover;
     object-position: 100% center;
 }
 
-.soundtrack {
+.play-memories-soundtrack {
     margin-top: 20px;
 }
 
-.soundtrack h4 {
+.play-memories-soundtrack h4 {
     color: white;
 }

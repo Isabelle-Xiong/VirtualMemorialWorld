@@ -4,7 +4,10 @@ import '../PlayMemories.css';
 
 function PlayMemories({ avatarId, onClose }) {
     const [memories, setMemories] = useState([]);
+    const [soundtracks, setSoundtracks] = useState([]);
+    const [currentSoundtrackIndex, setCurrentSoundtrackIndex] = useState(0);
     const trackRef = useRef(null);
+    const audioRef = useRef(null);
     const intervalRef = useRef(null);
 
     useEffect(() => {
@@ -22,7 +25,22 @@ function PlayMemories({ avatarId, onClose }) {
             }
         };
 
+        const fetchSoundtracks = async () => {
+            const token = localStorage.getItem('token');
+            try {
+                const response = await axios.get(`http://localhost:5001/api/avatars/${avatarId}/soundtracks`, {
+                    headers: { 'x-auth-token': token },
+                });
+                console.log('Fetched soundtracks:', response.data.soundtracks);
+                setSoundtracks(response.data.soundtracks || []);
+            } catch (error) {
+                console.error('Error fetching soundtracks:', error);
+                setSoundtracks([]);
+            }
+        };
+
         fetchMemories();
+        fetchSoundtracks();
 
         const handleOnDown = e => {
             if (trackRef.current) {
@@ -54,7 +72,7 @@ function PlayMemories({ avatarId, onClose }) {
 
                 trackRef.current.style.transform = `translate(${nextPercentage}%, -50%)`;
 
-                for (const image of trackRef.current.getElementsByClassName("image")) {
+                for (const image of trackRef.current.getElementsByClassName("play-memories-image")) {
                     image.style.objectPosition = `${100 + nextPercentage}% center`;
                 }
 
@@ -84,7 +102,7 @@ function PlayMemories({ avatarId, onClose }) {
                     trackRef.current.dataset.percentage = nextPercentage;
 
                     trackRef.current.style.transform = `translate(${nextPercentage}%, -50%)`;
-                    for (const image of trackRef.current.getElementsByClassName("image")) {
+                    for (const image of trackRef.current.getElementsByClassName("play-memories-image")) {
                         image.style.objectPosition = `${100 + nextPercentage}% center`;
                     }
                 }
@@ -101,37 +119,42 @@ function PlayMemories({ avatarId, onClose }) {
             window.removeEventListener('mousemove', handleOnMove);
             window.removeEventListener('touchmove', (e) => handleOnMove(e.touches[0]));
             clearInterval(intervalRef.current);
+            if (audioRef.current) {
+                audioRef.current.pause();
+            }
         };
     }, [avatarId]);
 
+    useEffect(() => {
+        if (soundtracks.length > 0 && audioRef.current) {
+            audioRef.current.src = soundtracks[currentSoundtrackIndex];
+            audioRef.current.play();
+            audioRef.current.onended = () => {
+                setCurrentSoundtrackIndex((prevIndex) => (prevIndex + 1) % soundtracks.length);
+            };
+        }
+    }, [soundtracks, currentSoundtrackIndex]);
+
     const duplicateMemories = (memories) => {
         return [...memories, ...memories];
-    }
+    };
 
     const duplicatedMemories = duplicateMemories(memories);
 
     return (
         <div className="play-memories-overlay">
             <div className="play-memories-content">
-                <button className="close-button" onClick={onClose}>X</button>
-                <div id="image-track" ref={trackRef} data-mouse-down-at="0" data-prev-percentage="0">
+                <button className="play-memories-close-button" onClick={onClose}>X</button>
+                <audio ref={audioRef} style={{ display: 'none' }} />
+                <div id="play-memories-image-track" ref={trackRef} data-mouse-down-at="0" data-prev-percentage="0">
                     {Array.isArray(duplicatedMemories) && duplicatedMemories.length > 0 ? duplicatedMemories.map((memory, index) => (
-                        <div key={index} className="memory">
-                            <h3 className="memory-title">{memory.title}</h3>
-                            <div className="memory-photos">
+                        <div key={index} className="play-memories-memory">
+                            <h3 className="play-memories-memory-title">{memory.title}</h3>
+                            <div className="play-memories-memory-photos">
                                 {Array.isArray(memory.photos) && memory.photos.map((photo, photoIndex) => (
-                                    <img key={photoIndex} className="image" src={photo} alt={`Memory ${index} Photo ${photoIndex}`} draggable="false" />
+                                    <img key={photoIndex} className="play-memories-image" src={photo} alt={`Memory ${index} Photo ${photoIndex}`} draggable="false" />
                                 ))}
                             </div>
-                            {memory.soundtrack && (
-                                <div className="soundtrack">
-                                    <h4>Soundtrack</h4>
-                                    <audio controls>
-                                        <source src={memory.soundtrack} />
-                                        Your browser does not support the audio element.
-                                    </audio>
-                                </div>
-                            )}
                         </div>
                     )) : (
                         <p>No memories available.</p>

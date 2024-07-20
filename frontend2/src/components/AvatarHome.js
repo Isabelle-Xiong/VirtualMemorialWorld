@@ -41,10 +41,12 @@ function AvatarHome() {
 
     const handlePlayClick = () => {
         setShowPlayMemories(true);
+        document.body.classList.add('play-memories-body');
     };
 
     const handleClosePopup = () => {
         setShowPlayMemories(false);
+        document.body.classList.remove('play-memories-body');
     };
 
     return (
