@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../AvatarHome.css';
 import { useParams, useNavigate } from 'react-router-dom';
+import PlayMemories from './PlayMemories';
+import '../AvatarHome.css';
 
 function AvatarHome() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [avatarName, setAvatarName] = useState('');
+    const [showPlayMemories, setShowPlayMemories] = useState(false);
 
     useEffect(() => {
         document.body.classList.add('avatar-home-page');
@@ -37,6 +39,14 @@ function AvatarHome() {
         return string.charAt(0).toUpperCase() + string.slice(1);
     };
 
+    const handlePlayClick = () => {
+        setShowPlayMemories(true);
+    };
+
+    const handleClosePopup = () => {
+        setShowPlayMemories(false);
+    };
+
     return (
         <div className="container">
             <h2 className="my-4">{avatarName}'s Home</h2>
@@ -51,6 +61,7 @@ function AvatarHome() {
                         src="https://cdn-icons-png.freepik.com/512/2611/2611312.png" 
                         alt="Play" 
                         className="camera-icon-option" 
+                        onClick={handlePlayClick} 
                     />
                     <img 
                         src="https://cdn-icons-png.flaticon.com/512/1004/1004733.png" 
@@ -60,6 +71,7 @@ function AvatarHome() {
                     />
                 </div>
             </div>
+            {showPlayMemories && <PlayMemories avatarId={id} onClose={handleClosePopup} />}
         </div>
     );
 }

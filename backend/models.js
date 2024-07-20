@@ -89,13 +89,13 @@ const avatarSchema = new Schema({
     picture: { type: String, required: true },
     age: { type: Number, required: true },
     birthday: { type: Date, required: true },
-    hobbies: { type: [String], required: true }, 
+    hobbies: { type: [String], required: true },
     education: { type: String, required: true },
-    career: { type: [String], required: true }, 
+    career: { type: [String], required: true },
     maritalStatus: { type: String, required: true },
     children: [childSchema],
     pets: [petSchema],
-    personality: { type: [String], required: true }, 
+    personality: { type: [String], required: true },
     specialNotes: String,
     goals: [
         {
@@ -146,4 +146,4 @@ const FriendRequest = mongoose.model('FriendRequest', friendRequestSchema);
 const Friend = mongoose.model('Friend', friendSchema);
 
 
-module.exports = { User, Avatar, Message, FriendRequest, Friend};
+module.exports = { User, Avatar, Message, FriendRequest, Friend };

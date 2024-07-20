@@ -25,6 +25,7 @@ import Chat from './components/Chat';
 import Friends from './components/Friends';
 import LandingPage from './components/LandingPage';
 import AddMemories from './components/AddMemories';
+import PlayMemories from './components/PlayMemories';
 
 
 
@@ -171,6 +172,7 @@ function App() {
           />
           <Route path="/avatar-home/:id" element={<AvatarHome />} />
           <Route path="/add-memories/:id" element={<AddMemories />} />
+          <Route path="/play-memories/:id" element={<PlayMemories />} />
 
         </Routes>
 

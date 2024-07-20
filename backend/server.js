@@ -12,13 +12,12 @@ const { spawn } = require('child_process');
 const textGeneratorPath = path.resolve(__dirname, '../nlp/sentiment_analysis/pipeline1/generate_final_goal.py');
 const routineItems = require('./routineItems');
 const moment = require('moment');
-const multer = require('multer');
-const ffmpeg = require('fluent-ffmpeg');
 
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' })); // Set the limit to 50MB
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // Set the limit to 50MB for URL encoded data
 
 const mongoUri = 'mongodb://localhost:27017/virtual-memorial-world';
 mongoose.connect(mongoUri, {
@@ -30,6 +29,20 @@ mongoose.connect(mongoUri, {
     console.error('Error connecting to MongoDB:', err);
 });
 
+// Fetch memories for a specific avatar
+app.get('/api/avatars/:id/memories', auth, async (req, res) => {
+    try {
+        const avatarId = req.params.id;
+        const avatar = await Avatar.findById(avatarId).select('memories');
+        if (!avatar) {
+            return res.status(404).send('Avatar not found');
+        }
+        res.json({ memories: avatar.memories }); // Ensure the response includes the memories key
+    } catch (error) {
+        console.error('Error fetching memories:', error);
+        res.status(500).send('Server error');
+    }
+});
 // Verify security question and reset password
 app.post('/api/reset-password-with-security-question', async (req, res) => {
     const { username, securityAnswer, newPassword } = req.body;
@@ -454,23 +467,10 @@ app.post('/api/register', async (req, res) => {
     }
 });
 
-
-
-// Multer configuration
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, `${Date.now()}-${file.originalname}`);
-    }
-});
-
-const upload = multer({ storage: storage });
-
-app.post('/api/avatars/:id/memories', auth, upload.fields([{ name: 'photos', maxCount: 10 }, { name: 'soundtrack', maxCount: 1 }]), async (req, res) => {
+//add photos memories
+app.post('/api/avatars/:id/memories', auth, async (req, res) => {
     const { id } = req.params;
-    const { title } = req.body;
+    const { title, photos, soundtrack } = req.body;
 
     try {
         const avatar = await Avatar.findById(id);
@@ -480,74 +480,35 @@ app.post('/api/avatars/:id/memories', auth, upload.fields([{ name: 'photos', max
 
         const memory = {
             title,
-            photos: req.files['photos'] ? req.files['photos'].map(file => file.path) : []
+            photos,
         };
 
         avatar.memories.push(memory);
 
-        if (req.files['soundtrack']) {
-            const soundtrackFile = req.files['soundtrack'][0];
-            const soundtrackPath = soundtrackFile.path;
-            const fileExtension = path.extname(soundtrackPath).toLowerCase();
-            let truncatedSoundtrackPath;
-
-            if (fileExtension === '.mp4') {
-                truncatedSoundtrackPath = `uploads/truncated-${Date.now()}.mp3`;
-
-                ffmpeg(soundtrackPath)
-                    .setDuration(45)
-                    .toFormat('mp3')
-                    .output(truncatedSoundtrackPath)
-                    .on('end', async () => {
-                        const soundtrack = {
-                            title,
-                            file: truncatedSoundtrackPath,
-                            duration: 45 // Set the duration to 45 seconds
-                        };
-
-                        avatar.soundtracks.push(soundtrack);
-                        await avatar.save();
-
-                        res.status(201).json(avatar);
-                    })
-                    .on('error', err => {
-                        console.error('Error processing soundtrack:', err);
-                        res.status(500).send('Error processing soundtrack');
-                    })
-                    .run();
-            } else {
-                truncatedSoundtrackPath = `uploads/truncated-${Date.now()}-${path.basename(soundtrackPath)}`;
-
-                ffmpeg(soundtrackPath)
-                    .setDuration(45)
-                    .output(truncatedSoundtrackPath)
-                    .on('end', async () => {
-                        const soundtrack = {
-                            title,
-                            file: truncatedSoundtrackPath,
-                            duration: 45 // Set the duration to 45 seconds
-                        };
-
-                        avatar.soundtracks.push(soundtrack);
-                        await avatar.save();
-
-                        res.status(201).json(avatar);
-                    })
-                    .on('error', err => {
-                        console.error('Error processing soundtrack:', err);
-                        res.status(500).send('Error processing soundtrack');
-                    })
-                    .run();
-            }
-        } else {
-            await avatar.save();
-            res.status(201).json(avatar);
+        if (soundtrack) {
+            const soundtrackData = {
+                title,
+                file: soundtrack,
+                duration: 45
+            };
+            avatar.soundtracks.push(soundtrackData);
         }
+
+        // Log the memory and soundtrack data
+        console.log('Memory added:', memory);
+        if (soundtrack) {
+            console.log('Soundtrack added:', soundtrackData);
+        }
+
+        await avatar.save();
+        res.status(201).json(avatar);
     } catch (error) {
         console.error('Error adding memory:', error);
         res.status(500).send('Server error');
     }
 });
+
+
 
 // Verify security questions
 app.post('/api/request-security-question', async (req, res) => {
