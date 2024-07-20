@@ -483,7 +483,6 @@ app.post('/api/register', async (req, res) => {
     }
 });
 
-//add photos memories
 app.post('/api/avatars/:id/memories', auth, async (req, res) => {
     const { id } = req.params;
     const { title, photos, soundtrack } = req.body;
@@ -508,13 +507,13 @@ app.post('/api/avatars/:id/memories', auth, async (req, res) => {
                 duration: 45
             };
             avatar.soundtracks.push(soundtrackData);
-        }
 
-        // Log the memory and soundtrack data
-        console.log('Memory added:', memory);
-        if (soundtrack) {
+            // Log the soundtrack data inside the if block
             console.log('Soundtrack added:', soundtrackData);
         }
+
+        // Log the memory data
+        console.log('Memory added:', memory);
 
         await avatar.save();
         res.status(201).json(avatar);

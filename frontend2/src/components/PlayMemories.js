@@ -130,7 +130,12 @@ function PlayMemories({ avatarId, onClose }) {
             audioRef.current.src = soundtracks[currentSoundtrackIndex];
             audioRef.current.play();
             audioRef.current.onended = () => {
-                setCurrentSoundtrackIndex((prevIndex) => (prevIndex + 1) % soundtracks.length);
+                setCurrentSoundtrackIndex((prevIndex) => {
+                    const nextIndex = (prevIndex + 1) % soundtracks.length;
+                    audioRef.current.src = soundtracks[nextIndex];
+                    audioRef.current.play();
+                    return nextIndex;
+                });
             };
         }
     }, [soundtracks, currentSoundtrackIndex]);
@@ -144,6 +149,7 @@ function PlayMemories({ avatarId, onClose }) {
     return (
         <div className="play-memories-overlay">
             <div className="play-memories-content">
+                <div className="play-memories-border"></div> {/* Add this line */}
                 <button className="play-memories-close-button" onClick={onClose}>X</button>
                 <audio ref={audioRef} style={{ display: 'none' }} />
                 <div id="play-memories-image-track" ref={trackRef} data-mouse-down-at="0" data-prev-percentage="0">

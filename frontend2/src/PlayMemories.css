@@ -71,6 +71,7 @@ body.play-memories-body {
     height: 56vmin;
     object-fit: cover;
     object-position: 100% center;
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
 }
 
 .play-memories-soundtrack {

@@ -127,8 +127,8 @@ const avatarSchema = new Schema({
     mouthType: { type: String, default: 'Smile' },
     skinColor: { type: String, default: 'Light' },
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    memories: [memorySchema], // Add this line
-    soundtracks: [soundtrackSchema], // Add this line
+    memories: [memorySchema],
+    soundtracks: [soundtrackSchema], 
 });
 
 // Pre-save middleware to slice the goals array to only keep the latest 5 goals
