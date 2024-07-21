@@ -385,11 +385,15 @@ app.post('/api/generate-new-routine', auth, async (req, res) => {
         // Generate multiple routine items
         const newRoutineItems = [];
         const numItems = 5; // Number of routine items to add
+        const usedIndexes = new Set();
 
-        for (let i = 0; i < numItems; i++) {
+        while (newRoutineItems.length < numItems && usedIndexes.size < routineItems.length) {
             const randomIndex = Math.floor(Math.random() * routineItems.length);
-            const newRoutineItem = routineItems[randomIndex];
-            newRoutineItems.push({ event: newRoutineItem.event, time: newRoutineItem.time });
+            if (!usedIndexes.has(randomIndex)) {
+                usedIndexes.add(randomIndex);
+                const newRoutineItem = routineItems[randomIndex];
+                newRoutineItems.push({ event: newRoutineItem.event, time: newRoutineItem.time });
+            }
         }
 
         // Sort the routine items by time

@@ -98,6 +98,15 @@ function Home({ speedMultiplier }) {
         setHoverContent(null);
     };
 
+    const renderRoutine = (dailyRoutine) => {
+        return dailyRoutine.map((routineItem, index) => (
+            <div key={index} className="routine-card">
+                <p>{routineItem.time}</p>
+                <p><strong>Activity: </strong>{routineItem.event}</p>
+            </div>
+        ));
+    };
+
     const renderGoals = (goals) => {
         return goals.map((goal, index) => (
             <div key={index} className="goal-card">
@@ -190,6 +199,8 @@ function Home({ speedMultiplier }) {
                                 renderJobs(modalContent)
                             ) : modalType === 'goals' ? (
                                 renderGoals(modalContent)
+                            ) : modalType === 'routine' ? (
+                                renderRoutine(modalContent)
                             ) : (
                                 <p>No details available.</p>
                             )
