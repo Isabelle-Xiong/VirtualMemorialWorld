@@ -5,27 +5,32 @@ import ButterflyModel from './ButterflyModel';
 import Typing from 'react-typing-effect';
 import ScrollReveal from 'scrollreveal';
 
+import woman1 from '../assets/userimages/randomwoman1.jpg';
+import man1 from '../assets/userimages/randomman1.jpg';
+import woman2 from '../assets/userimages/randomwoman2.jpg';
+import man2 from '../assets/userimages/randomman2.jpg';
+
 function LandingPage() {
     const reviews = [
         {
             text: "A beautiful way to keep my grandma's memory alive.",
             author: "Jane D.",
-            imageUrl: "https://randomuser.me/api/portraits/women/1.jpg"
+            imageUrl: woman1
         },
         {
             text: "This world brings me peace and comfort.",
             author: "John S.",
-            imageUrl: "https://randomuser.me/api/portraits/men/1.jpg"
+            imageUrl: man1
         },
         {
             text: "A touching and heartfelt experience.",
             author: "Emily R.",
-            imageUrl: "https://randomuser.me/api/portraits/women/2.jpg"
+            imageUrl: woman2
         },
         {
             text: "An innovative way to cherish our loved ones.",
             author: "Michael T.",
-            imageUrl: "https://randomuser.me/api/portraits/men/2.jpg"
+            imageUrl: man2
         }
     ];
 
