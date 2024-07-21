@@ -128,13 +128,13 @@
 }
 
 .aboutSection {
-    background: url('https://wallpapercave.com/wp/wp6289040.jpg') no-repeat center center;
+    background: url('assets/backgrounds/clouds-sky.webp') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
 }
 
 .featuresSection {
-    background: url('https://wallpapers-clan.com/wp-content/uploads/2024/04/blue-pink-aesthetic-clouds-desktop-wallpaper-preview.jpg') no-repeat center center;
+    background: url('assets/backgrounds/features-sky.jpg') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
 }
@@ -151,7 +151,7 @@
 }
 
 .testimonialSection {
-    background: url('https://images.nightcafe.studio/jobs/cYkyUz7xdyE5i8Mru4wE/cYkyUz7xdyE5i8Mru4wE--1--nai2s.jpg?tr\u003dw-1600,c-at_max') no-repeat center center;
+    background: url('assets/backgrounds/testimonials-flowers.webp') no-repeat center center;
     background-size: cover;
     background-attachment: fixed;
     position: relative;
