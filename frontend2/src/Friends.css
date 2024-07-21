@@ -1,11 +1,11 @@
 body.friends-page {
-    background: url('https://i3.wp.com/images3.alphacoders.com/105/1053147.jpg?ssl=1') no-repeat center center fixed;
+    background: url('assets/backgrounds/pink-overlook-sky.webp') no-repeat center center fixed;
     background-size: cover;
     font-family: 'Poppins', sans-serif;
 }
 
 .friends-container {
-    background: url('https://img.freepik.com/free-vector/pastel-watercolor-painted-background_23-2148959638.jpg') no-repeat center center;
+    background: url('assets/backgrounds/hazy-sky.avif') no-repeat center center;
     background-size: cover;
     padding: 40px;
     border-radius: 20px;

@@ -1,11 +1,11 @@
 body.chat-users-page {
-    background: url('https://www.itl.cat/pngfile/big/260-2602667_some-bis-biswas-scenery-wallpaper-hot-air-balloon.jpg') no-repeat center center fixed;
+    background: url('assets/backgrounds/hot-air-balloons.jpg') no-repeat center center fixed;
     background-size: cover;
     font-family: 'Poppins', sans-serif;
 }
 
 .chat-users-container {
-    background: url('https://media.istockphoto.com/id/1435226192/photo/beautiful-particles-with-shallow-depth-of-field-abstract-art-and-craft-background-colors-blue.webp?b=1&s=170667a&w=0&k=20&c=DInnY_lpZw77eImoqZjpxYubda7zTyH5mYQpOrg57Gc=') no-repeat center center;
+    background: url('assets/backgrounds/hazy-blue.webp') no-repeat center center;
     background-size: cover;
     padding: 40px;
     border-radius: 20px;

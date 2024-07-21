@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 body.add-memories-page {
-    background: url('https://image.cdn2.seaart.ai/2023-06-11/33289721884741/4957668e289562f2cb932d4b5e190453668bb2e7_high.webp') no-repeat center center fixed;
+    background: url('assets/backgrounds/home-courtyard.webp') no-repeat center center fixed;
     background-size: cover;
     font-family: 'Poppins', sans-serif;
 }

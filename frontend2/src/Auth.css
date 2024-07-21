@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
 .auth-page {
-    background: url('https://image.cdn2.seaart.ai/2024-01-31/cmt6ao5e878c73dkoiq0/bd4af4ab7003ab4591c800ea4a5b157bf1b2aca9_high.webp') no-repeat center center fixed;
+    background: url('assets/backgrounds/moutain-road.webp') no-repeat center center fixed;
     background-size: cover;
     background-blend-mode: lighten;
     min-height: 100vh;

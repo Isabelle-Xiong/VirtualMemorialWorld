@@ -1,7 +1,7 @@
 /* home.css */
 body.home-page {
     font-family: 'Poppins', sans-serif;
-    background: url('https://www.ultraimagehub.com/wallpapers/tr:flp-false,gx-0.5,gy-1,q-75,rh-3264,rw-5824,th-1080,tw-1920/1236869485147979877.jpeg') no-repeat center center fixed;
+    background: url('assets/backgrounds/green-pasture.webp') no-repeat center center fixed;
     background-size: cover;
     color: #333333;
     margin: 0;
