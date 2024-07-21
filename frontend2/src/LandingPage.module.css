@@ -26,7 +26,7 @@
 }
 
 .hero {
-    background: url('https://img.freepik.com/free-photo/anime-style-mountains-landscape_23-2151135141.jpg?t=st=1721454376~exp=1721457976~hmac=53bcc35f3d088e174f4c87f391fe89cf5b4223106fe6fd5521d1d0818f25d4af&w=1480') no-repeat center center;
+    background: url('assets/backgrounds/anime-mountain.jpg') no-repeat center center;
     background-attachment: fixed;
     background-size: cover;
     color: #fff;
