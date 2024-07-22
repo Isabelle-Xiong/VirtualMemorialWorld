@@ -4,6 +4,15 @@ body.avatar-page {
     font-family: 'Poppins', sans-serif;
 }
 
+body.avatar-page .form-center {
+    background: linear-gradient(to bottom right, rgb(255, 215, 234), rgb(205, 255, 252));
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-width: 1px;
+    border-color: #4a3b3b;
+}
+
 .title-container {
     position: relative;
     text-align: center;
@@ -23,42 +32,32 @@ body.avatar-page h2.my-4 {
     position: relative;
     z-index: 1;
     animation: gradientMove 5s infinite alternate;
-    -webkit-text-stroke: 1.4px #000000; /* Border around each letter for WebKit browsers */
+    -webkit-text-stroke: 1.4px #000000;
+    /* Border around each letter for WebKit browsers */
 }
+
 @keyframes gradientMove {
     0% {
         background-position: 0% 50%;
     }
+
     25% {
         background-position: 50% 75%;
     }
+
     50% {
         background-position: 100% 50%;
     }
+
     75% {
         background-position: 50% 25%;
     }
+
     100% {
         background-position: 0% 50%;
     }
 }
 
-
-
-button.btn-primary {
-    background: linear-gradient(145deg, #64b3f4, #4e6cff);
-    color: white;
-}
-
-button.btn-primary:hover {
-    background-color: #3b5bbf;
-    transform: scale(1.05);
-}
-
-button.btn-secondary {
-    background: linear-gradient(145deg, #79b3ff, #b3d9ff);
-    color: white;
-}
 
 button.btn-secondary:hover {
     background-color: #4e6cff;
@@ -66,7 +65,7 @@ button.btn-secondary:hover {
 }
 
 button.btn-create {
-    background: linear-gradient(145deg, #64b3f4, #4e6cff);
+    background: linear-gradient(145deg, #4a9cdf, #4e6cff);
     color: white;
     font-size: 18px;
     padding: 12px 24px;
@@ -88,18 +87,8 @@ button.btn-link:hover {
     color: #0056b3;
 }
 
-button {
-    margin: 5px;
-}
-
-.bottom-buttons {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    gap: 20px;
-}
-
 .bottom-buttons .btn-create-avatar {
+    justify-content: center;
     border: none;
     border-radius: 30px;
     padding: 12px 24px;
@@ -107,14 +96,11 @@ button {
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
     margin: 5px;
-}
-
-.bottom-buttons .btn-create-avatar {
-    background: linear-gradient(145deg, #f9b145, #8d2187);
+    background: linear-gradient(145deg, #fa70c2, #71006c);
     color: white;
+
 }
 
 .bottom-buttons .btn-create-avatar:hover {
-    background-color: #d27d2d;
     transform: scale(1.05);
 }
