@@ -47,11 +47,11 @@ body.avatar-home-page {
     margin: 20px auto;
     width: 25%;
     border: 2px solid #FFA500;
-    animation: cardAnimation 1s ease-in-out infinite alternate;
-    margin-left: 120px;
+    margin-left: 130px;
 }
 
-.avatar-home-image, .avatar-home-default {
+.avatar-home-image,
+.avatar-home-default {
     width: 100px;
     height: 100px;
     cursor: pointer;
@@ -60,7 +60,8 @@ body.avatar-home-page {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.avatar-home-image:hover, .avatar-home-default:hover {
+.avatar-home-image:hover,
+.avatar-home-default:hover {
     transform: scale(1.05);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
 }
