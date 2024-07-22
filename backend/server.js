@@ -873,6 +873,7 @@ app.get('/api/avatars/:id/customization', auth, async (req, res) => {
     }
 });
 
+// save avatar customization
 app.post('/api/save-avatar-customization/:id', auth, async (req, res) => {
     try {
         const avatarId = req.params.id;

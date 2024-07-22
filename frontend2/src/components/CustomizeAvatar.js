@@ -26,6 +26,23 @@ const CustomizeAvatar = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const fetchAvatarCustomization = async () => {
+            const token = localStorage.getItem('token');
+            try {
+                const response = await axios.get(
+                    `http://localhost:5001/api/avatars/${id}/customization`,
+                    { headers: { 'x-auth-token': token } }
+                );
+                setAvatarProps(response.data);
+            } catch (error) {
+                console.error('Error fetching avatar customization:', error);
+            }
+        };
+
+        fetchAvatarCustomization();
+    }, [id]);
+
     const handleSave = async () => {
         const token = localStorage.getItem('token');
         try {
