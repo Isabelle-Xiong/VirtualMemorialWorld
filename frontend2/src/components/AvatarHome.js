@@ -11,12 +11,13 @@ function AvatarHome() {
     const [avatarName, setAvatarName] = useState('');
     const [avatarProps, setAvatarProps] = useState(null); // Store avatar customization
     const [showPlayMemories, setShowPlayMemories] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false); // Track if the music is playing
     const audioRef = useRef(null); // Create a ref for the audio element
 
     useEffect(() => {
         document.body.classList.add('avatar-home-page');
 
-        // Create audio element and play
+        // Create audio element
         const audio = new Audio(ZeldasLullaby);
         audio.loop = true;
         audioRef.current = audio;
@@ -27,13 +28,25 @@ function AvatarHome() {
             });
         };
 
-        // Play audio on component mount
-        playAudio();
+        const pauseAudio = () => {
+            audioRef.current.pause();
+        };
+
+        // Check if the page was reloaded
+        const navigationType = performance.getEntriesByType('navigation')[0].type;
+        if (navigationType !== 'reload') {
+            playAudio();
+            setIsPlaying(true);
+            localStorage.setItem('shouldPlayMusic', 'true');
+        } else {
+            setIsPlaying(false);
+            localStorage.setItem('shouldPlayMusic', 'false');
+        }
 
         // Cleanup function to pause the audio when the component unmounts
         return () => {
             document.body.classList.remove('avatar-home-page');
-            audioRef.current.pause();
+            pauseAudio();
         };
     }, []);
 
@@ -77,9 +90,25 @@ function AvatarHome() {
         document.body.classList.remove('play-memories-body');
     };
 
+    const togglePlayPause = () => {
+        if (isPlaying) {
+            audioRef.current.pause();
+            localStorage.setItem('shouldPlayMusic', 'false');
+        } else {
+            audioRef.current.play().catch(error => {
+                console.error('Error playing audio:', error);
+            });
+            localStorage.setItem('shouldPlayMusic', 'true');
+        }
+        setIsPlaying(!isPlaying);
+    };
+
     return (
         <div className="avatar-home-container">
             <h2 className="avatar-home-title my-4">{avatarName}'s Home</h2>
+            <button onClick={togglePlayPause} className="play-pause-button">
+                {isPlaying ? 'Pause Music' : 'Play Music'}
+            </button>
             <div className="avatar-home-content">
                 <div className="avatar-home-card">
                     {avatarProps ? (
