@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import PlayMemories from './PlayMemories';
 import '../AvatarHome.css';
+import ZeldasLullaby from '../assets/Music/zelda_lullaby.mp3'; // Correct path to the audio file
 
 function AvatarHome() {
     const { id } = useParams();
@@ -10,11 +11,29 @@ function AvatarHome() {
     const [avatarName, setAvatarName] = useState('');
     const [avatarProps, setAvatarProps] = useState(null); // Store avatar customization
     const [showPlayMemories, setShowPlayMemories] = useState(false);
+    const audioRef = useRef(null); // Create a ref for the audio element
 
     useEffect(() => {
         document.body.classList.add('avatar-home-page');
+
+        // Create audio element and play
+        const audio = new Audio(ZeldasLullaby);
+        audio.loop = true;
+        audioRef.current = audio;
+
+        const playAudio = () => {
+            audioRef.current.play().catch(error => {
+                console.error('Error playing audio:', error);
+            });
+        };
+
+        // Play audio on component mount
+        playAudio();
+
+        // Cleanup function to pause the audio when the component unmounts
         return () => {
             document.body.classList.remove('avatar-home-page');
+            audioRef.current.pause();
         };
     }, []);
 
