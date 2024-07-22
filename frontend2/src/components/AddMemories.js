@@ -157,8 +157,9 @@ function AddMemories() {
                         <ReactPlayer 
                             url={soundtrackUrl} 
                             controls 
-                            width="100%" 
-                            height="50px"
+                            width="50%" 
+                            height="50%"
+                            className="react-player"
                         />
                     </div>
                 )}

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
 body.add-memories-page {
     background: url('assets/backgrounds/home-courtyard.webp') no-repeat center center fixed;
@@ -15,14 +16,28 @@ body.add-memories-page {
     margin: 20px;
     border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border: 2px solid #000000; /* Add a cool border to the form container */
+    transition: border-color 0.3s ease; /* Add transition for border color */
+}
+
+.add-memories-container h2,
+.add-memories-container h3,
+.add-memories-container .preview-soundtrack h4 {
+    font-family: 'Press Start 2P', cursive;
+    font-weight: bold;
+    color: black;
 }
 
 .add-memories-container h2 {
-    font-family: 'Press Start 2P', cursive;
-    font-weight: bold;
     font-size: 2rem;
     text-align: center;
     margin-bottom: 1rem;
+}
+
+.add-memories-container h3 {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 20px;
 }
 
 .add-memories-container .form-group {
@@ -31,10 +46,13 @@ body.add-memories-page {
     max-width: 600px;
 }
 
-.add-memories-container .form-group label {
+.add-memories-container .form-group label,
+.add-memories-container .preview-soundtrack h4 {
     display: block;
-    font-weight: bold;
+    font-family: 'Poppins', sans-serif, bold;
+    font-weight: 500;
     margin-bottom: 0.5rem;
+    color: #000000;
 }
 
 .add-memories-container .form-group input {
@@ -42,7 +60,43 @@ body.add-memories-page {
     padding: 0.5rem;
     font-size: 1rem;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 2px solid #90d3ff; /* Initial border color */
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Add transition for border color and shadow */
+}
+
+.add-memories-container .form-group input:focus,
+.add-memories-container .form-group input:hover,
+.add-memories-container .form-group input:active {
+    border-color: #ff00bf; /* Change border color on focus/hover/active */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Add a glow effect on focus/hover/active */
+    outline: none; /* Remove default outline */
+}
+
+.add-memories-container .file-label {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(45deg, #df6bc4, #3a9ad9);
+    border: 2px solid #86cfff;
+    border-radius: 5px;
+    padding: 0.5rem;
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    width: 100%;
+}
+
+.add-memories-container .file-label:hover {
+    background: linear-gradient(45deg, #e67bce, #49a2df);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 255, 255, 0.6);
+    transform: scale(1.05);
+    border-color: #49a2df;
+}
+
+.add-memories-container .file-input {
+    display: none;
 }
 
 .add-memories-container .preview-section {
@@ -50,6 +104,8 @@ body.add-memories-page {
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
+    width: 100%;
+    max-width: 600px;
 }
 
 .add-memories-container .preview-images {
@@ -57,6 +113,7 @@ body.add-memories-page {
     flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
+    width: 100%;
 }
 
 .add-memories-container .preview-image-container {
@@ -68,7 +125,14 @@ body.add-memories-page {
     height: 100px;
     object-fit: cover;
     border-radius: 5px;
-    border: 2px solid #ccc;
+    border: 2px solid #86cfff; /* Initial border color for preview images */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Add transition for border color and shadow */
+}
+
+.add-memories-container .preview-images img:hover,
+.add-memories-container .preview-images img:focus {
+    border-color: #3a9ad9; /* Change border color on hover/focus */
+    box-shadow: 0 0 10px rgba(58, 154, 217, 0.5); /* Add a glow effect on hover/focus */
 }
 
 .add-memories-container .remove-photo {
@@ -87,23 +151,46 @@ body.add-memories-page {
 .add-memories-container .preview-soundtrack {
     margin-top: 20px;
     text-align: center;
-}
-
-.add-memories-container .preview-soundtrack audio {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .add-memories-container button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    background-color: #4caf50;
+    padding: 8px 16px;
+    font-size: 0.7rem;
+    background: linear-gradient(45deg, #df6bc4, #3a9ad9);
+    border: 2px solid #86cfff;
+    border-radius: 20px;
     color: white;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+    font-family: 'Press Start 2P', cursive;
+    position: relative; /* For inner glow effect */
+    overflow: hidden; /* Prevents glow overflow */
 }
 
 .add-memories-container button:hover {
-    background-color: #45a049;
+    background: linear-gradient(45deg, #e67bce, #49a2df);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 255, 255, 0.6); /* Add a glow effect */
+    transform: scale(1.05); /* Slightly scale up the button */
+    border-color: #49a2df; /* Change border color */
+}
+
+.add-memories-container button:before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 80%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Prevents interaction with pseudo-element */
+}
+
+.add-memories-container button:hover:before {
+    opacity: 1;
 }
