@@ -8,6 +8,7 @@ body.add-memories-page {
 }
 
 .add-memories-container {
+    position: relative; /* Ensure the container is relative */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,6 +19,41 @@ body.add-memories-page {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border: 2px solid #000000; /* Add a cool border to the form container */
     transition: border-color 0.3s ease; /* Add transition for border color */
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    position: relative;
+}
+
+.add-memories-container .header .back-button {
+    position: absolute;
+    left: 400px; /* Adjust this value to move the button further to the left */
+    background: none;
+    border: none;
+    color: black;
+    font-size: 24px;
+    cursor: pointer;
+    font-family: 'Arial', sans-serif; 
+    text-decoration: none;
+    padding: 0; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-memories-container .header .back-button:hover,
+.add-memories-container .header .back-button:focus,
+.add-memories-container .header .back-button:active {
+    background: none;
+    border: none;
+    color: black;
+    text-decoration: none;
+    outline: none;
+    box-shadow: none; /* Ensure no shadow */
 }
 
 .add-memories-container h2,
@@ -194,3 +230,5 @@ body.add-memories-page {
 .add-memories-container button:hover:before {
     opacity: 1;
 }
+
+

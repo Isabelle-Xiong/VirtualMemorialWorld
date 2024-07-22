@@ -93,7 +93,10 @@ function AvatarHome() {
     return (
         <div className="avatar-home-container">
             <h2 className="avatar-home-title my-4">{avatarName}'s Home</h2>
-            <button onClick={togglePlayPause} className="play-pause-button">
+            <button
+                onClick={togglePlayPause}
+                className={`play-pause-button ${isPlaying ? 'playing' : 'paused'}`}
+            >
                 {isPlaying ? 'Pause Music' : 'Play Music'}
             </button>
             <div className="avatar-home-content">
@@ -111,6 +114,7 @@ function AvatarHome() {
                         </div>
                     )}
                     <div className="avatar-home-camera-icon-container">
+                        <div className="memories-label">Memories</div>
                         <img
                             src="https://icons.iconarchive.com/icons/iconarchive/outline-camera/512/Flat-Red-Big-Camera-icon.png"
                             alt="Camera Icon"

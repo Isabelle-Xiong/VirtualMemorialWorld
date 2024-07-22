@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import '../AddMemories.css';
 
 function AddMemories() {
     const { id: avatarId } = useParams();
+    const navigate = useNavigate();
     const [photos, setPhotos] = useState([]);
     const [soundtrackUrl, setSoundtrackUrl] = useState('');
     const [title, setTitle] = useState('');
@@ -106,9 +107,20 @@ function AddMemories() {
         });
     };
 
+    const handleBackClick = () => {
+        navigate(`/avatar-home/${avatarId}`);
+    };
+
     return (
         <div className="add-memories-container">
+            <div className="header">
+            <button className="back-button" onClick={handleBackClick}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 18L9 12L15 6" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
             <h2>Add New Memories</h2>
+        </div>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="title">Memory Title</label>
