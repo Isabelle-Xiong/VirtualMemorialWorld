@@ -20,7 +20,6 @@ body.avatar-home-page {
     font-family: 'Press Start 2P', cursive;
     font-weight: bold;
     font-size: 2.3rem;
-    /* Increased font size */
     background: url('assets/rustic-wood-panel.avif') repeat;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -28,7 +27,6 @@ body.avatar-home-page {
     margin-bottom: 1rem;
     -webkit-text-stroke: 2px black;
     transform: scaleY(1.1);
-    /* Stretch text vertically */
 }
 
 .avatar-home-content {
@@ -42,32 +40,29 @@ body.avatar-home-page {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f8f9fa;
+    background: linear-gradient(145deg, #FFEBB8, #FFD080);
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     padding: 20px;
-    margin-right: 20px;
-    width: 25%; /* Adjust the width as needed */
+    margin: 20px auto;
+    width: 25%;
+    border: 2px solid #FFA500;
+    animation: cardAnimation 1s ease-in-out infinite alternate;
+    margin-left: 120px;
 }
 
-.avatar-home-image {
+.avatar-home-image, .avatar-home-default {
     width: 100px;
     height: 100px;
     cursor: pointer;
     border-radius: 50%;
     margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.avatar-home-default {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: #e0e0e0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    margin-bottom: 20px;
+.avatar-home-image:hover, .avatar-home-default:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
 }
 
 .avatar-home-add-icon {
@@ -88,7 +83,6 @@ body.avatar-home-page {
 
 .avatar-home-camera-icon-container:hover .avatar-home-camera-icon {
     filter: brightness(0.8);
-    /* Darken the camera icon on hover */
 }
 
 .avatar-home-camera-icon-options {
@@ -120,4 +114,17 @@ body.avatar-home-page {
 
 .avatar-home-camera-icon-container:hover .avatar-home-camera-icon-option {
     transform: scale(1);
+}
+
+/* Animation for the card */
+@keyframes cardAnimation {
+    0% {
+        transform: translateX(20px);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    100% {
+        transform: translateX(25px);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
 }
