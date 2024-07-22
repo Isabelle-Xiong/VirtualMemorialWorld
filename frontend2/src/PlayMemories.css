@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Swanky+and+Moo+Moo&display=swap');
+
 body.play-memories-body {
     margin: 0;
     overflow: hidden;
@@ -65,6 +67,8 @@ body.play-memories-body {
     width: 100%;
     color: white;
     margin-bottom: 1rem;
+    font-family: 'Swanky and Moo Moo', cursive;
+    font-size: 2rem;
 }
 
 .play-memories-memory-photos {
