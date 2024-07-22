@@ -14,34 +14,58 @@ function AvatarHome() {
     const [isPlaying, setIsPlaying] = useState(false); // Track if the music is playing
     const audioRef = useRef(null); // Create a ref for the audio element
 
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    };
+
+    const playAudio = async () => {
+        try {
+            await audioRef.current.play();
+            setIsPlaying(true);
+        } catch (error) {
+            console.error('Error playing audio:', error);
+        }
+    };
+
+    const pauseAudio = () => {
+        audioRef.current.pause();
+        setIsPlaying(false);
+    };
+
+    const togglePlayPause = () => {
+        if (isPlaying) {
+            pauseAudio();
+        } else {
+            playAudio();
+        }
+    };
+
+    const fetchAvatarData = async () => {
+        const token = localStorage.getItem('token');
+        try {
+            const response = await axios.get(`http://localhost:5001/api/avatars/${id}`, {
+                headers: { 'x-auth-token': token },
+            });
+            const avatarData = response.data;
+            setAvatarName(capitalizeFirstLetter(avatarData.name));
+
+            // Fetch customization data
+            const customizationResponse = await axios.get(`http://localhost:5001/api/avatars/${id}/customization`, {
+                headers: { 'x-auth-token': token },
+            });
+            setAvatarProps(customizationResponse.data);
+        } catch (error) {
+            console.error('Error fetching avatar data:', error);
+        }
+    };
+
     useEffect(() => {
         document.body.classList.add('avatar-home-page');
 
-        // Create audio element
+        // Initialize audio element
         const audio = new Audio(ZeldasLullaby);
         audio.loop = true;
         audioRef.current = audio;
-
-        const playAudio = () => {
-            audioRef.current.play().catch(error => {
-                console.error('Error playing audio:', error);
-            });
-        };
-
-        const pauseAudio = () => {
-            audioRef.current.pause();
-        };
-
-        // Check if the page was reloaded
-        const navigationType = performance.getEntriesByType('navigation')[0].type;
-        if (navigationType !== 'reload') {
-            playAudio();
-            setIsPlaying(true);
-            localStorage.setItem('shouldPlayMusic', 'true');
-        } else {
-            setIsPlaying(false);
-            localStorage.setItem('shouldPlayMusic', 'false');
-        }
 
         // Cleanup function to pause the audio when the component unmounts
         return () => {
@@ -51,34 +75,10 @@ function AvatarHome() {
     }, []);
 
     useEffect(() => {
-        const fetchAvatarData = async () => {
-            const token = localStorage.getItem('token');
-            try {
-                const response = await axios.get(`http://localhost:5001/api/avatars/${id}`, {
-                    headers: { 'x-auth-token': token },
-                });
-                const avatarData = response.data;
-                setAvatarName(capitalizeFirstLetter(avatarData.name));
-
-                // Fetch customization data
-                const customizationResponse = await axios.get(`http://localhost:5001/api/avatars/${id}/customization`, {
-                    headers: { 'x-auth-token': token },
-                });
-                setAvatarProps(customizationResponse.data);
-
-            } catch (error) {
-                console.error('Error fetching avatar data:', error);
-            }
-        };
-
         if (id) {
             fetchAvatarData();
         }
     }, [id]);
-
-    const capitalizeFirstLetter = (string) => {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    };
 
     const handlePlayClick = () => {
         setShowPlayMemories(true);
@@ -88,19 +88,6 @@ function AvatarHome() {
     const handleClosePopup = () => {
         setShowPlayMemories(false);
         document.body.classList.remove('play-memories-body');
-    };
-
-    const togglePlayPause = () => {
-        if (isPlaying) {
-            audioRef.current.pause();
-            localStorage.setItem('shouldPlayMusic', 'false');
-        } else {
-            audioRef.current.play().catch(error => {
-                console.error('Error playing audio:', error);
-            });
-            localStorage.setItem('shouldPlayMusic', 'true');
-        }
-        setIsPlaying(!isPlaying);
     };
 
     return (
@@ -120,31 +107,27 @@ function AvatarHome() {
                         />
                     ) : (
                         <div className="avatar-home-default" onClick={() => navigate(`/customize-avatar/${id}`)}>
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/1004/1004733.png"
-                                alt="Add Avatar"
-                                className="avatar-home-add-icon"
-                            />
+                            {/* Removed add icon image here */}
                         </div>
                     )}
                     <div className="avatar-home-camera-icon-container">
-                        <img 
-                            src="https://icons.iconarchive.com/icons/iconarchive/outline-camera/512/Flat-Red-Big-Camera-icon.png" 
-                            alt="Camera Icon" 
-                            className="avatar-home-camera-icon" 
+                        <img
+                            src="https://icons.iconarchive.com/icons/iconarchive/outline-camera/512/Flat-Red-Big-Camera-icon.png"
+                            alt="Camera Icon"
+                            className="avatar-home-camera-icon"
                         />
                         <div className="avatar-home-camera-icon-options">
-                            <img 
-                                src="https://cdn-icons-png.freepik.com/512/2611/2611312.png" 
-                                alt="Play" 
-                                className="avatar-home-camera-icon-option" 
-                                onClick={handlePlayClick} 
+                            <img
+                                src="https://cdn-icons-png.freepik.com/512/2611/2611312.png"
+                                alt="Play"
+                                className="avatar-home-camera-icon-option"
+                                onClick={handlePlayClick}
                             />
-                            <img 
-                                src="https://cdn-icons-png.flaticon.com/512/1004/1004733.png" 
-                                alt="Add" 
-                                className="avatar-home-camera-icon-option" 
-                                onClick={() => navigate(`/add-memories/${id}`)} 
+                            <img
+                                src="https://cdn-icons-png.flaticon.com/512/1004/1004733.png"
+                                alt="Add"
+                                className="avatar-home-camera-icon-option"
+                                onClick={() => navigate(`/add-memories/${id}`)}
                             />
                         </div>
                     </div>

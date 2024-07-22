@@ -140,20 +140,14 @@ function PlayMemories({ avatarId, onClose }) {
         }
     }, [soundtracks, currentSoundtrackIndex]);
 
-    const duplicateMemories = (memories) => {
-        return [...memories, ...memories];
-    };
-
-    const duplicatedMemories = duplicateMemories(memories);
-
     return (
         <div className="play-memories-overlay">
             <div className="play-memories-content">
-                <div className="play-memories-border"></div> {/* Add this line */}
+                <div className="play-memories-border"></div>
                 <button className="play-memories-close-button" onClick={onClose}>X</button>
                 <audio ref={audioRef} style={{ display: 'none' }} />
                 <div id="play-memories-image-track" ref={trackRef} data-mouse-down-at="0" data-prev-percentage="0">
-                    {Array.isArray(duplicatedMemories) && duplicatedMemories.length > 0 ? duplicatedMemories.map((memory, index) => (
+                    {Array.isArray(memories) && memories.length > 0 ? memories.map((memory, index) => (
                         <div key={index} className="play-memories-memory">
                             <h3 className="play-memories-memory-title">{memory.title}</h3>
                             <div className="play-memories-memory-photos">

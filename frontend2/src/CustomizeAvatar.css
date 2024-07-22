@@ -71,7 +71,7 @@
 
 /* Set the background image for the whole page */
 body.customize-avatar-page {
-    background: url('https://wallpapers.com/images/featured/anime-scenery-ahd1eqpvwq8aoofp.jpg') no-repeat center center fixed;
+    background: url('assets/backgrounds/field-background.jpg') no-repeat center center fixed;
     background-size: cover;
     font-family: 'Poppins', sans-serif;
 }
