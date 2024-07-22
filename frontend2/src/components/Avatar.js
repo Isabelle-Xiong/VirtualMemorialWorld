@@ -1,51 +1,55 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../Avatar.css';
 import { useParams, useNavigate } from 'react-router-dom';
-import PlayMemories from './PlayMemories';
-import '../AvatarHome.css';
-import ZeldasLullaby from '../assets/Music/zelda_lullaby.mp3'; // Correct path to the audio file
+import GlslCanvas from 'glslCanvas';
 
-function AvatarHome() {
-    const { id } = useParams();
+const personalityOptions = [
+    'Adventurous', 'Artistic', 'Charismatic', 'Cheerful', 'Confident', 'Creative', 'Dependable',
+    'Energetic', 'Friendly', 'Funny', 'Generous', 'Hardworking', 'Honest', 'Imaginative',
+    'Independent', 'Kind', 'Loyal', 'Optimistic', 'Outgoing', 'Patient', 'Reliable', 'Sociable',
+    'Thoughtful', 'Trustworthy'
+];
+
+const hobbyOptions = [
+    'Reading', 'Traveling', 'Cooking', 'Gardening', 'Hiking', 'Fishing', 'Painting', 'Drawing',
+    'Photography', 'Writing', 'Dancing', 'Playing Musical Instruments', 'Singing', 'Knitting',
+    'Crafting', 'Collecting', 'Gaming', 'Yoga', 'Meditation', 'Fitness', 'Cycling', 'Running',
+    'Swimming', 'Other'
+];
+
+
+
+
+function Avatar({ virtualTime }) { // Receive virtualTime as a prop
     const navigate = useNavigate();
-    const [avatarName, setAvatarName] = useState('');
-    const [avatarProps, setAvatarProps] = useState(null); // Store avatar customization
-    const [showPlayMemories, setShowPlayMemories] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false); // Track if the music is playing
-    const audioRef = useRef(null); // Create a ref for the audio element
+    const { id } = useParams();
+    const [name, setName] = useState('');
+    const [picture, setPicture] = useState('');
+    const [age, setAge] = useState('');
+    const [birthday, setBirthday] = useState('');
+    const [hobbies, setHobbies] = useState([]);
+    const [customHobby, setCustomHobby] = useState('');
+    const [education, setEducation] = useState('');
+    const [career, setCareer] = useState('');
+    const [maritalStatus, setMaritalStatus] = useState('');
+    const [children, setChildren] = useState([]);
+    const [pets, setPets] = useState([]);
+    const [personality, setPersonality] = useState([]);
+    const [personalityTrait, setPersonalityTrait] = useState('');
+    const [goals, setGoals] = useState([{ goal: '', status: '' }]);
+    const [specialNotes, setSpecialNotes] = useState('');
+    const [childGender, setChildGender] = useState('');
+    const [childName, setChildName] = useState('');
+    const [petType, setPetType] = useState('');
+    const [petName, setPetName] = useState('');
+    const [avatarId, setAvatarId] = useState(null);
 
+    
     useEffect(() => {
-        document.body.classList.add('avatar-home-page');
-
-        // Create audio element
-        const audio = new Audio(ZeldasLullaby);
-        audio.loop = true;
-        audioRef.current = audio;
-
-        const playAudio = () => {
-            audioRef.current.play().catch(error => {
-                console.error('Error playing audio:', error);
-            });
-        };
-
-        const pauseAudio = () => {
-            audioRef.current.pause();
-        };
-
-        // Check localStorage and play/pause audio accordingly
-        const shouldPlayMusic = localStorage.getItem('shouldPlayMusic');
-        if (shouldPlayMusic === 'true') {
-            playAudio();
-            setIsPlaying(true);
-        } else {
-            pauseAudio();
-            setIsPlaying(false);
-        }
-
-        // Cleanup function to pause the audio when the component unmounts
+        document.body.classList.add('avatar-page');
         return () => {
-            document.body.classList.remove('avatar-home-page');
-            audioRef.current.pause();
+            document.body.classList.remove('avatar-page');
         };
     }, []);
 
@@ -57,14 +61,7 @@ function AvatarHome() {
                     headers: { 'x-auth-token': token },
                 });
                 const avatarData = response.data;
-                setAvatarName(capitalizeFirstLetter(avatarData.name));
-
-                // Fetch customization data
-                const customizationResponse = await axios.get(`http://localhost:5001/api/avatars/${id}/customization`, {
-                    headers: { 'x-auth-token': token },
-                });
-                setAvatarProps(customizationResponse.data);
-
+                // Update avatar properties here if needed
             } catch (error) {
                 console.error('Error fetching avatar data:', error);
             }
@@ -75,83 +72,430 @@ function AvatarHome() {
         }
     }, [id]);
 
-    const capitalizeFirstLetter = (string) => {
-        return string.charAt(0).toUpperCase() + string.slice(1);
+
+    // Job-related state variables
+    const [jobs, setJobs] = useState([]);
+    const [jobTitle, setJobTitle] = useState('');
+    const [jobCompany, setJobCompany] = useState('');
+    const [jobStartDate, setJobStartDate] = useState('');
+    const [jobEndDate, setJobEndDate] = useState('');
+    const [jobIsCurrent, setJobIsCurrent] = useState(false);
+
+    // Routine-related state variables
+    const [dailyRoutine, setDailyRoutine] = useState([
+        { time: "08:00", event: "Wake up" },
+        { time: "09:00", event: "Go to work" }
+    ]);
+    const [relationships, setRelationships] = useState([]);
+
+    useEffect(() => {
+        const updateRoutine = () => {
+            console.log(`Updating ${name}'s routine at virtual time ${virtualTime}`);
+            // Implement routine update logic based on virtual time
+        };
+
+        const updateRelationships = () => {
+            console.log(`Updating ${name}'s relationships at virtual time ${virtualTime}`);
+            // Implement relationship update logic based on virtual time
+        };
+
+        updateRoutine();
+        updateRelationships();
+    }, [virtualTime]);
+
+    const handleAddChild = () => {
+        setChildren([...children, { gender: childGender, name: childName }]);
+        setChildGender('');
+        setChildName('');
     };
 
-    const handlePlayClick = () => {
-        setShowPlayMemories(true);
-        document.body.classList.add('play-memories-body');
+    const handleRemoveChild = (index) => {
+        setChildren(children.filter((_, i) => i !== index));
     };
 
-    const handleClosePopup = () => {
-        setShowPlayMemories(false);
-        document.body.classList.remove('play-memories-body');
+    const handleAddPet = () => {
+        setPets([...pets, { type: petType, name: petName }]);
+        setPetType('');
+        setPetName('');
     };
 
-    const togglePlayPause = () => {
-        if (isPlaying) {
-            audioRef.current.pause();
-            localStorage.setItem('shouldPlayMusic', 'false');
-        } else {
-            audioRef.current.play().catch(error => {
-                console.error('Error playing audio:', error);
-            });
-            localStorage.setItem('shouldPlayMusic', 'true');
+    const handleRemovePet = (index) => {
+        setPets(pets.filter((_, i) => i !== index));
+    };
+
+    const handleAddJob = () => {
+        setJobs([...jobs, { title: jobTitle, company: jobCompany, startDate: jobStartDate, endDate: jobIsCurrent ? null : jobEndDate, isCurrent: jobIsCurrent }]);
+        setJobTitle('');
+        setJobCompany('');
+        setJobStartDate('');
+        setJobEndDate('');
+        setJobIsCurrent(false);
+    };
+
+    const handleRemoveJob = (index) => {
+        setJobs(jobs.filter((_, i) => i !== index));
+    };
+
+    const handleJobIsCurrentChange = (checked) => {
+        setJobIsCurrent(checked);
+        if (checked) {
+            setJobEndDate('');
         }
-        setIsPlaying(!isPlaying);
+    };
+
+    const handleAddHobby = () => {
+        if (customHobby) {
+            setHobbies([...hobbies, customHobby]);
+            setCustomHobby('');
+        }
+    };
+
+    const handleRemoveHobby = (index) => {
+        setHobbies(hobbies.filter((_, i) => i !== index));
+    };
+
+    const handleAddPersonality = () => {
+        if (personalityTrait && !personality.includes(personalityTrait)) {
+            setPersonality([...personality, personalityTrait]);
+            setPersonalityTrait('');
+        }
+    };
+
+    const handleRemovePersonality = (index) => {
+        setPersonality(personality.filter((_, i) => i !== index));
+    };
+
+    const handleAddGoal = () => {
+        setGoals([...goals, { goal: '', status: '' }]);
+    };
+
+    const handleRemoveGoal = (index) => {
+        setGoals(goals.filter((_, i) => i !== index));
+    };
+
+    const handleGoalChange = (index, field, value) => {
+        const newGoals = goals.slice();
+        newGoals[index][field] = value;
+        setGoals(newGoals);
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('No token found in localStorage');
+            return;
+        }
+        try {
+            const response = await axios.post(
+                'http://localhost:5001/api/avatars',
+                { name, picture, age, birthday, hobbies, education, career, maritalStatus, children, pets, personality, specialNotes, goals, jobs },
+                { headers: { 'x-auth-token': token } }
+            );
+            setAvatarId(response.data._id); // Set the avatarId from the response
+            navigate('/');
+            console.log('Avatar created:', response.data);
+        } catch (error) {
+            console.error('Error creating avatar:', error);
+        }
     };
 
     return (
-        <div className="avatar-home-container">
-            <h2 className="avatar-home-title my-4">{avatarName}'s Home</h2>
-            <button onClick={togglePlayPause} className="play-pause-button">
-                {isPlaying ? 'Pause Music' : 'Play Music'}
-            </button>
-            <div className="avatar-home-content">
-                <div className="avatar-home-card">
-                    {avatarProps ? (
-                        <img
-                            src={`https://avataaars.io/?avatarStyle=Circle&topType=${avatarProps.topType}&accessoriesType=${avatarProps.accessoriesType}&hairColor=${avatarProps.hairColor}&facialHairType=${avatarProps.facialHairType}&clotheType=${avatarProps.clotheType}&eyeType=${avatarProps.eyeType}&eyebrowType=${avatarProps.eyebrowType}&mouthType=${avatarProps.mouthType}&skinColor=${avatarProps.skinColor}`}
-                            alt="Customized Avatar"
-                            className="avatar-home-image"
-                            onClick={() => navigate(`/customize-avatar/${id}`)}
-                        />
-                    ) : (
-                        <div className="avatar-home-default" onClick={() => navigate(`/customize-avatar/${id}`)}>
-                            <img
-                                src="https://cdn-icons-png.flaticon.com/512/1004/1004733.png"
-                                alt="Add Avatar"
-                                className="avatar-home-add-icon"
-                            />
-                        </div>
-                    )}
-                    <div className="avatar-home-camera-icon-container">
-                        <img 
-                            src="https://icons.iconarchive.com/icons/iconarchive/outline-camera/512/Flat-Red-Big-Camera-icon.png" 
-                            alt="Camera Icon" 
-                            className="avatar-home-camera-icon" 
-                        />
-                        <div className="avatar-home-camera-icon-options">
-                            <img 
-                                src="https://cdn-icons-png.freepik.com/512/2611/2611312.png" 
-                                alt="Play" 
-                                className="avatar-home-camera-icon-option" 
-                                onClick={handlePlayClick} 
-                            />
-                            <img 
-                                src="https://cdn-icons-png.flaticon.com/512/1004/1004733.png" 
-                                alt="Add" 
-                                className="avatar-home-camera-icon-option" 
-                                onClick={() => navigate(`/add-memories/${id}`)} 
-                            />
-                        </div>
-                    </div>
+        <div className="container">
+            <h2 class="my-4">Create Avatar</h2>
+            <form onSubmit={handleSubmit} className="form-center">
+                <div className="mb-3">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
                 </div>
-            </div>
-            {showPlayMemories && <PlayMemories avatarId={id} onClose={handleClosePopup} />}
+                <div className="mb-3">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Picture URL"
+                        value={picture}
+                        onChange={(e) => setPicture(e.target.value)}
+                    />
+                </div>
+                <div className="mb-3">
+                    <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Age"
+                        value={age}
+                        onChange={(e) => setAge(e.target.value)}
+                    />
+                </div>
+                <div className="mb-3">
+                    <label>Birthday:</label>
+                    <input
+                        type="date"
+                        className="form-control"
+                        placeholder="Birthday"
+                        value={birthday}
+                        onChange={(e) => setBirthday(e.target.value)}
+                    />
+                </div>
+                <div className="mb-3">
+                    <label style={{ display: 'block', textAlign: 'center' }}>Hobbies</label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <select
+                            className="form-control"
+                            style={{ width: '70%' }}
+                            onChange={(e) => setCustomHobby(e.target.value)}
+                        >
+                            <option value="">Select Hobby</option>
+                            {hobbyOptions.map((hobby, index) => (
+                                <option key={index} value={hobby}>{hobby}</option>
+                            ))}
+                        </select>
+                        <button type="button" className="btn btn-primary" style={{ width: '25%' }} onClick={handleAddHobby}>Add Hobby</button>
+                    </div>
+                    <ul className="list-centered">
+                        {hobbies.map((hobby, index) => (
+                            <li key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                {hobby}
+                                <button type="button" className="btn btn-link btn-sm" onClick={() => handleRemoveHobby(index)}>x</button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="mb-3">
+                    <label style={{ display: 'block', textAlign: 'center' }}>Personality Traits</label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <select
+                            className="form-control"
+                            style={{ width: '70%' }}
+                            value={personalityTrait}
+                            onChange={(e) => setPersonalityTrait(e.target.value)}
+                        >
+                            <option value="">Select Personality Trait</option>
+                            {personalityOptions.map((trait, index) => (
+                                <option key={index} value={trait}>{trait}</option>
+                            ))}
+                        </select>
+                        <button type="button" className="btn btn-primary" style={{ width: '25%' }} onClick={handleAddPersonality}>Add Trait</button>
+                    </div>
+                    <ul className="list-centered">
+                        {personality.map((trait, index) => (
+                            <li key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                {trait}
+                                <button type="button" className="btn btn-link btn-sm" onClick={() => handleRemovePersonality(index)}>x</button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="mb-3">
+                    <select
+                        className="form-control"
+                        value={education}
+                        onChange={(e) => setEducation(e.target.value)}
+                    >
+                        <option value="">Select Education Level</option>
+                        <option value="High School">High School</option>
+                        <option value="Associate Degree">Associate Degree</option>
+                        <option value="Bachelor's Degree">Bachelor's Degree</option>
+                        <option value="Master's Degree">Master's Degree</option>
+                        <option value="Doctorate">Doctorate</option>
+                    </select>
+                </div>
+                <div className="mb-3">
+                    <select
+                        className="form-control"
+                        value={career}
+                        onChange={(e) => setCareer(e.target.value)}
+                    >
+                        <option value="">Select Career</option>
+                        <option value="Doctor">Doctor</option>
+                        <option value="Engineer">Engineer</option>
+                        <option value="Teacher">Teacher</option>
+                        <option value="Artist">Artist</option>
+                    </select>
+                </div>
+                <div className="mb-3">
+                    <select
+                        className="form-control"
+                        value={maritalStatus}
+                        onChange={(e) => setMaritalStatus(e.target.value)}
+                    >
+                        <option value="">Select Marital Status</option>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Divorced">Divorced</option>
+                        <option value="Widowed">Widowed</option>
+                    </select>
+                </div>
+                <div className="mb-3">
+                    <label style={{ display: 'block', textAlign: 'center' }}>Children</label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <select
+                            className="form-control"
+                            style={{ width: '30%' }}
+                            value={childGender}
+                            onChange={(e) => setChildGender(e.target.value)}
+                        >
+                            <option value="">Select Child Gender</option>
+                            <option value="Boy">Boy</option>
+                            <option value="Girl">Girl</option>
+                            <option value="Non-binary">Non-binary</option>
+                        </select>
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Child Name"
+                            style={{ width: '50%' }}
+                            value={childName}
+                            onChange={(e) => setChildName(e.target.value)}
+                        />
+                        <button type="button" className="btn btn-secondary" style={{ width: '15%' }} onClick={handleAddChild}>Add Child</button>
+                    </div>
+                    <ul className="list-centered">
+                        {children.map((child, index) => (
+                            <li key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                {child.gender} - {child.name}
+                                <button type="button" className="btn btn-link btn-sm" onClick={() => handleRemoveChild(index)}>x</button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="mb-3">
+                    <label style={{ display: 'block', textAlign: 'center' }}>Pets</label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <select
+                            className="form-control"
+                            style={{ width: '30%' }}
+                            value={petType}
+                            onChange={(e) => setPetType(e.target.value)}
+                        >
+                            <option value="">Select Pet Type</option>
+                            <option value="Dog">Dog</option>
+                            <option value="Cat">Cat</option>
+                            <option value="Bird">Bird</option>
+                            <option value="Fish">Fish</option>
+                        </select>
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Pet Name"
+                            style={{ width: '50%' }}
+                            value={petName}
+                            onChange={(e) => setPetName(e.target.value)}
+                        />
+                        <button type="button" className="btn btn-secondary" style={{ width: '15%' }} onClick={handleAddPet}>Add Pet</button>
+                    </div>
+                    <ul className="list-centered">
+                        {pets.map((pet, index) => (
+                            <li key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                {pet.type} - {pet.name}
+                                <button type="button" className="btn btn-link btn-sm" onClick={() => handleRemovePet(index)}>x</button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="mb-3">
+                    <label style={{ display: 'block', textAlign: 'center' }}>Jobs</label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Job Title"
+                            style={{ width: '20%' }}
+                            value={jobTitle}
+                            onChange={(e) => setJobTitle(e.target.value)}
+                        />
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Company"
+                            style={{ width: '20%' }}
+                            value={jobCompany}
+                            onChange={(e) => setJobCompany(e.target.value)}
+                        />
+                        <input
+                            type="date"
+                            className="form-control"
+                            placeholder="Start Date"
+                            style={{ width: '20%' }}
+                            value={jobStartDate}
+                            onChange={(e) => setJobStartDate(e.target.value)}
+                        />
+                        <input
+                            type="date"
+                            className="form-control"
+                            placeholder="End Date"
+                            style={{ width: '20%' }}
+                            value={jobEndDate}
+                            onChange={(e) => setJobEndDate(e.target.value)}
+                            disabled={jobIsCurrent}
+                        />
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={jobIsCurrent}
+                                onChange={(e) => handleJobIsCurrentChange(e.target.checked)}
+                            /> Current
+                        </label>
+                        <button type="button" className="btn btn-secondary" style={{ width: '15%' }} onClick={handleAddJob}>Add Job</button>
+                    </div>
+                    <ul className="list-centered">
+                        {jobs.map((job, index) => (
+                            <li key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                {job.title} at {job.company} from {job.startDate} to {job.endDate ? job.endDate : 'Present'} {job.isCurrent ? '(Current)' : ''}
+                                <button type="button" className="btn btn-link btn-sm" onClick={() => handleRemoveJob(index)}>x</button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="mb-3">
+                    <label style={{ display: 'block', textAlign: 'center' }}>Goals</label>
+                    {goals.map((goal, index) => (
+                        <div key={index} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Goal"
+                                value={goal.goal}
+                                onChange={(e) => handleGoalChange(index, 'goal', e.target.value)}
+                                style={{ width: '40%' }}
+                            />
+                            <select
+                                className="form-control"
+                                value={goal.status}
+                                onChange={(e) => handleGoalChange(index, 'status', e.target.value)}
+                                style={{ width: '40%' }}
+                            >
+                                <option value="">Select Status</option>
+                                <option value="Not Started">Not Started</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                            <button type="button" className="btn btn-link btn-sm" onClick={() => handleRemoveGoal(index)}>x</button>
+                        </div>
+
+
+                    ))}
+                    <button type="button" className="btn btn-primary" onClick={handleAddGoal}>Add Goal</button>
+                </div>
+                <div className="mb-3">
+                    <textarea
+                        className="form-control"
+                        placeholder="Special Notes"
+                        value={specialNotes}
+                        onChange={(e) => setSpecialNotes(e.target.value)}
+                        rows="3"
+                    />
+                </div>
+                <div className="bottom-buttons">
+                    <button type="submit" className="btn-create-avatar">Create Avatar</button>
+                </div>
+            </form>
         </div>
     );
 }
 
-export default AvatarHome;
+export default Avatar;
