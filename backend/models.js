@@ -27,7 +27,6 @@ const memorySchema = new Schema({
 const soundtrackSchema = new Schema({
     title: { type: String, required: true },
     file: { type: String }, // Store soundtrack URL or file path
-    duration: { type: Number, required: true }, // Store duration in seconds
     createdAt: { type: Date, default: Date.now }
 });
 

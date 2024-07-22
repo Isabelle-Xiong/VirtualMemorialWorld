@@ -52,12 +52,14 @@ app.get('/api/avatars/:id/soundtracks', auth, async (req, res) => {
         if (!avatar) {
             return res.status(404).send('Avatar not found');
         }
-        res.json({ soundtracks: avatar.soundtracks.map(track => track.file) }); // Ensure the response includes the soundtracks key
+        res.json({ soundtracks: avatar.soundtracks }); // Send the entire soundtrack objects
     } catch (error) {
         console.error('Error fetching soundtracks:', error);
         res.status(500).send('Server error');
     }
 });
+
+
 
 // Verify security question and reset password
 app.post('/api/reset-password-with-security-question', async (req, res) => {
@@ -487,9 +489,10 @@ app.post('/api/register', async (req, res) => {
     }
 });
 
+// Add a new memory to an avatar
 app.post('/api/avatars/:id/memories', auth, async (req, res) => {
     const { id } = req.params;
-    const { title, photos, soundtrack } = req.body;
+    const { title, photos, soundtrackUrl } = req.body;
 
     try {
         const avatar = await Avatar.findById(id);
@@ -504,11 +507,10 @@ app.post('/api/avatars/:id/memories', auth, async (req, res) => {
 
         avatar.memories.push(memory);
 
-        if (soundtrack) {
+        if (soundtrackUrl) {
             const soundtrackData = {
                 title,
-                file: soundtrack,
-                duration: 45
+                file: soundtrackUrl,
             };
             avatar.soundtracks.push(soundtrackData);
 

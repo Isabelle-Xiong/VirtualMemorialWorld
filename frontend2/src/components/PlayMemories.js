@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import ReactPlayer from 'react-player';
 import '../PlayMemories.css';
 
 function PlayMemories({ avatarId, onClose }) {
@@ -7,7 +8,6 @@ function PlayMemories({ avatarId, onClose }) {
     const [soundtracks, setSoundtracks] = useState([]);
     const [currentSoundtrackIndex, setCurrentSoundtrackIndex] = useState(0);
     const trackRef = useRef(null);
-    const audioRef = useRef(null);
     const intervalRef = useRef(null);
 
     useEffect(() => {
@@ -119,33 +119,31 @@ function PlayMemories({ avatarId, onClose }) {
             window.removeEventListener('mousemove', handleOnMove);
             window.removeEventListener('touchmove', (e) => handleOnMove(e.touches[0]));
             clearInterval(intervalRef.current);
-            if (audioRef.current) {
-                audioRef.current.pause();
-            }
         };
     }, [avatarId]);
 
     useEffect(() => {
-        if (soundtracks.length > 0 && audioRef.current) {
-            audioRef.current.src = soundtracks[currentSoundtrackIndex];
-            audioRef.current.play();
-            audioRef.current.onended = () => {
-                setCurrentSoundtrackIndex((prevIndex) => {
-                    const nextIndex = (prevIndex + 1) % soundtracks.length;
-                    audioRef.current.src = soundtracks[nextIndex];
-                    audioRef.current.play();
-                    return nextIndex;
-                });
-            };
+        if (soundtracks.length > 0) {
+            setCurrentSoundtrackIndex(0); // Start from the first soundtrack
         }
-    }, [soundtracks, currentSoundtrackIndex]);
+    }, [soundtracks]);
 
     return (
         <div className="play-memories-overlay">
             <div className="play-memories-content">
                 <div className="play-memories-border"></div>
                 <button className="play-memories-close-button" onClick={onClose}>X</button>
-                <audio ref={audioRef} style={{ display: 'none' }} />
+                {/* Hidden ReactPlayer to play audio */}
+                {soundtracks.length > 0 && (
+                    <ReactPlayer 
+                        url={soundtracks[currentSoundtrackIndex].file}
+                        playing 
+                        controls={false} // Hide controls
+                        width="0" 
+                        height="0"
+                        onEnded={() => setCurrentSoundtrackIndex((prevIndex) => (prevIndex + 1) % soundtracks.length)}
+                    />
+                )}
                 <div id="play-memories-image-track" ref={trackRef} data-mouse-down-at="0" data-prev-percentage="0">
                     {Array.isArray(memories) && memories.length > 0 ? memories.map((memory, index) => (
                         <div key={index} className="play-memories-memory">
