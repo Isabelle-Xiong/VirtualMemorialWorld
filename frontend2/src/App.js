@@ -138,14 +138,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route
-            path="/customize-avatar"
-            element={
-              <PrivateRoute>
-                <CustomizeAvatar />
-              </PrivateRoute>
-            }
-          />
+          <Route path="/customize-avatar/:id" element={<PrivateRoute><CustomizeAvatar /></PrivateRoute>} />
 
           <Route
             path="/profile"

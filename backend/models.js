@@ -117,6 +117,8 @@ const avatarSchema = new Schema({
         }
     ],
     relationships: [relationshipSchema],
+
+    // Customization fields
     topType: { type: String, default: 'ShortHairShortFlat' },
     accessoriesType: { type: String, default: 'Blank' },
     hairColor: { type: String, default: 'BrownDark' },
@@ -126,9 +128,11 @@ const avatarSchema = new Schema({
     eyebrowType: { type: String, default: 'Default' },
     mouthType: { type: String, default: 'Smile' },
     skinColor: { type: String, default: 'Light' },
+
+
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     memories: [memorySchema],
-    soundtracks: [soundtrackSchema], 
+    soundtracks: [soundtrackSchema],
 });
 
 // Pre-save middleware to slice the goals array to only keep the latest 5 goals

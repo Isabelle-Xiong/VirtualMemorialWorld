@@ -6,7 +6,7 @@ body.avatar-home-page {
     font-family: 'Poppins', sans-serif;
 }
 
-.container {
+.avatar-home-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,7 +16,7 @@ body.avatar-home-page {
     border-radius: 20px;
 }
 
-body.avatar-home-page h2.my-4 {
+.avatar-home-title {
     font-family: 'Press Start 2P', cursive;
     font-weight: bold;
     font-size: 2.3rem;
@@ -31,23 +31,67 @@ body.avatar-home-page h2.my-4 {
     /* Stretch text vertically */
 }
 
-.camera-icon-container {
+.avatar-home-content {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.avatar-home-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-right: 20px;
+    width: 25%; /* Adjust the width as needed */
+}
+
+.avatar-home-image {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.avatar-home-default {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.avatar-home-add-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.avatar-home-camera-icon-container {
     position: relative;
     margin-top: 20px;
 }
 
-.camera-icon {
-    width: 64px;
-    height: 64px;
+.avatar-home-camera-icon {
+    width: 48px;
+    height: 48px;
     transition: filter 0.3s ease;
 }
 
-.camera-icon-container:hover .camera-icon {
+.avatar-home-camera-icon-container:hover .avatar-home-camera-icon {
     filter: brightness(0.8);
     /* Darken the camera icon on hover */
 }
 
-.camera-icon-options {
+.avatar-home-camera-icon-options {
     position: absolute;
     top: 50%;
     left: 100%;
@@ -60,21 +104,20 @@ body.avatar-home-page h2.my-4 {
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.camera-icon-container:hover .camera-icon-options {
+.avatar-home-camera-icon-container:hover .avatar-home-camera-icon-options {
     opacity: 1;
     transform: translate(0, -50%) scale(1);
 }
 
-.camera-icon-option {
-    width: 48px;
-    height: 48px;
+.avatar-home-camera-icon-option {
+    width: 32px;
+    height: 32px;
     transform: scale(0);
     transition: transform 0.3s ease;
     margin: 4px 0;
     cursor: pointer;
-    /* Change cursor on hover */
 }
 
-.camera-icon-container:hover .camera-icon-option {
+.avatar-home-camera-icon-container:hover .avatar-home-camera-icon-option {
     transform: scale(1);
 }

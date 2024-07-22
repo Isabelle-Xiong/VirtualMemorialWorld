@@ -8,6 +8,7 @@ function AvatarHome() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [avatarName, setAvatarName] = useState('');
+    const [avatarProps, setAvatarProps] = useState(null); // Store avatar customization
     const [showPlayMemories, setShowPlayMemories] = useState(false);
 
     useEffect(() => {
@@ -18,20 +19,28 @@ function AvatarHome() {
     }, []);
 
     useEffect(() => {
-        const fetchAvatarName = async () => {
+        const fetchAvatarData = async () => {
             const token = localStorage.getItem('token');
             try {
                 const response = await axios.get(`http://localhost:5001/api/avatars/${id}`, {
                     headers: { 'x-auth-token': token },
                 });
-                setAvatarName(capitalizeFirstLetter(response.data.name));
+                const avatarData = response.data;
+                setAvatarName(capitalizeFirstLetter(avatarData.name));
+
+                // Fetch customization data
+                const customizationResponse = await axios.get(`http://localhost:5001/api/avatars/${id}/customization`, {
+                    headers: { 'x-auth-token': token },
+                });
+                setAvatarProps(customizationResponse.data);
+
             } catch (error) {
-                console.error('Error fetching avatar name:', error);
+                console.error('Error fetching avatar data:', error);
             }
         };
 
         if (id) {
-            fetchAvatarName();
+            fetchAvatarData();
         }
     }, [id]);
 
@@ -50,27 +59,47 @@ function AvatarHome() {
     };
 
     return (
-        <div className="container">
-            <h2 className="my-4">{avatarName}'s Home</h2>
-            <div className="camera-icon-container">
-                <img 
-                    src="https://icons.iconarchive.com/icons/iconarchive/outline-camera/512/Flat-Red-Big-Camera-icon.png" 
-                    alt="Camera Icon" 
-                    className="camera-icon" 
-                />
-                <div className="camera-icon-options">
-                    <img 
-                        src="https://cdn-icons-png.freepik.com/512/2611/2611312.png" 
-                        alt="Play" 
-                        className="camera-icon-option" 
-                        onClick={handlePlayClick} 
-                    />
-                    <img 
-                        src="https://cdn-icons-png.flaticon.com/512/1004/1004733.png" 
-                        alt="Add" 
-                        className="camera-icon-option" 
-                        onClick={() => navigate(`/add-memories/${id}`)} 
-                    />
+        <div className="avatar-home-container">
+            <h2 className="avatar-home-title my-4">{avatarName}'s Home</h2>
+            <div className="avatar-home-content">
+                <div className="avatar-home-card">
+                    {avatarProps ? (
+                        <img
+                            src={`https://avataaars.io/?avatarStyle=Circle&topType=${avatarProps.topType}&accessoriesType=${avatarProps.accessoriesType}&hairColor=${avatarProps.hairColor}&facialHairType=${avatarProps.facialHairType}&clotheType=${avatarProps.clotheType}&eyeType=${avatarProps.eyeType}&eyebrowType=${avatarProps.eyebrowType}&mouthType=${avatarProps.mouthType}&skinColor=${avatarProps.skinColor}`}
+                            alt="Customized Avatar"
+                            className="avatar-home-image"
+                            onClick={() => navigate(`/customize-avatar/${id}`)}
+                        />
+                    ) : (
+                        <div className="avatar-home-default" onClick={() => navigate(`/customize-avatar/${id}`)}>
+                            <img
+                                src="https://cdn-icons-png.flaticon.com/512/1004/1004733.png"
+                                alt="Add Avatar"
+                                className="avatar-home-add-icon"
+                            />
+                        </div>
+                    )}
+                    <div className="avatar-home-camera-icon-container">
+                        <img 
+                            src="https://icons.iconarchive.com/icons/iconarchive/outline-camera/512/Flat-Red-Big-Camera-icon.png" 
+                            alt="Camera Icon" 
+                            className="avatar-home-camera-icon" 
+                        />
+                        <div className="avatar-home-camera-icon-options">
+                            <img 
+                                src="https://cdn-icons-png.freepik.com/512/2611/2611312.png" 
+                                alt="Play" 
+                                className="avatar-home-camera-icon-option" 
+                                onClick={handlePlayClick} 
+                            />
+                            <img 
+                                src="https://cdn-icons-png.flaticon.com/512/1004/1004733.png" 
+                                alt="Add" 
+                                className="avatar-home-camera-icon-option" 
+                                onClick={() => navigate(`/add-memories/${id}`)} 
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
             {showPlayMemories && <PlayMemories avatarId={id} onClose={handleClosePopup} />}

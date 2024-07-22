@@ -859,6 +859,41 @@ app.post('/api/update-avatar-routine', auth, async (req, res) => {
     }
 });
 
+// Get avatar customization by id
+app.get('/api/avatars/:id/customization', auth, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const avatar = await Avatar.findById(id).select('topType accessoriesType hairColor facialHairType clotheType eyeType eyebrowType mouthType skinColor');
+        if (!avatar) {
+            return res.status(404).send('Avatar not found');
+        }
+        res.send(avatar);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.post('/api/save-avatar-customization/:id', auth, async (req, res) => {
+    try {
+        const avatarId = req.params.id;
+        const { avatarProps } = req.body;
+
+        const avatar = await Avatar.findByIdAndUpdate(
+            avatarId,
+            { $set: avatarProps },
+            { new: true }
+        );
+
+        if (!avatar) {
+            return res.status(404).json({ message: 'Avatar not found' });
+        }
+
+        res.json(avatar);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../frontend2/build')));
 
@@ -870,3 +905,4 @@ const PORT = 5001;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
