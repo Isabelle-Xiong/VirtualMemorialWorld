@@ -114,67 +114,70 @@ function AvatarHome() {
                         </div>
                     )}
                     <div className="avatar-home-icons-list">
-    <div className="icon-row">
-    <div className="avatar-home-icon-container">
-    <div className="memories-label">Memories</div>
-    <div className="avatar-home-camera-icon-container">
-        <img
-            src="https://icons.iconarchive.com/icons/iconarchive/outline-camera/512/Flat-Red-Big-Camera-icon.png"
-            alt="Camera Icon"
-            className="avatar-home-camera-icon avatar-home-icon"
-        />
-        <div className="avatar-home-camera-icon-options">
-            <img
-                src="https://cdn-icons-png.freepik.com/512/2611/2611312.png"
-                alt="Play"
-                className="avatar-home-camera-icon-option"
-                onClick={handlePlayClick}
-            />
-            <img
-                src="https://cdn-icons-png.flaticon.com/512/1004/1004733.png"
-                alt="Add"
-                className="avatar-home-camera-icon-option"
-                onClick={() => navigate(`/add-memories/${id}`)}
-            />
-        </div>
-    </div>
-</div>
-        <div className="avatar-home-icon-container">
-            <div className="letters-label">Letters</div>
-            <img
-                src="https://cdn-icons-png.freepik.com/512/3463/3463581.png"
-                alt="Letters Icon"
-                className="avatar-home-icon"
-            />
-        </div>
-    </div>
-    <div className="icon-row">
-        <div className="avatar-home-icon-container">
-            <div className="progression-log-label">Progression Log</div>
-            <img
-                src="https://cdn-icons-png.flaticon.com/512/1039/1039492.png"
-                alt="Progression Log Icon"
-                className="avatar-home-icon"
-            />
-        </div>
-        <div className="avatar-home-icon-container">
-            <div className="goal-label">Goal</div>
-            <img
-                src="https://cdn-icons-png.flaticon.com/512/4479/4479901.png"
-                alt="Goal Icon"
-                className="avatar-home-icon"
-            />
-        </div>
-        <div className="avatar-home-icon-container">
-            <div className="calendar-label">Calendar</div>
-            <img
-                src="https://cdn-icons-png.flaticon.com/512/747/747310.png"
-                alt="Calendar Icon"
-                className="avatar-home-icon"
-            />
-        </div>
-    </div>
-</div>
+                        <div className="icon-row">
+                            <div className="avatar-home-icon-container">
+                                <div className="memories-label">Memories</div>
+                                <div className="avatar-home-camera-icon-container">
+                                    <img
+                                        src="https://icons.iconarchive.com/icons/iconarchive/outline-camera/512/Flat-Red-Big-Camera-icon.png"
+                                        alt="Camera Icon"
+                                        className="avatar-home-camera-icon avatar-home-icon"
+                                    />
+                                    <div className="avatar-home-camera-icon-options">
+                                        <img
+                                            src="https://cdn-icons-png.freepik.com/512/2611/2611312.png"
+                                            alt="Play"
+                                            className="avatar-home-camera-icon-option"
+                                            onClick={handlePlayClick}
+                                        />
+                                        <img
+                                            src="https://cdn-icons-png.flaticon.com/512/1004/1004733.png"
+                                            alt="Add"
+                                            className="avatar-home-camera-icon-option"
+                                            onClick={() => navigate(`/add-memories/${id}`)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="avatar-home-icon-container">
+                                <div className="letters-label">Letters</div>
+                                <img
+                                    src="https://cdn-icons-png.freepik.com/512/3463/3463581.png"
+                                    alt="Letters Icon"
+                                    className="avatar-home-icon"
+                                />
+                            </div>
+                        </div>
+                        <div className="icon-row">
+                            <div className="avatar-home-icon-container">
+                                <div className="progression-log-label">Logs</div>
+                                <img
+                                    src="https://cdn-icons-png.flaticon.com/512/2779/2779262.png"
+                                    alt="Progression Log Icon"
+                                    className="avatar-home-icon"
+                                    onClick={() => navigate(`/progression-log/${id}`)}
+                                />
+                            </div>
+                            <div className="avatar-home-icon-container">
+                                <div className="goal-label">Goals</div>
+                                <img
+                                    src="https://cdn-icons-png.flaticon.com/512/4185/4185501.png"
+                                    alt="Goal Icon"
+                                    className="avatar-home-icon"
+                                    onClick={() => navigate(`/goals/${id}`)}
+                                />
+                            </div>
+                            <div className="avatar-home-icon-container">
+                                <div className="calendar-label">Calendar</div>
+                                <img
+                                    src="https://i.pinimg.com/originals/6c/62/cd/6c62cd23f22859554b2de1e7d5887484.png"
+                                    alt="Calendar Icon"
+                                    className="avatar-home-icon"
+                                    onClick={() => navigate(`/calendar/${id}`)}
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             {showPlayMemories && <PlayMemories avatarId={id} onClose={handleClosePopup} />}

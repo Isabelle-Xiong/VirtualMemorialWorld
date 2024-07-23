@@ -90,6 +90,7 @@ body.avatar-home-page {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0 20px; 
 }
 
 .memories-label, .letters-label, .progression-log-label, .goal-label, .calendar-label {
