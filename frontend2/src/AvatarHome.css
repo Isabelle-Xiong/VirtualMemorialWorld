@@ -71,57 +71,87 @@ body.avatar-home-page {
     height: 50px;
 }
 
-.avatar-home-camera-icon-container {
+.avatar-home-icons-list {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center; /* Center horizontally */
+    justify-content: center;
     margin-top: 20px;
-    position: relative; /* Required for absolute positioning of the options */
 }
 
+.icon-row {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 20px;
+}
 
-.avatar-home-camera-icon {
-    width: 48px;
+.avatar-home-icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.memories-label, .letters-label, .progression-log-label, .goal-label, .calendar-label {
+    font-size: 16px; /* Increased font size for better readability */
+    color: black;
+    margin-bottom: 5px; /* Adjusted spacing between label and icon */
+    text-align: center; /* Center align the text */
+}
+
+.avatar-home-icon {
+    width: 48px; /* Ensure the icons are the same size for better alignment */
     height: 48px;
     transition: filter 0.3s ease;
+    margin-bottom: 20px; /* Adjust spacing between icons */
 }
 
-.avatar-home-camera-icon-container:hover .avatar-home-camera-icon {
+.avatar-home-camera-icon {
+    width: 60px; /* Increase the size */
+    height: 60px;
+    margin-top: -4px; /* Move the icon up a bit */
+}
+.avatar-home-icon:hover {
     filter: brightness(0.8);
+}
+
+.avatar-home-camera-icon-container {
+    position: relative; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.avatar-home-camera-icon-container:hover .avatar-home-camera-icon-options {
+    opacity: 1;
+    transform: translate(50%, -50%) scale(1);
 }
 
 .avatar-home-camera-icon-options {
     position: absolute;
-    top: 50%;
-    left: 100%;
-    transform: translate(0, -50%);
-    width: 48px;
+    top: 37%;
+    left: 80%; /* Position to the right of the camera icon */
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    align-items: center; 
     opacity: 0;
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
-
-.avatar-home-camera-icon-container:hover .avatar-home-camera-icon-options {
-    opacity: 1;
-    transform: translate(0, -50%) scale(1);
-}
-
 .avatar-home-camera-icon-option {
     width: 32px;
     height: 32px;
-    transform: scale(0);
     transition: transform 0.3s ease;
-    margin: 4px 0;
+    margin: 2px 0; 
     cursor: pointer;
+    transform: scale(0); 
 }
+
 
 .avatar-home-camera-icon-container:hover .avatar-home-camera-icon-option {
-    transform: scale(1);
+    transform: scale(1); 
 }
 
-/* Animation for the card */
 @keyframes cardAnimation {
     0% {
         transform: translateX(20px);
@@ -134,7 +164,6 @@ body.avatar-home-page {
     }
 }
 
-/* Play Music button background color */
 .play-pause-button {
     background: white; /* Changed this line */
     border: 2px solid #90d3ff;
@@ -148,7 +177,6 @@ body.avatar-home-page {
     overflow: hidden;
 }
 
-/* Hover effect for Play/Pause button when playing */
 .play-pause-button.playing:hover {
     background: #ebebeb; /* Slightly dim background on hover */
     color: #ff5100; /* Change text color to red */
@@ -156,21 +184,9 @@ body.avatar-home-page {
     transform: scale(1.05); /* Slightly scale up the button */
 }
 
-/* Hover effect for Play/Pause button when paused */
 .play-pause-button.paused:hover {
     background: #ebebeb; /* Slightly different dim background on hover */
     color: #00d5ff; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
     transform: scale(1.05); /* Slightly scale up the button */
-}
-
-
-
-/* New Memories label style */
-/* New Memories label style */
-.memories-label {
-    font-size: 14px;
-    color: black;
-    margin-right: 10px; /* Adjust the spacing as needed */
-    text-align: center; /* Center the text */
 }
