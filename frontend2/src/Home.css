@@ -196,8 +196,7 @@ body.home-page h2.my-4.avatars-title {
 
 .goal-card,
 .relationship-card,
-.job-card,
-.routine-card {
+.job-card {
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 15px;
@@ -210,9 +209,65 @@ body.home-page h2.my-4.avatars-title {
 
 .goal-card p,
 .relationship-card p,
-.job-card p,
-.routine-card p {
+.job-card p {
     margin: 6px 0;
+}
+
+.routine-list {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border: 2px solid #4a90e2;
+}
+
+.routine-header {
+    margin-bottom: 20px;
+    font-size: 26px;
+    color: #ffffff;
+    background-color: #4a90e2;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.routine-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+    background-color: inherit;
+    transition: background-color 0.3s ease;
+}
+
+.routine-item:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom: none;
+}
+
+.routine-time {
+    font-weight: bold;
+    color: #4a90e2;
+    font-size: 18px;
+}
+
+.routine-event {
+    color: #333;
+    font-size: 16px;
+}
+
+.routine-list .routine-item:hover {
+    background-color: #a3d4f7;
+}
+
+.routine-item:nth-child(odd) {
+    background-color: #d0ebff;
+}
+
+.routine-item:nth-child(even) {
+    background-color: #e8f4ff;
 }
 
 .avatar-creator {

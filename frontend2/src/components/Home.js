@@ -99,12 +99,17 @@ function Home({ speedMultiplier }) {
     };
 
     const renderRoutine = (dailyRoutine) => {
-        return dailyRoutine.map((routineItem, index) => (
-            <div key={index} className="routine-card">
-                <p>{routineItem.time}</p>
-                <p><strong>Activity: </strong>{routineItem.event}</p>
+        return (
+            <div className="routine-list">
+                <h3 className="routine-header">My Schedule</h3>
+                {dailyRoutine.map((routineItem, index) => (
+                    <div key={index} className="routine-item">
+                        <span className="routine-time">{routineItem.time}</span>
+                        <span className="routine-event">{routineItem.event}</span>
+                    </div>
+                ))}
             </div>
-        ));
+        );
     };
 
     const renderGoals = (goals) => {
