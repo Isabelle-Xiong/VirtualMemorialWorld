@@ -113,12 +113,22 @@ function Home({ speedMultiplier }) {
     };
 
     const renderGoals = (goals) => {
-        return goals.map((goal, index) => (
-            <div key={index} className="goal-card">
-                <p><strong>Goal:</strong> {stripPrompt(goal.goal)}</p>
-                <p><strong>Status:</strong> {goal.status}</p>
+        return (
+            <div className="goal-dashboard">
+                {goals.map((goal, index) => (
+                    <div key={index} className="goal-card">
+                        <img src="https://cdn-icons-png.flaticon.com/512/4185/4185501.png" className="goal-icon" alt="Goal Icon" />
+                        <div className="goal-content">
+                            <div className="goal-header">Goal:</div>
+                            <p className="goal-text">{stripPrompt(goal.goal)}</p>
+                            <div className="goal-status">
+                                Progress: <span className={`status-badge status-${goal.status.replace(/\s+/g, '-').toLowerCase()}`}>{goal.status}</span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
-        ));
+        );
     };
 
     const renderRelationships = (relationships) => {
@@ -182,9 +192,9 @@ function Home({ speedMultiplier }) {
                                 </div>
                             </div>
                             <div className="avatar-icons">
-                                <FontAwesomeIcon icon={faLightbulb} className="icon" onMouseEnter={() => handleHoverContent(avatar.progressionLog)} onMouseLeave={handleLeaveHover} />
-                                <FontAwesomeIcon icon={faBullseye} className="icon" onClick={() => handleShowModal(avatar.goals, 'goals')} />
-                                <FontAwesomeIcon icon={faCalendarAlt} className="icon" onClick={() => handleShowModal(avatar.dailyRoutine, 'routine')} />
+                                <img src="https://cdn-icons-png.freepik.com/512/354/354613.png" className="icon custom-icon" alt="Lightbulb Icon" onMouseEnter={() => handleHoverContent(avatar.progressionLog)} onMouseLeave={handleLeaveHover} />
+                                <img src="https://pngimg.com/d/darts_PNG26.png" className="icon custom-icon" alt="Dartboard Icon" onClick={() => handleShowModal(avatar.goals, 'goals')} />
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Circle-icons-calendar.svg/1200px-Circle-icons-calendar.svg.png" className="icon custom-icon" alt="Calendar Icon" onClick={() => handleShowModal(avatar.dailyRoutine, 'routine')} />
                             </div>
                         </div>
                     ))
@@ -232,14 +242,14 @@ function Home({ speedMultiplier }) {
                 </div>
             )}
             {selectedUser && (
-    <div className="home-chat-container">
-        <Chat
-            recipientId={selectedUser.userId}
-            recipientUsername={selectedUser.username}
-            onClose={() => setSelectedUser(null)}
-        />
-    </div>
-)}
+                <div className="home-chat-container">
+                    <Chat
+                        recipientId={selectedUser.userId}
+                        recipientUsername={selectedUser.username}
+                        onClose={() => setSelectedUser(null)}
+                    />
+                </div>
+            )}
         </div>
     );
 }
