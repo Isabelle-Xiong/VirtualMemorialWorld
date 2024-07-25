@@ -205,8 +205,8 @@ function Home({ speedMultiplier }) {
 
             {showModal && (
                 <div className="modal" style={modalStyle}>
-                    <div className="modal-content">
-                        <span className="close" onClick={handleCloseModal}>&times;</span>
+                    <div className={`modal-content ${modalType === 'routine' ? 'routine-modal' : ''}`}>
+                        <span className={`close ${modalType === 'routine' ? 'routine-close' : ''}`} onClick={handleCloseModal}>&times;</span>
                         {Array.isArray(modalContent) && modalContent.length > 0 ? (
                             modalType === 'relationships' ? (
                                 renderRelationships(modalContent)

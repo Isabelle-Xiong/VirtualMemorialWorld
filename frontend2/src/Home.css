@@ -191,10 +191,25 @@ body.home-page h2.my-4.avatars-title {
     transform: translateY(-50%);
 }
 
+.modal-content.routine-modal {
+    background: none; /* Remove background for routine modal */
+    border: none; /* Remove border for routine modal */
+    box-shadow: none; /* Remove shadow for routine modal */
+}
+
+
 .close {
     position: absolute;
     top: 10px;
     right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333333;
+}
+
+.close.routine-close {
+    top: 20px;
+    right: 30px; /* Move inward for routine modal */
     font-size: 24px;
     cursor: pointer;
     color: #333333;
@@ -324,6 +339,7 @@ body.home-page h2.my-4.avatars-title {
 .routine-item {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 15px 20px;
     border-bottom: 1px solid #ddd;
     background-color: inherit;
@@ -340,11 +356,14 @@ body.home-page h2.my-4.avatars-title {
     font-weight: bold;
     color: #4a90e2;
     font-size: 18px;
+    flex-shrink: 0;
+    margin-right: 10px;
 }
 
 .routine-event {
     color: #333;
     font-size: 16px;
+    flex-grow: 1;
 }
 
 .routine-list .routine-item:hover {
