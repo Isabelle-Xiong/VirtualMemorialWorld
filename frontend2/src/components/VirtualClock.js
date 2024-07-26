@@ -94,7 +94,7 @@ const VirtualClock = ({ speedMultiplier, onTick }) => {
                 });
                 response.data.forEach(avatar => {
                     const { statusUpdateTimer, newGoalTimer, newRoutineTimer} = initializeIntervals(avatar._id);
-                    intervals.push({ avatarId: avatar._id, statusUpdateTimer, newGoalTimer });
+                    intervals.push({ avatarId: avatar._id, statusUpdateTimer, newGoalTimer, newRoutineTimer });
                 });
             } catch (error) {
                 console.error('Error fetching avatars:', error);
