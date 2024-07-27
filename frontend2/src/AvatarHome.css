@@ -79,6 +79,62 @@ body.avatar-home-page {
     margin-top: 20px;
 }
 
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    padding: 20px;
+    border-radius: 20px;
+    width: 80%;
+    max-width: 500px;
+    max-height: 70%;
+    overflow-y: auto;
+    text-align: left;
+    color: #333333;
+    border: 1px solid #cfdef3;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    position: relative;
+    margin: auto;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.modal-content.routine-modal {
+    background: none; /* Remove background for routine modal */
+    border: none; /* Remove border for routine modal */
+    box-shadow: none; /* Remove shadow for routine modal */
+}
+
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333333;
+}
+
+.close.routine-close {
+    top: 20px;
+    right: 30px; /* Move inward for routine modal */
+    font-size: 24px;
+    cursor: pointer;
+    color: #333333;
+}
+
 .icon-row {
     display: flex;
     justify-content: space-around;

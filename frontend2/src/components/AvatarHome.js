@@ -3,16 +3,26 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import PlayMemories from './PlayMemories';
 import '../AvatarHome.css';
-import ZeldasLullaby from '../assets/Music/zelda_lullaby.mp3'; // Correct path to the audio file
+import ZeldasLullaby from '../assets/Music/zelda_lullaby.mp3';
+
+// Function to strip the prompt from the generated goal text
+const stripPrompt = (text, prompt = "Tell me about your goals.") => {
+    return text.startsWith(prompt) ? text.slice(prompt.length).trim() : text;
+};
 
 function AvatarHome() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [avatarName, setAvatarName] = useState('');
-    const [avatarProps, setAvatarProps] = useState(null); // Store avatar customization
+    const [avatarInfo, setAvatarInfo] = useState(null);
+    const [avatarProps, setAvatarProps] = useState(null);
     const [showPlayMemories, setShowPlayMemories] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false); // Track if the music is playing
-    const audioRef = useRef(null); // Create a ref for the audio element
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState(null);
+    const [modalType, setModalType] = useState(null);
+    const [hoverContent, setHoverContent] = useState(null);
+    const audioRef = useRef(null);
 
     const capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -48,6 +58,7 @@ function AvatarHome() {
             });
             const avatarData = response.data;
             setAvatarName(capitalizeFirstLetter(avatarData.name));
+            setAvatarInfo(avatarData);
 
             // Fetch customization data
             const customizationResponse = await axios.get(`http://localhost:5001/api/avatars/${id}/customization`, {
@@ -88,6 +99,73 @@ function AvatarHome() {
     const handleClosePopup = () => {
         setShowPlayMemories(false);
         document.body.classList.remove('play-memories-body');
+    };
+
+    const handleShowModal = (content, type) => {
+        setModalContent(content);
+        setModalType(type);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setModalContent(null);
+        setModalType(null);
+    };
+
+    const handleHoverContent = (content) => {
+        setHoverContent(content);
+    };
+
+    const handleLeaveHover = () => {
+        setHoverContent(null);
+    };
+
+    const renderRoutine = (dailyRoutine) => {
+        return (
+            <div className="routine-list">
+                <h3 className="routine-header">My Schedule</h3>
+                {dailyRoutine.map((routineItem, index) => (
+                    <div key={index} className="routine-item">
+                        <span className="routine-time">{routineItem.time}</span>
+                        <span className="routine-event">{routineItem.event}</span>
+                    </div>
+                ))}
+            </div>
+        );
+    };
+
+    const renderGoals = (goals) => {
+        return (
+            <div className="goal-dashboard">
+                {goals.map((goal, index) => (
+                    <div key={index} className="goal-card">
+                        <img src="https://cdn-icons-png.flaticon.com/512/4185/4185501.png" className="goal-icon" alt="Goal Icon" />
+                        <div className="goal-content">
+                            <div className="goal-header">Goal:</div>
+                            <p className="goal-text">{stripPrompt(goal.goal)}</p>
+                            <div className="goal-status">
+                                Progress: <span className={`status-badge status-${goal.status.replace(/\s+/g, '-').toLowerCase()}`}>{goal.status}</span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        );
+    };
+
+    const renderProgressionLog = (progressionLog) => {
+        return (
+            <div className="progression-log-list">
+                <h3 className="progression-log-header">Progression Log</h3>
+                {progressionLog.map((logItem, index) => (
+                    <div key={index} className="log-item">
+                        <span className="log-date">{new Date(logItem.date).toLocaleDateString()}</span>
+                        <span className="log-event">{logItem.event}</span>
+                    </div>
+                ))}
+            </div>
+        );
     };
 
     return (
@@ -155,7 +233,7 @@ function AvatarHome() {
                                     src="https://cdn-icons-png.flaticon.com/512/2779/2779262.png"
                                     alt="Progression Log Icon"
                                     className="avatar-home-icon"
-                                    onClick={() => navigate(`/progression-log/${id}`)}
+                                    onClick={() => handleShowModal(avatarInfo.progressionLog, 'progressionLog')}
                                 />
                             </div>
                             <div className="avatar-home-icon-container">
@@ -164,7 +242,7 @@ function AvatarHome() {
                                     src="https://cdn-icons-png.flaticon.com/512/4185/4185501.png"
                                     alt="Goal Icon"
                                     className="avatar-home-icon"
-                                    onClick={() => navigate(`/goals/${id}`)}
+                                    onClick={() => handleShowModal(avatarInfo.goals, 'goals')}
                                 />
                             </div>
                             <div className="avatar-home-icon-container">
@@ -173,7 +251,7 @@ function AvatarHome() {
                                     src="https://i.pinimg.com/originals/6c/62/cd/6c62cd23f22859554b2de1e7d5887484.png"
                                     alt="Calendar Icon"
                                     className="avatar-home-icon"
-                                    onClick={() => navigate(`/calendar/${id}`)}
+                                    onClick={() => handleShowModal(avatarInfo.dailyRoutine, 'routine')}
                                 />
                             </div>
                         </div>
@@ -181,8 +259,41 @@ function AvatarHome() {
                 </div>
             </div>
             {showPlayMemories && <PlayMemories avatarId={id} onClose={handleClosePopup} />}
+
+            {showModal && (
+                <div className="modal" style={modalStyle}>
+                    <div className={`modal-content ${modalType === 'routine' ? 'routine-modal' : ''}`}>
+                        <span className={`close ${modalType === 'routine' ? 'routine-close' : ''}`} onClick={handleCloseModal}>&times;</span>
+                        {Array.isArray(modalContent) && modalContent.length > 0 ? (
+                            modalType === 'goals' ? (
+                                renderGoals(modalContent)
+                            ) : modalType === 'routine' ? (
+                                renderRoutine(modalContent)
+                            ) : modalType === 'progressionLog' ? (
+                                renderProgressionLog(modalContent)
+                            ) : (
+                                <p>No details available.</p>
+                            )
+                        ) : (
+                            <p>No details available.</p>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
+
+const modalStyle = {
+    display: 'block',
+    position: 'fixed',
+    zIndex: 1,
+    left: 0,
+    top: 0,
+    width: '100%',
+    height: '100%',
+    overflow: 'auto',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+};
 
 export default AvatarHome;
