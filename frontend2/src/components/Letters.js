@@ -14,6 +14,16 @@ function Letters() {
     const [receivedLetters, setReceivedLetters] = useState([]);
     const [selectedLetter, setSelectedLetter] = useState(null);
     const [showReceivedLetters, setShowReceivedLetters] = useState(false);
+    const MAX_CHAR_COUNT = 400;
+    const [charCount, setCharCount] = useState(0);
+
+    const handleLetterContentChange = (e) => {
+        const content = e.target.value;
+        if (content.length <= MAX_CHAR_COUNT) {
+            setLetterContent(content);
+            setCharCount(content.length);
+        }
+    };
 
     useEffect(() => {
         fetchAvatarDetails();
@@ -46,18 +56,29 @@ function Letters() {
 
     const sendLetter = async () => {
         const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('No token found');
+            return;
+        }
+    
         try {
-            const response = await axios.post(`http://localhost:5001/api/avatars/${id}/letters`, {
+            const response = await axios.post('http://localhost:5001/api/avatars/${id}/letters', { letterContent });
+            const responseText = response.data.completion.trim();
+    
+            const newLetterResponse = await axios.post(`http://localhost:5001/api/avatars/${id}/letters`, {
                 title: letterTitle,
                 content: letterContent,
-                background: selectedBackground || 'https://img.freepik.com/free-photo/beige-aged-background_53876-90777.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1721952000&semt=ais_user'
+                background: selectedBackground || 'https://img.freepik.com/free-photo/beige-aged-background_53876-90777.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1721952000&semt=ais_user',
+                response: responseText
             }, {
                 headers: { 'x-auth-token': token },
             });
-            setReceivedLetters([...receivedLetters, response.data]);
+    
+            setReceivedLetters([...receivedLetters, newLetterResponse.data]);
             setLetterTitle('');
             setLetterContent('');
             setSelectedBackground('');
+            setCharCount(0);
         } catch (error) {
             console.error('Error sending letter:', error);
         }
@@ -116,8 +137,10 @@ function Letters() {
                             <textarea
                                 placeholder={`Write your letter to ${avatarName} here...`}
                                 value={letterContent}
-                                onChange={(e) => setLetterContent(e.target.value)}
+                                onChange={handleLetterContentChange}
                             />
+                            <p className="char-count">Characters remaining: {MAX_CHAR_COUNT - charCount}</p>
+
                         </div>
                         <div className="letters-page-background-selection">
                             <label>Select Background:</label>

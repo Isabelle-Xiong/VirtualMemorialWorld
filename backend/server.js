@@ -12,10 +12,16 @@ const { spawn } = require('child_process');
 const textGeneratorPath = path.resolve(__dirname, '../nlp/sentiment_analysis/pipeline1/generate_final_goal.py');
 const routineItems = require('./routineItems');
 const moment = require('moment');
+const axios = require('axios');
+const Anthropic = require('@anthropic-ai/sdk');
+const PORT = process.env.PORT || 5001;
 
+require('dotenv').config();
+console.log('API Key:', process.env.ANTHROPIC_API_KEY);
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 app.use(bodyParser.json({ limit: '50mb' })); // Set the limit to 50MB
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // Set the limit to 50MB for URL encoded data
 
@@ -900,17 +906,32 @@ app.post('/api/save-avatar-customization/:id', auth, async (req, res) => {
 // Send a new letter
 app.post('/api/avatars/:id/letters', auth, async (req, res) => {
     const { id } = req.params;
-    const { title, content, background } = req.body; // Accept background in the request body
-    const userId = req.user.userId;
+    const { title, content, background } = req.body;
+
+    console.log('Request body:', req.body); // Debug: Print the request body
+    console.log('Request user:', req.user); // Debug: Print the user info
 
     try {
+        // Generate a response from Claude
+        const msg = await anthropic.messages.create({
+            model: "claude-3-haiku-20240307",
+            max_tokens: 100,
+            messages: [
+                {
+                    role: "user",
+                    content: `You are a compassionate and positive persona representing a deceased loved one. Respond to this letter with empathy, reminiscence, and positivity.\n\nUser's letter: "${content}"`,
+                },
+            ],
+        });
+
+        const responseText = msg.completion.trim();
+
         const newLetter = new Letter({
-            sender: userId,
-            receiver: id,
-            title, // Save title
+            title,
             content,
-            background, // Save background
-            response: generateRandomResponse() // Replace this with Claude API later
+            response: responseText,
+            background,
+            createdAt: new Date(),
         });
 
         await newLetter.save();
@@ -921,10 +942,15 @@ app.post('/api/avatars/:id/letters', auth, async (req, res) => {
 
         res.status(201).json(newLetter);
     } catch (error) {
-        console.error('Error sending letter:', error);
-        res.status(500).json({ message: 'Server error' });
+        console.error('Error generating response from Claude:', error);
+        if (error.response) {
+            console.error('Claude API response:', error.response.data);
+        }
+        res.status(500).json({ message: 'Failed to generate response from Claude' });
+        return;
     }
 });
+
 
 // Get letters for an avatar
 app.get('/api/avatars/:id/letters', auth, async (req, res) => {
@@ -940,15 +966,7 @@ app.get('/api/avatars/:id/letters', auth, async (req, res) => {
     }
 });
 
-// Function to generate a random response (placeholder)
-function generateRandomResponse() {
-    const responses = [
-        "Thank you for writing to me. I'm always with you.",
-        "Your words mean a lot. I'm here for you.",
-        "I appreciate your message. Keep being strong."
-    ];
-    return responses[Math.floor(Math.random() * responses.length)];
-}
+
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../frontend2/build')));
@@ -957,7 +975,7 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend2/build/index.html'));
 });
 
-const PORT = 5001;
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
