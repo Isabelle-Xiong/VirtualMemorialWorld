@@ -8,103 +8,140 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
 }
 
-.letters-container {
+.letters-page-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: rgba(245, 245, 245, 0.8);
     padding: 20px;
     border-radius: 10px;
-    width: 90%;
-    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 90%;
+    width: 700px;
+    min-height: 50vh;
     position: relative;
-    z-index: 2;
-    background-color: rgba(255, 255, 255, 0.9); /* Add a background to the container */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add some shadow */
 }
 
-.header-container {
+.letters-page-header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
 
-.header-container h2 {
+.letters-page-header-container h2 {
     font-family: 'Press Start 2P', cursive;
     color: #333;
 }
 
-.letter-writing-area {
-    position: relative;
-    width: 100%;
-    height: 400px;
-    margin-bottom: 20px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-position: center;
-}
-
-.letter-writing-area input,
-.letter-writing-area textarea {
-    background: transparent;
-    border: none;
-    width: 90%;
-    font-family: 'Courier New', monospace;
-    resize: none;
-    outline: none;
-    color: #333;
-    z-index: 3;
-}
-
-.letter-writing-area input {
-    height: 30px;
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.letter-writing-area textarea {
-    height: 150px;
-    font-size: 14px;
-}
-
-.background-selection {
-    margin: 10px 0;
-    text-align: center;
-}
-
-.background-options {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.background-option {
-    width: 60px;
-    height: 60px;
-    margin: 5px;
-    border: 2px solid transparent;
+.letters-page-mailbox-toggle {
     cursor: pointer;
 }
 
-.background-option img {
+.letters-page-mailbox-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.letters-page-letter-writing-area {
+    width: 100%;
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-size: cover;
+    background-position: center;
+}
+
+.letters-page-letter-writing-area input,
+.letters-page-letter-writing-area textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    background: url('https://www.transparenttextures.com/patterns/linen.png');
+    resize: none;
+}
+
+.letters-page-background-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.letters-page-background-selection label {
+    font-family: 'Press Start 2P', cursive;
+    margin-bottom: 10px;
+}
+
+.letters-page-background-options {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.letters-page-background-option {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.letters-page-background-option img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.background-option.selected {
+.letters-page-background-option.letters-page-selected {
     border: 2px solid #d4a373;
 }
 
-.letters-container button {
+.letters-page-send-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #d4a373;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.letters-page-send-button:hover {
+    background-color: #bf8c5e;
+}
+
+.letters-page-response-area {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.letters-page-letter-details {
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.letters-page-letter-details h4 {
+    font-family: 'Press Start 2P', cursive;
+    margin-bottom: 10px;
+}
+
+.letters-page-letter-details p {
+    margin: 5px 0;
+}
+
+.letters-page-back-button {
     display: block;
     margin: 10px auto;
     padding: 10px 20px;
@@ -114,29 +151,13 @@
     border-radius: 5px;
     cursor: pointer;
     font-family: 'Press Start 2P', cursive;
-    transition: background-color 0.3s, transform 0.3s;
 }
 
-.letters-container button:hover {
+.letters-page-back-button:hover {
     background-color: #bf8c5e;
-    transform: translateY(-2px);
 }
 
-.mailbox-toggle {
-    cursor: pointer;
-}
-
-.mailbox-icon {
-    width: 40px;
-    height: 40px;
-}
-
-.letters-container .response-area {
-    margin-top: 20px;
-    width: 100%;
-}
-
-.letters-container .letter-history {
+.letters-page-letter-history {
     width: 300px;
     position: absolute;
     right: -320px;
@@ -148,16 +169,16 @@
     display: none;
 }
 
-.letters-container .letter-history.visible {
+.letters-page-letter-history.letters-page-visible {
     display: block;
 }
 
-.letters-container .letter-history h3 {
+.letters-page-letter-history h3 {
     font-family: 'Press Start 2P', cursive;
     margin-bottom: 10px;
 }
 
-.letters-container .letter-item {
+.letters-page-letter-item {
     background: #fff;
     padding: 10px;
     border-radius: 5px;
@@ -166,27 +187,8 @@
     cursor: pointer;
 }
 
-.letters-container .letter-item:hover {
+.letters-page-letter-item:hover {
     background-color: #f0f0f0;
-}
-
-.letters-container .letter-details {
-    background: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    background-size: cover;
-    background-position: center;
-}
-
-.letters-container .letter-details h4 {
-    font-family: 'Press Start 2P', cursive;
-    margin-bottom: 10px;
-}
-
-.letters-container .letter-details p {
-    margin: 5px 0;
 }
 
 .hidden {
