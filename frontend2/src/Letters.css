@@ -224,3 +224,62 @@
 .letters-page-hidden {
     display: none;
 }
+
+.letters-page-letter-details-sent {
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-bottom: 20px;
+    background-size: cover;
+    background-position: center;
+    font-family: 'Satisfy', cursive;
+    min-height: 250px; /* Set to match the height of the letter writing area */
+}
+
+.letters-page-letter-details-sent h4 {
+    font-family: 'Press Start 2P', cursive;
+    margin-bottom: 10px;
+    font-family: 'Satisfy', cursive;
+}
+
+.letters-page-letter-details-sent p {
+    margin: 5px 0;
+    font-family: 'Satisfy', cursive;
+}
+
+.letters-page-letter-details-received {
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    font-family: 'Satisfy', cursive;
+    min-height: 250px;
+}
+
+.letters-page-letter-details-received p {
+    font-family: 'Satisfy', cursive;
+    margin: 5px 0;
+}
+
+.letters-page-letter-details-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.letters-page-letter-response {
+    background: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-top: 20px;
+    background-size: cover;
+    background-position: center;
+}

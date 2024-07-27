@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -79,23 +80,25 @@ function Letters() {
             <div className="letters-page-container">
                 <div className="letters-page-header-container">
                     <h2>
-                        {!selectedLetter ? `Letters to ${avatarName}` : `Letter Title: ${selectedLetter.title}`}
+                        {!selectedLetter ? `Letters to ${avatarName}` : `Letter: ${selectedLetter.title}`}
                     </h2>
-                    <div className="letters-page-mailbox-toggle" onClick={toggleReceivedLetters}>
-                        {showReceivedLetters ? (
-                            <img
-                                src="https://cdn.iconscout.com/icon/free/png-256/free-mail-mailbox-open-postbox-38048.png"
-                                alt="Open Mailbox"
-                                className="letters-page-mailbox-icon"
-                            />
-                        ) : (
-                            <img
-                                src="https://www.svgrepo.com/show/404987/closed-mailbox-with-raised-flag.svg"
-                                alt="Closed Mailbox"
-                                className="letters-page-mailbox-icon"
-                            />
-                        )}
-                    </div>
+                    {!selectedLetter && (
+                        <div className="letters-page-mailbox-toggle" onClick={toggleReceivedLetters}>
+                            {showReceivedLetters ? (
+                                <img
+                                    src="https://cdn.iconscout.com/icon/free/png-256/free-mail-mailbox-open-postbox-38048.png"
+                                    alt="Open Mailbox"
+                                    className="letters-page-mailbox-icon"
+                                />
+                            ) : (
+                                <img
+                                    src="https://www.svgrepo.com/show/404987/closed-mailbox-with-raised-flag.svg"
+                                    alt="Closed Mailbox"
+                                    className="letters-page-mailbox-icon"
+                                />
+                            )}
+                        </div>
+                    )}
                 </div>
                 {!selectedLetter ? (
                     <>
@@ -177,16 +180,27 @@ function Letters() {
                         </div>
                         <button className="letters-page-send-button" onClick={sendLetter}>Send</button>
                     </>
-                ) : null}
-                <div className="letters-page-response-area">
-                    {selectedLetter ? (
-                        <div className="letters-page-letter-details" style={{ backgroundImage: `url(${selectedLetter.background})` }}>
-                            <h4>{selectedLetter.title}</h4>
-                            <p><strong>You:</strong> {selectedLetter.content}</p>
-                            <p><strong>Response:</strong> {selectedLetter.response}</p>
-                            <button className="letters-page-back-button" onClick={() => setSelectedLetter(null)}>Back to List</button>
+                ) : (
+                    <div className="letters-page-letter-details-container">
+                        <div
+                            className="letters-page-letter-details-sent"
+                            style={{ backgroundImage: `url(${selectedLetter.background})` }}
+                        >
+                            <h4 className="letters-page-letter-title">{selectedLetter.title}</h4>
+                            <p>{selectedLetter.content}</p>
                         </div>
-                    ) : (
+                        <div
+                            className="letters-page-letter-details-received"
+                            style={{ backgroundImage: `url('https://media.istockphoto.com/id/182154211/photo/old-paper-textere.webp?b=1&s=170667a&w=0&k=20&c=ym_eO6PKLl6itLgksTBO-ykUVtQwYabUfWXYyuL2iCU=')` }}
+                        >
+                            <h4>Response:</h4>
+                            <p>{selectedLetter.response}</p>
+                        </div>
+                        <button className="letters-page-back-button" onClick={() => setSelectedLetter(null)}>Back to List</button>
+                    </div>
+                )}
+                <div className="letters-page-response-area">
+                    {!selectedLetter && (
                         <div className={`letters-page-letter-history ${showReceivedLetters ? 'letters-page-visible' : 'letters-page-hidden'}`}>
                             <h3>Letter History</h3>
                             {letters.map((letter, index) => (

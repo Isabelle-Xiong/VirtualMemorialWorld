@@ -900,7 +900,7 @@ app.post('/api/save-avatar-customization/:id', auth, async (req, res) => {
 // Send a new letter
 app.post('/api/avatars/:id/letters', auth, async (req, res) => {
     const { id } = req.params;
-    const { title, content } = req.body; // Accept title in the request body
+    const { title, content, background } = req.body; // Accept background in the request body
     const userId = req.user.userId;
 
     try {
@@ -909,6 +909,7 @@ app.post('/api/avatars/:id/letters', auth, async (req, res) => {
             receiver: id,
             title, // Save title
             content,
+            background, // Save background
             response: generateRandomResponse() // Replace this with Claude API later
         });
 
