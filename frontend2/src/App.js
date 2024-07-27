@@ -26,7 +26,7 @@ import Friends from './components/Friends';
 import LandingPage from './components/LandingPage';
 import AddMemories from './components/AddMemories';
 import PlayMemories from './components/PlayMemories';
-
+import Letters from './components/Letters';
 
 
 function App() {
@@ -175,7 +175,7 @@ function App() {
           <Route path="/avatar-home/:id" element={<AvatarHome />} />
           <Route path="/add-memories/:id" element={<AddMemories />} />
           <Route path="/play-memories/:id" element={<PlayMemories onClose={handlePlayMemoriesClose} />} />
-
+          <Route path="/avatars/:id/letters" element={<Letters />} />
         </Routes>
 
         <VirtualClock speedMultiplier={48} onTick={handleTick} />

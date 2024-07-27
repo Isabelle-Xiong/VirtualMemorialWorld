@@ -83,6 +83,15 @@ const jobSchema = new Schema({
     isCurrent: Boolean
 });
 
+const letterSchema = new Schema({
+    sender: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    receiver: { type: Schema.Types.ObjectId, ref: 'Avatar', required: true },
+    title: { type: String, required: true }, // Add title field
+    content: { type: String, required: true },
+    response: { type: String },
+    createdAt: { type: Date, default: Date.now }
+});
+
 const avatarSchema = new Schema({
     name: { type: String, required: true },
     picture: { type: String, required: true },
@@ -116,6 +125,7 @@ const avatarSchema = new Schema({
         }
     ],
     relationships: [relationshipSchema],
+    
 
     // Customization fields
     topType: { type: String, default: 'ShortHairShortFlat' },
@@ -132,6 +142,7 @@ const avatarSchema = new Schema({
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     memories: [memorySchema],
     soundtracks: [soundtrackSchema],
+    letters: [{ type: Schema.Types.ObjectId, ref: 'Letter' }]
 });
 
 // Pre-save middleware to slice the goals array to only keep the latest 5 goals
@@ -147,6 +158,8 @@ const Avatar = mongoose.model('Avatar', avatarSchema);
 const Message = mongoose.model('Message', messageSchema);
 const FriendRequest = mongoose.model('FriendRequest', friendRequestSchema);
 const Friend = mongoose.model('Friend', friendSchema);
+const Letter = mongoose.model('Letter', letterSchema);
 
 
-module.exports = { User, Avatar, Message, FriendRequest, Friend };
+
+module.exports = { User, Avatar, Message, FriendRequest, Friend, Letter };

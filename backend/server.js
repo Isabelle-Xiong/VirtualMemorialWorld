@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const path = require('path');
 const auth = require('./middleware/auth');
 const crypto = require('crypto');
-const { User, Avatar, Message, FriendRequest, Friend } = require('./models');
+const { User, Avatar, Message, FriendRequest, Friend, Letter } = require('./models');
 const { spawn } = require('child_process');
 const textGeneratorPath = path.resolve(__dirname, '../nlp/sentiment_analysis/pipeline1/generate_final_goal.py');
 const routineItems = require('./routineItems');
@@ -896,6 +896,58 @@ app.post('/api/save-avatar-customization/:id', auth, async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+
+// Send a new letter
+app.post('/api/avatars/:id/letters', auth, async (req, res) => {
+    const { id } = req.params;
+    const { title, content } = req.body; // Accept title in the request body
+    const userId = req.user.userId;
+
+    try {
+        const newLetter = new Letter({
+            sender: userId,
+            receiver: id,
+            title, // Save title
+            content,
+            response: generateRandomResponse() // Replace this with Claude API later
+        });
+
+        await newLetter.save();
+
+        const avatar = await Avatar.findById(id);
+        avatar.letters.push(newLetter._id);
+        await avatar.save();
+
+        res.status(201).json(newLetter);
+    } catch (error) {
+        console.error('Error sending letter:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Get letters for an avatar
+app.get('/api/avatars/:id/letters', auth, async (req, res) => {
+    try {
+        const avatar = await Avatar.findById(req.params.id).populate('letters');
+        if (!avatar) {
+            return res.status(404).send('Avatar not found');
+        }
+        res.json(avatar.letters);
+    } catch (error) {
+        console.error('Error fetching letters:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Function to generate a random response (placeholder)
+function generateRandomResponse() {
+    const responses = [
+        "Thank you for writing to me. I'm always with you.",
+        "Your words mean a lot. I'm here for you.",
+        "I appreciate your message. Keep being strong."
+    ];
+    return responses[Math.floor(Math.random() * responses.length)];
+}
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../frontend2/build')));

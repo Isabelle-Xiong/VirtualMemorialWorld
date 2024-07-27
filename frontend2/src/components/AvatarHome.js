@@ -223,6 +223,7 @@ function AvatarHome() {
                                     src="https://cdn-icons-png.freepik.com/512/3463/3463581.png"
                                     alt="Letters Icon"
                                     className="avatar-home-icon"
+                                    onClick={() => navigate(`/avatars/${id}/letters`)} // Navigate to Letters.js
                                 />
                             </div>
                         </div>
