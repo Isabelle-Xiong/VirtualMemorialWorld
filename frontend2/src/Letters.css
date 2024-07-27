@@ -22,6 +22,8 @@
     width: 700px;
     min-height: 50vh;
     position: relative;
+    margin-top: 0px;
+    /* Increase the margin at the top to move the container up */
 }
 
 .letters-page-header-container {
@@ -47,24 +49,48 @@
 
 .letters-page-letter-writing-area {
     width: 100%;
-    margin-top: 20px;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    height: 400px;
     background-size: cover;
     background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 10px;
+    padding-top: 50px;
 }
 
 .letters-page-letter-writing-area input,
 .letters-page-letter-writing-area textarea {
-    width: 100%;
+    width: 90%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: none;
     border-radius: 5px;
+    margin-bottom: 10px;
     font-family: 'Courier New', monospace;
-    background: url('https://www.transparenttextures.com/patterns/linen.png');
+    background: none;
     resize: none;
+    outline: none;
+}
+
+
+.letters-page-letter-writing-area input {
+    text-align: center; /* Center the title text */
+    margin-bottom: 20px; /* Add some margin below the title */
+}
+
+.letters-page-letter-writing-area textarea {
+    min-height: 200px;
+    /* Set minimum height */
+    max-height: 200px;
+    /* Set maximum height a bit less than the letter */
+    overflow-y: auto;
+    /* Enable vertical scrolling if content overflows */
+    width: 80%;
+    /* Ensure textarea doesn't overflow the letter background */
+    padding: 10px;
+    /* Ensure enough padding inside the textarea */
 }
 
 .letters-page-background-selection {

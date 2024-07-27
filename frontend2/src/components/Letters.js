@@ -155,11 +155,11 @@ function Letters() {
                                     />
                                 </div>
                                 <div
-                                    className={`letters-page-background-option ${selectedBackground === 'https://img.freepik.com/free-vector/watercolor-background-world-tourism-day_23-2149567156.jpg' ? 'letters-page-selected' : ''}`}
-                                    onClick={() => setSelectedBackground('https://img.freepik.com/free-vector/watercolor-background-world-tourism-day_23-2149567156.jpg')}
+                                    className={`letters-page-background-option ${selectedBackground === 'https://img.freepik.com/premium-photo/happy-teachers-day-frame-flowers-boder-background_916191-80403.jpg?w=1480' ? 'letters-page-selected' : ''}`}
+                                    onClick={() => setSelectedBackground('https://img.freepik.com/premium-photo/happy-teachers-day-frame-flowers-boder-background_916191-80403.jpg?w=1480')}
                                 >
                                     <img
-                                        src="https://img.freepik.com/free-vector/watercolor-background-world-tourism-day_23-2149567156.jpg"
+                                        src="https://img.freepik.com/premium-photo/happy-teachers-day-frame-flowers-boder-background_916191-80403.jpg?w=1480"
                                         alt="Background 5"
                                     />
                                 </div>
