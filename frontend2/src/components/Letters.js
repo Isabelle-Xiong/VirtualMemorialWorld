@@ -49,7 +49,7 @@ function Letters() {
             const response = await axios.post(`http://localhost:5001/api/avatars/${id}/letters`, {
                 title: letterTitle,
                 content: letterContent,
-                background: selectedBackground
+                background: selectedBackground || 'https://img.freepik.com/free-photo/beige-aged-background_53876-90777.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1721952000&semt=ais_user'
             }, {
                 headers: { 'x-auth-token': token },
             });
@@ -101,13 +101,14 @@ function Letters() {
                     <>
                         <div
                             className="letters-page-letter-writing-area"
-                            style={{ backgroundImage: `url(${selectedBackground})` }}
+                            style={{ backgroundImage: `url(${selectedBackground || 'https://img.freepik.com/free-photo/beige-aged-background_53876-90777.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1721952000&semt=ais_user'})` }}
                         >
                             <input
                                 type="text"
-                                placeholder="Enter letter title..."
+                                placeholder="Enter letter title"
                                 value={letterTitle}
                                 onChange={(e) => setLetterTitle(e.target.value)}
+                                className="letters-page-letter-title"
                             />
                             <textarea
                                 placeholder={`Write your letter to ${avatarName} here...`}

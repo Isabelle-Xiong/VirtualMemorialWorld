@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+
 /* Ensure all styles are specific to the Letters page */
 .letters-page-background {
     background-image: url('https://wallpapers.com/images/hd/cherry-blossoms-anime-scenery-fvn3g06sr4bshzpu.jpg');
@@ -14,7 +16,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(245, 245, 245, 0.8);
+    background: rgba(255, 255, 255, 0.865);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -22,8 +24,7 @@
     width: 700px;
     min-height: 50vh;
     position: relative;
-    margin-top: 0px;
-    /* Increase the margin at the top to move the container up */
+    margin-top: 0px; 
 }
 
 .letters-page-header-container {
@@ -63,7 +64,7 @@
 
 .letters-page-letter-writing-area input,
 .letters-page-letter-writing-area textarea {
-    width: 90%;
+    width: 80%;
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -72,25 +73,27 @@
     background: none;
     resize: none;
     outline: none;
+    box-shadow: none;
 }
 
-
 .letters-page-letter-writing-area input {
-    text-align: center; /* Center the title text */
-    margin-bottom: 20px; /* Add some margin below the title */
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Satisfy', cursive;
+    font-size: 25px;
+    font-weight: bold;
 }
 
 .letters-page-letter-writing-area textarea {
     min-height: 200px;
-    /* Set minimum height */
-    max-height: 200px;
-    /* Set maximum height a bit less than the letter */
+    max-height: 250px;
     overflow-y: auto;
-    /* Enable vertical scrolling if content overflows */
     width: 80%;
-    /* Ensure textarea doesn't overflow the letter background */
     padding: 10px;
-    /* Ensure enough padding inside the textarea */
+    background: none;
+    font-family: 'Satisfy', cursive;
+    font-size: 20px;
+    
 }
 
 .letters-page-background-selection {
@@ -101,8 +104,9 @@
 }
 
 .letters-page-background-selection label {
-    font-family: 'Press Start 2P', cursive;
     margin-bottom: 10px;
+    font-family: 'Press Start 2P', cursive;
+
 }
 
 .letters-page-background-options {
@@ -172,7 +176,7 @@
     margin: 10px auto;
     padding: 10px 20px;
     background-color: #d4a373;
-    color: white;
+    color: rgb(255, 255, 255);
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -217,6 +221,6 @@
     background-color: #f0f0f0;
 }
 
-.hidden {
+.letters-page-hidden {
     display: none;
 }
