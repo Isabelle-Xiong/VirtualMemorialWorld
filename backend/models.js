@@ -84,12 +84,11 @@ const jobSchema = new Schema({
 });
 
 const letterSchema = new Schema({
-    sender: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    receiver: { type: Schema.Types.ObjectId, ref: 'Avatar', required: true },
-    title: { type: String, required: true }, // Add title field
+    title: { type: String, required: true },
     content: { type: String, required: true },
-    response: { type: String },
-    createdAt: { type: Date, default: Date.now }
+    response: { type: String, default: '' },
+    background: { type: String, default: 'default' },
+    createdAt: { type: Date, default: Date.now },
 });
 
 const avatarSchema = new Schema({

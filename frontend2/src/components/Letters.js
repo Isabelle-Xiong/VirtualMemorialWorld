@@ -6,12 +6,13 @@ import '../Letters.css'; // Adjust the path based on your project structure
 function Letters() {
     const { id } = useParams();
     const [letters, setLetters] = useState([]);
-    const [letterTitle, setLetterTitle] = useState(''); // State for letter title
+    const [letterTitle, setLetterTitle] = useState('');
     const [letterContent, setLetterContent] = useState('');
+    const [selectedBackground, setSelectedBackground] = useState('');
     const [avatarName, setAvatarName] = useState('');
     const [receivedLetters, setReceivedLetters] = useState([]);
     const [selectedLetter, setSelectedLetter] = useState(null);
-    const [showReceivedLetters, setShowReceivedLetters] = useState(false); // State for toggling received letters
+    const [showReceivedLetters, setShowReceivedLetters] = useState(false);
 
     useEffect(() => {
         fetchAvatarDetails();
@@ -46,14 +47,16 @@ function Letters() {
         const token = localStorage.getItem('token');
         try {
             const response = await axios.post(`http://localhost:5001/api/avatars/${id}/letters`, {
-                title: letterTitle, // Include title in the request
-                content: letterContent
+                title: letterTitle,
+                content: letterContent,
+                background: selectedBackground
             }, {
                 headers: { 'x-auth-token': token },
             });
             setReceivedLetters([...receivedLetters, response.data]);
-            setLetterTitle(''); // Clear title input after sending
+            setLetterTitle('');
             setLetterContent('');
+            setSelectedBackground('');
         } catch (error) {
             console.error('Error sending letter:', error);
         }
@@ -91,24 +94,89 @@ function Letters() {
                     </div>
                 </div>
                 {!selectedLetter ? (
-                    <div className="letter-writing-area">
-                        <input
-                            type="text"
-                            placeholder="Enter letter title..."
-                            value={letterTitle}
-                            onChange={(e) => setLetterTitle(e.target.value)}
-                        />
-                        <textarea
-                            placeholder={`Write your letter to ${avatarName} here...`}
-                            value={letterContent}
-                            onChange={(e) => setLetterContent(e.target.value)}
-                        />
+                    <>
+                        <div
+                            className="letter-writing-area"
+                            style={{ backgroundImage: `url(${selectedBackground})` }}
+                        >
+                            <input
+                                type="text"
+                                placeholder="Enter letter title..."
+                                value={letterTitle}
+                                onChange={(e) => setLetterTitle(e.target.value)}
+                            />
+                            <textarea
+                                placeholder={`Write your letter to ${avatarName} here...`}
+                                value={letterContent}
+                                onChange={(e) => setLetterContent(e.target.value)}
+                            />
+                        </div>
+                        <div className="background-selection">
+                            <label>Select Background:</label>
+                            <div className="background-options">
+                                <div
+                                    className={`background-option ${selectedBackground === 'https://img.freepik.com/free-vector/watercolor-abstract-background_23-2148995294.jpg' ? 'selected' : ''}`}
+                                    onClick={() => setSelectedBackground('https://img.freepik.com/free-vector/watercolor-abstract-background_23-2148995294.jpg')}
+                                >
+                                    <img
+                                        src="https://img.freepik.com/free-photo/wall-blank-paper-frame-with-acorn-decoration_53876-105706.jpghttps://img.freepik.com/free-vector/watercolor-abstract-background_23-2148995294.jpg"
+                                        alt="Background 1"
+                                    />
+                                </div>
+                                <div
+                                    className={`background-option ${selectedBackground === 'https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm00MjItMDQ3LXguanBn.jpg' ? 'selected' : ''}`}
+                                    onClick={() => setSelectedBackground('https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm00MjItMDQ3LXguanBn.jpg')}
+                                >
+                                    <img
+                                        src="https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm00MjItMDQ3LXguanBn.jpg"
+                                        alt="Background 2"
+                                    />
+                                </div>
+                                <div
+                                    className={`background-option ${selectedBackground === 'https://slidescorner.com/wp-content/uploads/2024/01/Powerpoint-Background-Watercolor-Birthday-Party-or-Celebration-Balloons-by-SlidesCorner.com_.jpg' ? 'selected' : ''}`}
+                                    onClick={() => setSelectedBackground('https://slidescorner.com/wp-content/uploads/2024/01/Powerpoint-Background-Watercolor-Birthday-Party-or-Celebration-Balloons-by-SlidesCorner.com_.jpg')}
+                                >
+                                    <img
+                                        src="https://slidescorner.com/wp-content/uploads/2024/01/Powerpoint-Background-Watercolor-Birthday-Party-or-Celebration-Balloons-by-SlidesCorner.com_.jpg"
+                                        alt="Background 3"
+                                    />
+                                </div>
+                                <div
+                                    className={`background-option ${selectedBackground === 'https://c1.wallpaperflare.com/preview/258/359/614/596edafe6db62.jpg' ? 'selected' : ''}`}
+                                    onClick={() => setSelectedBackground('https://c1.wallpaperflare.com/preview/258/359/614/596edafe6db62.jpg')}
+                                >
+                                    <img
+                                        src="https://c1.wallpaperflare.com/preview/258/359/614/596edafe6db62.jpg"
+                                        alt="Background 4"
+                                    />
+                                </div>
+                                <div
+                                    className={`background-option ${selectedBackground === 'https://img.freepik.com/free-vector/watercolor-background-world-tourism-day_23-2149567156.jpg' ? 'selected' : ''}`}
+                                    onClick={() => setSelectedBackground('https://img.freepik.com/free-vector/watercolor-background-world-tourism-day_23-2149567156.jpg')}
+                                >
+                                    <img
+                                        src="https://img.freepik.com/free-vector/watercolor-background-world-tourism-day_23-2149567156.jpg"
+                                        alt="Background 5"
+                                    />
+                                </div>
+                                <div
+                                    className={`background-option ${selectedBackground === 'https://static.vecteezy.com/system/resources/previews/042/344/243/non_2x/watercolor-pastel-color-background-design-vector.jpg' ? 'selected' : ''}`}
+                                    onClick={() => setSelectedBackground('https://static.vecteezy.com/system/resources/previews/042/344/243/non_2x/watercolor-pastel-color-background-design-vector.jpg')}
+                                >
+                                    <img
+                                        src="https://static.vecteezy.com/system/resources/previews/042/344/243/non_2x/watercolor-pastel-color-background-design-vector.jpg"
+                                        alt="Background 6"
+                                    />
+                                </div>
+                            </div>
+                        </div>
                         <button onClick={sendLetter}>Send</button>
-                    </div>
+                    </>
                 ) : null}
                 <div className="response-area">
                     {selectedLetter ? (
-                        <div className="letter-details">
+                        <div className="letter-details" style={{ backgroundImage: `url(${selectedLetter.background})` }}>
+                            <h4>{selectedLetter.title}</h4>
                             <p><strong>You:</strong> {selectedLetter.content}</p>
                             <p><strong>Response:</strong> {selectedLetter.response}</p>
                             <button onClick={() => setSelectedLetter(null)}>Back to List</button>
