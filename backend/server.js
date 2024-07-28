@@ -920,7 +920,7 @@ app.post('/api/avatars/:id/letters', auth, async (req, res) => {
         // Generate a response from Claude
         const msg = await anthropic.messages.create({
             model: "claude-3-haiku-20240307",
-            max_tokens: 75,
+            max_tokens: 100,
             messages: [
                 {
                     role: "user",
