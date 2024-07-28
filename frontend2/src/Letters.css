@@ -24,7 +24,7 @@
     width: 700px;
     min-height: 50vh;
     position: relative;
-    margin-top: 0px; 
+    margin-top: 0px;
 }
 
 .letters-page-header-container {
@@ -74,7 +74,7 @@
     resize: none;
     outline: none;
     box-shadow: none;
-    
+
 }
 
 .letters-page-letter-writing-area input {
@@ -94,7 +94,7 @@
     background: none;
     font-family: 'Satisfy', cursive;
     font-size: 20px;
-    
+
 }
 
 .letters-page-background-selection {
@@ -198,6 +198,8 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
     display: none;
+    max-height: 650px;
+    overflow-y: auto;
 }
 
 .letters-page-letter-history.letters-page-visible {
@@ -236,7 +238,8 @@
     background-size: cover;
     background-position: center;
     font-family: 'Satisfy', cursive;
-    min-height: 250px; /* Set to match the height of the letter writing area */
+    min-height: 250px;
+    /* Set to match the height of the letter writing area */
 }
 
 .letters-page-letter-details-sent h4 {
