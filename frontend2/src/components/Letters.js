@@ -62,14 +62,11 @@ function Letters() {
         }
     
         try {
-            const response = await axios.post('http://localhost:5001/api/avatars/${id}/letters', { letterContent });
-            const responseText = response.data.completion.trim();
     
             const newLetterResponse = await axios.post(`http://localhost:5001/api/avatars/${id}/letters`, {
                 title: letterTitle,
                 content: letterContent,
                 background: selectedBackground || 'https://img.freepik.com/free-photo/beige-aged-background_53876-90777.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1721952000&semt=ais_user',
-                response: responseText
             }, {
                 headers: { 'x-auth-token': token },
             });

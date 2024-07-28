@@ -18,6 +18,11 @@ const PORT = process.env.PORT || 5001;
 
 require('dotenv').config();
 console.log('API Key:', process.env.ANTHROPIC_API_KEY);
+const apiKey = process.env.ANTHROPIC_API_KEY;
+
+const anthropic = new Anthropic({
+    apiKey: apiKey, // defaults to process.env["ANTHROPIC_API_KEY"]
+  });
 
 const app = express();
 app.use(cors());
@@ -915,16 +920,16 @@ app.post('/api/avatars/:id/letters', auth, async (req, res) => {
         // Generate a response from Claude
         const msg = await anthropic.messages.create({
             model: "claude-3-haiku-20240307",
-            max_tokens: 100,
+            max_tokens: 75,
             messages: [
                 {
                     role: "user",
-                    content: `You are a compassionate and positive persona representing a deceased loved one. Respond to this letter with empathy, reminiscence, and positivity.\n\nUser's letter: "${content}"`,
+                    content: `You are a compassionate and positive persona representing a deceased loved one. In less than 250 characters, respond to this letter with empathy, reminiscence, and positivity.\n\nUser's letter: "${content}"`,
                 },
             ],
         });
 
-        const responseText = msg.completion.trim();
+        const responseText = msg.content[0].text;
 
         const newLetter = new Letter({
             title,
