@@ -17,6 +17,7 @@
     flex-direction: column;
     align-items: center;
     background: linear-gradient(rgb(255, 235, 198), rgb(225, 253, 255));
+    border: 2px solid rgba(212, 163, 115, 0.5);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -46,6 +47,12 @@
 .letters-page-mailbox-icon {
     width: 40px;
     height: 40px;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
 }
 
 .letters-page-letter-writing-area {
@@ -54,6 +61,7 @@
     height: 400px;
     background-size: cover;
     background-position: center;
+    border: 3px solid rgba(212, 163, 115, 0.7);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -137,17 +145,24 @@
 .letters-page-send-button {
     display: block;
     margin: 20px auto;
-    padding: 10px 20px;
+    padding: 15px 30px;
     background-color: #d4a373;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
 
+
+
 .letters-page-send-button:hover {
-    background-color: #bf8c5e;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(212, 163, 115, 0.4);
 }
 
 .letters-page-response-area {
@@ -174,18 +189,23 @@
 
 .letters-page-back-button {
     display: block;
-    margin: 10px auto;
-    padding: 10px 20px;
+    margin: 20px auto;
+    padding: 15px 30px;
     background-color: #d4a373;
-    color: rgb(255, 255, 255);
+    color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
     cursor: pointer;
     font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
 
 .letters-page-back-button:hover {
-    background-color: #bf8c5e;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(212, 163, 115, 0.4);
 }
 
 .letters-page-letter-history {
@@ -193,7 +213,7 @@
     position: absolute;
     right: -320px;
     top: 20px;
-    background-color: rgba(245, 245, 245, 0.8);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 240, 255, 0.9) 100%);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
@@ -201,7 +221,7 @@
     max-height: 650px;
     overflow-y: auto;
     scrollbar-width: thin;
-    scrollbar-color: #ffb4f2 #ff1313;
+    scrollbar-color: #e5adff #ff13e0;
     overflow-x: hidden;
 }
 
@@ -238,7 +258,7 @@
     margin-bottom: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    transition: transform 0.3s, background-color 0.3s;
+    transition: transform 0.3s ease;
     font-family: 'Satisfy', cursive; 
     background: linear-gradient(135deg, #fff8f9 0%, #ffdbea 100%);
     border: 2px solid #ffb4e0;
