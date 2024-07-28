@@ -225,7 +225,7 @@ function Letters() {
                             <h3>Letter History</h3>
                             {letters.map((letter, index) => (
                                 <div key={index} className="letters-page-letter-item" onClick={() => handleLetterClick(letter)}>
-                                    <p>Letter Title: {letter.title}</p>
+                                    <p>Title: {letter.title}</p>
                                 </div>
                             ))}
                         </div>

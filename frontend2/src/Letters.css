@@ -200,11 +200,31 @@
     display: none;
     max-height: 650px;
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #ffb4f2 #ff1313;
+    overflow-x: hidden;
+}
+
+/* For WebKit browsers (Chrome, Safari) */
+.letters-page-letter-history::-webkit-scrollbar {
+    width: 8px;
+}
+
+.letters-page-letter-history::-webkit-scrollbar-track {
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+
+.letters-page-letter-history::-webkit-scrollbar-thumb {
+    background-color: #d4a373;
+    border-radius: 10px;
+    border: 2px solid #f5f5f5;
 }
 
 .letters-page-letter-history.letters-page-visible {
     display: block;
 }
+
 
 .letters-page-letter-history h3 {
     font-family: 'Press Start 2P', cursive;
@@ -216,8 +236,19 @@
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+    font-family: 'Satisfy', cursive; 
+    background: linear-gradient(135deg, #fff8f9 0%, #ffdbea 100%);
+    border: 2px solid #ffb4e0;
+}
+
+.letters-page-letter-item:hover {
+    background-color: #ffe6e6; /* Changed hover background color for a softer feel */
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Increased shadow on hover for more emphasis */
+    background: url('https://png.pngtree.com/png-vector/20240109/ourmid/pngtree-vector-open-envelope-with-letter-heart-png-image_11430401.png') no-repeat center center / contain; /* Adds a stamp-like image */
 }
 
 .letters-page-letter-item:hover {
@@ -239,7 +270,6 @@
     background-position: center;
     font-family: 'Satisfy', cursive;
     min-height: 250px;
-    /* Set to match the height of the letter writing area */
 }
 
 .letters-page-letter-details-sent h4 {
