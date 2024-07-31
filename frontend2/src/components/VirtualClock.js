@@ -50,16 +50,24 @@ const VirtualClock = ({ speedMultiplier, onTick }) => {
         };
 
         const generateNewRoutine = async (avatarId) => {
-            const token = localStorage.getItem('token');
-            if (!token) {
+            const token1 = localStorage.getItem('token');
+            const token2 = localStorage.getItem('token');
+            if (!token1) {
                 console.error('No token found, please log in.');
                 return;
             }
 
             try {
-                const response = await axios.post('http://localhost:5001/api/generate-new-routine', { avatarId }, {
-                    headers: { 'x-auth-token': token }
+                const currentGoals = await axios.get('http://localhost:5001/api/get-goals', {
+                    params: { avatarId }, // Passing avatarId as a query parameter
+                    headers: { 'x-auth-token': token2 } // Adding the token in headers
                 });
+                const response = await axios.post('http://localhost:5001/api/generate-new-routine', 
+                    { avatarId, currentGoals: currentGoals.data }, // Pass currentGoals in the body
+                    {
+                        headers: { 'x-auth-token': token1 }
+                    }
+                );
                 console.log(`New routine generated for avatar ${avatarId}:`, response.data);
             } catch (error) {
                 console.error(`Error generating new routine for avatar ${avatarId}:`, error);

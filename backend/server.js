@@ -354,6 +354,27 @@ const generateGoalWithRetries = async (retries = 3) => {
     return null; // Return null if all retries fail
 };
 
+// Get the array of goals for a specific avatar
+app.get('/api/get-goals', auth, async (req, res) => {
+    const { avatarId } = req.query; // Assuming avatarId is passed as a query parameter
+
+    try {
+        // Find the avatar by ID and return only the goals field
+        const avatar = await Avatar.findById(avatarId, 'goals');
+
+        if (!avatar) {
+            return res.status(404).send({ error: 'Avatar not found' });
+        }
+
+        console.log(`Goals retrieved for avatar ${avatarId}`);
+        res.status(200).send(avatar.goals);
+    } catch (error) {
+        console.error(`Error retrieving goals for avatar ${avatarId}:`, error);
+        res.status(500).send({ error: 'Error retrieving goals.' });
+    }
+});
+
+
 
 // Generate a new goal for a specific avatar
 app.post('/api/generate-new-goal', auth, async (req, res) => {
@@ -391,42 +412,96 @@ app.post('/api/generate-new-goal', auth, async (req, res) => {
     }
 });
 
+app.post('/compare-sentences', async (req, res) => {
+    const { sentence1, sentence2 } = req.body;
+
+    try {
+        const response = await axios.post('http://localhost:5000/similarity', {
+            sentence1: sentence1,
+            sentence2: sentence2
+        });
+
+        const similarity = response.data.similarity;
+        res.json({ similarity });
+    } catch (error) {
+        console.error('Error communicating with the Python backend:', error);
+        res.status(500).json({ error: 'Failed to compute similarity' });
+    }
+});
+
 // Generate a new routine for a specific avatar
 app.post('/api/generate-new-routine', auth, async (req, res) => {
-    const { avatarId } = req.body;
+    const { avatarId, currentGoals } = req.body;
     try {
-        // Generate multiple routine items
-        const newRoutineItems = [];
-        const numItems = 5; // Number of routine items to add
-        const usedIndexes = new Set();
+        // Step 1: Extract everything after the first period in each goal
+        const processedGoals = currentGoals.map(goal => {
+            const goalText = goal.goal;
+            const splitText = goalText.split('.');
+            return splitText.length > 1 ? splitText.slice(1).join('.').trim() : goalText;
+        });
 
-        while (newRoutineItems.length < numItems && usedIndexes.size < routineItems.length) {
-            const randomIndex = Math.floor(Math.random() * routineItems.length);
-            if (!usedIndexes.has(randomIndex)) {
-                usedIndexes.add(randomIndex);
-                const newRoutineItem = routineItems[randomIndex];
-                newRoutineItems.push({ event: newRoutineItem.event, time: newRoutineItem.time });
+        // Step 2: Select 2 random goals from processedGoals
+        const selectedGoals = [];
+        const usedGoalIndexes = new Set();
+
+        while (selectedGoals.length < 2 && usedGoalIndexes.size < processedGoals.length) {
+            const randomIndex = Math.floor(Math.random() * processedGoals.length);
+            if (!usedGoalIndexes.has(randomIndex)) {
+                usedGoalIndexes.add(randomIndex);
+                selectedGoals.push(processedGoals[randomIndex]);
             }
         }
 
-        // Sort the routine items by time
-        newRoutineItems.sort((a, b) => moment(a.time, 'hh:mm A').isBefore(moment(b.time, 'hh:mm A')) ? -1 : 1);
+        // Step 3: Find the routine items with the highest similarity to each selected goal
+        const topSimilarItems = await Promise.all(selectedGoals.map(async (goalText) => {
+            let bestMatch = null;
+            let highestSimilarity = -1;
 
-        // Print the generated and sorted routine items for debugging
-        console.log('Generated and sorted routine items:', newRoutineItems);
+            for (let item of routineItems) {
+                const response = await axios.post('http://localhost:5000/similarity', {
+                    sentence1: goalText,
+                    sentence2: item.event
+                });
 
-        if (newRoutineItems.length === 0) {
-            console.error('Failed to generate routine.');
-            return res.status(500).send({ error: 'Generated routine could not be retrieved.' });
+                const similarity = response.data.similarity;
+                if (similarity > highestSimilarity) {
+                    highestSimilarity = similarity;
+                    bestMatch = item;
+                }
+            }
+
+            return { ...bestMatch, similarity: highestSimilarity };
+        }));
+
+        console.log(topSimilarItems)
+
+        // Step 4: Select 3 more random routine items, ensuring no duplicates
+        const remainingItems = routineItems.filter(item => 
+            !topSimilarItems.some(similarItem => 
+                similarItem.event === item.event && similarItem.time === item.time
+            )
+        );
+        const randomItems = [];
+        const usedIndexes = new Set();
+
+        while (randomItems.length < 3 && usedIndexes.size < remainingItems.length) {
+            const randomIndex = Math.floor(Math.random() * remainingItems.length);
+            if (!usedIndexes.has(randomIndex)) {
+                usedIndexes.add(randomIndex);
+                randomItems.push(remainingItems[randomIndex]);
+            }
         }
 
+        // Combine selected similar items with random items
+        const newRoutineItems = [...topSimilarItems, ...randomItems];
+
+        // Sort the combined routine items by time
+        newRoutineItems.sort((a, b) => moment(a.time, 'hh:mm A').isBefore(moment(b.time, 'hh:mm A')) ? -1 : 1);
+
+        // Step 5: Update the avatar's daily routine in the database
         const updateResult = await Avatar.findOneAndUpdate(
             { _id: avatarId },
-            {
-                $set: {
-                    dailyRoutine: newRoutineItems
-                }
-            },
+            { $set: { dailyRoutine: newRoutineItems } },
             { new: true, runValidators: true }
         );
 
