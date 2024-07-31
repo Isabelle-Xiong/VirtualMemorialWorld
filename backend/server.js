@@ -458,7 +458,7 @@ app.post('/api/generate-new-routine', auth, async (req, res) => {
             let highestSimilarity = -1;
 
             for (let item of routineItems) {
-                const response = await axios.post('http://localhost:5000/similarity', {
+                const response = await axios.post('http://localhost:4000/similarity', {
                     sentence1: goalText,
                     sentence2: item.event
                 });

@@ -60,9 +60,9 @@ function Letters() {
             console.error('No token found');
             return;
         }
-    
+
         try {
-    
+
             const newLetterResponse = await axios.post(`http://localhost:5001/api/avatars/${id}/letters`, {
                 title: letterTitle,
                 content: letterContent,
@@ -70,7 +70,7 @@ function Letters() {
             }, {
                 headers: { 'x-auth-token': token },
             });
-    
+
             setReceivedLetters([...receivedLetters, newLetterResponse.data]);
             setLetterTitle('');
             setLetterContent('');
@@ -222,7 +222,7 @@ function Letters() {
                 <div className="letters-page-response-area">
                     {!selectedLetter && (
                         <div className={`letters-page-letter-history ${showReceivedLetters ? 'letters-page-visible' : 'letters-page-hidden'}`}>
-                            <h3>Letter History</h3>
+                            <h3>Mailbox</h3>
                             {letters.map((letter, index) => (
                                 <div key={index} className="letters-page-letter-item" onClick={() => handleLetterClick(letter)}>
                                     <p>Title: {letter.title}</p>
